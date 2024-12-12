@@ -9,12 +9,13 @@ defineEmits(['file-change'])
   <div>
     <h2>{{ title }}</h2>
     <div class="grid grid-cols-2 gap-[12px] mb-[30px]">
-      <label v-for="{ field, file, url } in fields" :key="field" :for="field">
+      <label v-for="({ field, file, url }, i) in fields" :key="field" :for="field">
         <div class="content">
           <img v-if="file" :src="url" alt="Изображение" />
           <template v-else>
             <uploadIcon />
-            <span>Загрузите файл</span>
+            <span v-if="i % 2 === 0">Лицевая сторона</span>
+            <span v-else>Обратная сторона</span>
           </template>
         </div>
         <input type="file" :data-name="field" :id="field" @change="$emit('file-change', $event)" />

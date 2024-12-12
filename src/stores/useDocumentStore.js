@@ -1,11 +1,14 @@
 import { defineStore } from 'pinia'
 
+import passportFrontSide from '../assets/images/passport-front-side.png'
+import passportBackSide from '../assets/images/passport-back-side.png'
+
 export const useDocumentStore = defineStore('documentStore', {
   state: () => ({
     isDisabled: true,
     uploadedDocuments: {
-      'passport-front-side': { file: null, url: null },
-      'passport-back-side': { file: null, url: null },
+      'passport-front-side': { file: 'null', url: passportFrontSide },
+      'passport-back-side': { file: 'null', url: passportBackSide },
       'license-front-side': { file: null, url: null },
       'license-back-side': { file: null, url: null },
       'certificate-front-side': { file: null, url: null },
