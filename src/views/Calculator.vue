@@ -5,11 +5,9 @@
       <div class="calculator__content">
         <h2 class="form-title">Калькулятор стоимости ОСАГО</h2>
 
-        <!-- Dropdown для водителей -->
         <h3>Водители</h3>
         <Dropdown v-model="formData.driver" :options="driverOptions" placeholder="Любой водитель" />
 
-        <!-- Dropdown для стажа водителя -->
         <h3>Укажите ваш возраст и водительский стаж <span>*</span></h3>
         <Dropdown
           v-model="formData.driverExperience"
@@ -17,7 +15,6 @@
           placeholder="До 25 лет включительно, стаж менее трех лет"
         />
 
-        <!-- Вопрос о диагностической карте -->
         <h3>Есть ли у Вас диагностическая карта техосмотра? <span>*</span></h3>
         <div class="radio-group">
           <label>
@@ -30,28 +27,22 @@
           </label>
         </div>
 
-        <!-- Вопрос о предыдущем договоре ОСАГО -->
         <h3>Заключали ли Вы раньше договор ОСАГО? <span>*</span></h3>
         <div class="radio-group">
           <label>
-            <!-- поменять value -->
             <input type="radio" v-model="formData.previousAgreement" :value="1" />
             Да
           </label>
           <label>
-            <!-- поменять value -->
             <input type="radio" v-model="formData.previousAgreement" :value="0" />
             Нет
           </label>
         </div>
 
-        <!-- Укажите срок страхования -->
         <h3>Укажите срок страхования <span>*</span></h3>
         <div class="insurance-duration">
           <button
-            v-for="({
-              label, value
-            }, index) in insuranceDurations"
+            v-for="({ label, value }, index) in insuranceDurations"
             :key="index"
             :class="{ active: formData.insuranceDuration === value }"
             @click="formData.insuranceDuration = value"
@@ -59,14 +50,16 @@
             {{ label }}
           </button>
         </div>
-
-        <hr />
-        <div class="flex items-center justify-between">
+      </div>
+      <div>
+        <div
+          class="fixed left-[15px] bottom-[69px] w-[94%] bg-white flex items-center justify-between border-t-[2px] py-[5px]"
+        >
           <h3>Стоимость страхового полиса:</h3>
           <b>2352 сом</b>
         </div>
+        <Footer :isValid="false" navigateTo="/" :title="'Оплатить' + ' 2352 сом'" />
       </div>
-      <Footer :isValid="false" navigateTo="/" />
     </Container>
   </section>
 </template>
@@ -80,59 +73,64 @@ import { reactive, watch } from 'vue'
 const driverOptions = [
   {
     label: 'Любой водитель',
-    value: 1
+    value: 1,
   },
   {
     label: 'Конкретные водители',
-    value: 2
-  }
+    value: 2,
+  },
 ]
 const experienceOptions = [
   {
     label: 'До 25 лет включительно, со стажем вождения до 3 лет включительно',
-    value: 1.4
+    value: 1.4,
   },
   {
     label: 'До 25 лет включительно, со стажем вождения свыше 3 лет',
-    value: 1.3
+    value: 1.3,
   },
   {
     label: 'Более 25 лет, со стажем вождения до 3 лет включительно',
-    value: 1.2
+    value: 1.2,
   },
   {
     label: 'Более 25 лет, со стажем вождения свыше 3 лет',
-    value: 1
-  }
+    value: 1,
+  },
 ]
 
 const insuranceDurations = [
   {
     label: 'От 5 до 15 дней',
-    value: 0.2
-  }, {
+    value: 0.2,
+  },
+  {
     label: 'От 16 дней до 1 месяца',
-    value: 0.3
-  }, {
+    value: 0.3,
+  },
+  {
     label: 'До 3 месяцев',
-    value: 0.5
-  }, {
+    value: 0.5,
+  },
+  {
     label: 'До 6 месяцев',
-    value: 0.7
-  }, {
+    value: 0.7,
+  },
+  {
     label: 'До 9 месяцев',
-    value: 0.9
-  }, {
+    value: 0.9,
+  },
+  {
     label: 'До 12 месяцев',
-    value: 1
-  }
+    value: 1,
+  },
 ]
 
 const formData = reactive({
   driver: null,
   driverExperience: null,
-  diagnosticCard: null,
-  previousAgreement: null,
+  diagnosticCard: 1,
+  previousAgreement: 1,
   insuranceDuration: 1,
 })
 
@@ -140,18 +138,23 @@ watch(
   () => formData,
   () => {
     // НсП = 3%  Потом добавить для расчета
-    const calculate = formData.driver + formData.driverExperience + formData.diagnosticCard + formData.previousAgreement + formData.insuranceDuration
-    console.log(calculate.toFixed(2));
-
-  }, {
-    deep: true
-  })
-
+    const calculate =
+      formData.driver +
+      formData.driverExperience +
+      formData.diagnosticCard +
+      formData.previousAgreement +
+      formData.insuranceDuration
+    console.log(calculate.toFixed(2))
+  },
+  {
+    deep: true,
+  },
+)
 </script>
 
 <style scoped lang="scss">
 .calculator {
-  @apply py-14;
+  @apply pt-14 pb-[100px];
 
   &__content {
     @apply space-y-4;
