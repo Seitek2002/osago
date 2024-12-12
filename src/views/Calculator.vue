@@ -56,9 +56,9 @@
           class="fixed left-[15px] bottom-[69px] w-[94%] bg-white flex items-center justify-between border-t-[2px] py-[5px]"
         >
           <h3>Стоимость страхового полиса:</h3>
-          <b>2352 сом</b>
+          <b>{{ standartOfOsago }} сом</b>
         </div>
-        <Footer :isValid="false" navigateTo="/" :title="'Оплатить' + ' 2352 сом'" />
+        <Footer :isValid="false" navigateTo="/" :title="'Оплатить' + standartOfOsago + ' сом'" />
       </div>
     </Container>
   </section>
@@ -68,7 +68,9 @@
 import Container from '@/components/Container.vue'
 import Footer from '@/components/Footer.vue'
 import Dropdown from '@/components/Dropdown.vue'
-import { reactive, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
+
+const standartOfOsago = ref(1680)
 
 const driverOptions = [
   {
@@ -127,10 +129,10 @@ const insuranceDurations = [
 ]
 
 const formData = reactive({
-  driver: null,
-  driverExperience: null,
+  driver: 1,
+  driverExperience: 1.4,
   diagnosticCard: 1,
-  previousAgreement: 1,
+  previousAgreement: 0,
   insuranceDuration: 1,
 })
 
@@ -138,13 +140,18 @@ watch(
   () => formData,
   () => {
     // НсП = 3%  Потом добавить для расчета
-    const calculate =
-      formData.driver +
-      formData.driverExperience +
-      formData.diagnosticCard +
-      formData.previousAgreement +
-      formData.insuranceDuration
-    console.log(calculate.toFixed(2))
+    const basePrice = 1680;
+    const coefficients = [
+      formData.driver || 1,
+      formData.driverExperience || 1,
+      formData.diagnosticCard || 1,
+      formData.previousAgreement || 1,
+      formData.insuranceDuration || 1,
+    ];
+
+    const totalMultiplier = coefficients.reduce((acc, coef) => acc * coef, 1);
+
+    standartOfOsago.value = Math.ceil(basePrice * totalMultiplier); // Округление стоимости
   },
   {
     deep: true,
