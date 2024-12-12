@@ -107,7 +107,7 @@ const idDetails = { ...passportDetails }
 
 <style scoped lang="scss">
 .form-section {
-  @apply py-6;
+  @apply pt-6 pb-[100px];
 
   &__content {
     @apply space-y-4;

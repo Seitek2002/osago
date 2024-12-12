@@ -57,7 +57,7 @@ const selectOption = (option) => {
   }
 
   &__list {
-    @apply absolute z-10 mt-1 w-full bg-[#F7F8FA] shadow-lg max-h-60 rounded-md p-2 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm;
+    @apply z-10 mt-1 w-full bg-[#F7F8FA] shadow-lg max-h-60 rounded-md p-2 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm;
   }
 
   &__item {
