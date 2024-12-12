@@ -2,7 +2,7 @@
   <header class="header">
     <Container>
         <div class="header__content">
-            <RouterLink to="/"><headerIcon /></RouterLink>
+            <headerIcon @click="handleClick" />
             <span>ОСАГО</span>
         </div>
     </Container>
@@ -10,8 +10,16 @@
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
 import Container from "./Container.vue";
 import headerIcon from "@/assets/icons/headerIcon.vue"
+
+const router = useRouter();
+
+const handleClick = () => {
+    router.back()
+}
+
 </script>
 
 <style lang="scss">
@@ -22,7 +30,7 @@ import headerIcon from "@/assets/icons/headerIcon.vue"
         @apply relative flex justify-center;
 
         svg {
-            @apply absolute top-0 left-0;
+            @apply absolute top-0 left-0 cursor-pointer;
         }
 
         span {
