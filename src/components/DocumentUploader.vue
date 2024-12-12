@@ -14,9 +14,11 @@ defineEmits(['file-change'])
           <img v-if="file" :src="url" alt="Изображение" />
           <template v-else>
             <uploadIcon />
-            <span v-if="i % 2 === 0">Лицевая сторона</span>
-            <span v-else>Обратная сторона</span>
           </template>
+        </div>
+        <div class="text-center">
+          <span v-if="i % 2 === 0">Лицевая сторона</span>
+          <span v-else>Обратная сторона</span>
         </div>
         <input type="file" :data-name="field" :id="field" @change="$emit('file-change', $event)" />
       </label>

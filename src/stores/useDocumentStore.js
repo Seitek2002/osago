@@ -7,8 +7,8 @@ export const useDocumentStore = defineStore('documentStore', {
   state: () => ({
     isDisabled: true,
     uploadedDocuments: {
-      'passport-front-side': { file: 'null', url: passportFrontSide },
-      'passport-back-side': { file: 'null', url: passportBackSide },
+      'passport-front-side': { file: null, url: null },
+      'passport-back-side': { file: null, url: null },
       'license-front-side': { file: null, url: null },
       'license-back-side': { file: null, url: null },
       'certificate-front-side': { file: null, url: null },
