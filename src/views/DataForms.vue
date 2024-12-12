@@ -2,9 +2,8 @@
   <section class="form-section">
     <Container>
       <div class="form-section__content">
-        <h2 class="form-title">ОСАГО</h2>
+        <h2 class="form-title">Проверка данных</h2>
 
-        <!-- Dropdown для целей использования -->
         <h3>
           Цель использования ТС <span>*</span>
         </h3>
@@ -14,7 +13,6 @@
           placeholder="Для личных целей"
         />
 
-        <!-- Адрес -->
         <FormInput
           v-model="formData.address"
           label="Адрес фактического проживания"
@@ -22,7 +20,6 @@
           id="address"
         />
 
-        <!-- Номер телефона -->
         <FormInput
           v-model="formData.phone"
           label="Номер телефона"
@@ -30,7 +27,6 @@
           id="phoneNumber"
         />
 
-        <!-- Паспортные данные -->
         <Dropdown
           v-model="formData.passport"
           placeholder="Данные паспорта"
@@ -48,7 +44,6 @@
           </template>
         </Dropdown>
 
-        <!-- ID Паспорт -->
         <Dropdown
           v-model="formData.idData"
           placeholder="Данные с ID паспорта"

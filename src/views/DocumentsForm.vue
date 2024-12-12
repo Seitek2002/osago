@@ -47,6 +47,11 @@ const handleFileChange = (event) => {
 <template>
   <section class="passport">
     <Container>
+
+      <h2 class="passport__title">
+        Загрузка документов
+      </h2>
+
       <DocumentUploader
         v-for="doc in documents"
         :key="doc.id"
@@ -62,5 +67,9 @@ const handleFileChange = (event) => {
 <style lang="scss">
 .passport {
   @apply py-[30px];
+
+  &__title {
+    @apply text-[#000B16] text-[20px] font-semibold mb-4;
+  }
 }
 </style>
