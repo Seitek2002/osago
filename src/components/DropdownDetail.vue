@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown__detail">
     <span>{{ label }}</span>
-    <h3>{{ value }}</h3>
+    <input type="text" :defaultValue="value">
   </div>
 </template>
 
@@ -20,12 +20,14 @@ defineProps({
 
 <style lang="scss" scoped>
 .dropdown__detail {
+  @apply flex flex-col gap-[6px];
+
   span {
     @apply text-[#2D465B] opacity-60 text-[12px];
   }
 
-  h3 {
-    @apply text-[#2D465B] text-[15px];
+  input {
+    @apply text-[#2D465B] text-[15px] rounded-[5px] pl-[5px];
   }
 }
 </style>
