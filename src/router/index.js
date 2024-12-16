@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import DocumentsForm from '../views/DocumentsForm.vue'
+import Home from '../views/Home.vue'
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import ServicesLayout from "@/layouts/ServicesLayout.vue";
 
@@ -8,10 +8,18 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'documents-form',
-      component: DocumentsForm,
+      name: 'home',
+      component: Home,
       meta: {
         layout: DefaultLayout,
+      },
+    },
+    {
+      path: '/documents-form',
+      name: 'documents-form',
+      component: () => import('../views/DocumentsForm.vue'),
+      meta: {
+        layout: ServicesLayout,
       },
     },
     {

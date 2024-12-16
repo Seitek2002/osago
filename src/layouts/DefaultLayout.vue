@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <Header />
+  <div class="default">
     <main>
       <slot /> <!-- Сюда вставляется контент страниц -->
     </main>
@@ -8,10 +7,11 @@
 </template>
 
 <script setup>
-import Header from "@/components/Header.vue";
 
 </script>
 
-<style>
-
+<style scoped lang="scss">
+.default {
+  @apply bg-gradient-to-b from-[#005CAA]/100 to-[#000C16]/100;
+}
 </style>
