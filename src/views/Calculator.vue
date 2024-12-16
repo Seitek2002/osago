@@ -132,7 +132,6 @@ const formData = reactive({
   driver: 1,
   driverExperience: 1.4,
   diagnosticCard: 1,
-  previousAgreement: 0,
   insuranceDuration: 1,
 })
 
@@ -145,7 +144,6 @@ watch(
       formData.driver || 1,
       formData.driverExperience || 1,
       formData.diagnosticCard || 1,
-      formData.previousAgreement || 1,
       formData.insuranceDuration || 1,
     ];
 
@@ -161,7 +159,7 @@ watch(
 
 <style scoped lang="scss">
 .calculator {
-  @apply pt-14 pb-[100px];
+  @apply pt-14 pb-[120px];
 
   &__content {
     @apply space-y-4;

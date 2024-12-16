@@ -25,15 +25,9 @@ router.afterEach(() => {
 
 <template>
   <component :is="layout">
-    <div class="wrapper">
       <Loader v-if="loading" />
       <RouterView v-else />
-    </div>
   </component>
 </template>
 
-<style lang="scss" scoped>
-.wrapper {
-  @apply py-[24px];
-}
-</style>
+<style lang="scss" scoped></style>

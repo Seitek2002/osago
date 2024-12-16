@@ -7,9 +7,9 @@
           <img src="../assets/images/home-img.png" alt="car-shield" />
         </div>
         <div class="home__btns">
-          <button>ОСАГО</button>
-          <button>Найти полис</button>
-          <button>КАСКО</button>
+          <router-link to="/documents-form" class="button">ОСАГО</router-link>
+          <router-link to="/" class="button">Найти полис</router-link>
+          <router-link to="/" class="button">КАСКО</router-link>
         </div>
         <div class="home__bottom">
           <label>
@@ -36,7 +36,7 @@ import Container from '@/components/Container.vue'
   @apply h-screen text-white;
 
   &__top {
-    @apply flex justify-center mt-[35px];
+    @apply flex justify-center pt-[35px];
 
     img {
       @apply w-[175px];
@@ -46,7 +46,7 @@ import Container from '@/components/Container.vue'
   &__btns {
     @apply mt-[100px];
 
-    button {
+    .button {
       @apply flex justify-center w-full py-[14px] bg-[#005CAA] rounded-[6px] text-[#fff] text-[16px] mb-[16px];
 
       &:disabled {
