@@ -138,7 +138,6 @@ const formData = reactive({
 watch(
   () => formData,
   () => {
-    // НсП = 3%  Потом добавить для расчета
     const basePrice = 1680;
     const coefficients = [
       formData.driver || 1,
@@ -149,7 +148,9 @@ watch(
 
     const totalMultiplier = coefficients.reduce((acc, coef) => acc * coef, 1);
 
-    standartOfOsago.value = Math.ceil(basePrice * totalMultiplier); // Округление стоимости
+    standartOfOsago.value = Math.ceil(basePrice * totalMultiplier);
+
+    standartOfOsago.value = Math.ceil(standartOfOsago.value * 1.03)
   },
   {
     deep: true,
