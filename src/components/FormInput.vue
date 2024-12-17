@@ -43,7 +43,7 @@ defineProps({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .form-group {
   @apply mt-4;
 }

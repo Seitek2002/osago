@@ -5,14 +5,18 @@
       <div class="calculator__content">
         <h2 class="form-title">Калькулятор стоимости ОСАГО</h2>
 
-        <h3>Водители</h3>
-        <Dropdown v-model="formData.driver" :options="driverOptions" placeholder="Любой водитель" />
+        <h3>Количество водителей <span>*</span></h3>
+        <Dropdown
+          v-model="formData.driver"
+          :options="driverOptions"
+          placeholder="Неограниченное кол-во водителей"
+        />
 
-        <h3>Укажите ваш возраст и водительский стаж <span>*</span></h3>
+        <h3>Укажите возраст и стаж самого младшего водителя <span>*</span></h3>
         <Dropdown
           v-model="formData.driverExperience"
           :options="experienceOptions"
-          placeholder="До 25 лет включительно, стаж менее трех лет"
+          placeholder="до 25-ти лет и стажем до 3-х лет"
         />
 
         <h3>Есть ли у Вас диагностическая карта техосмотра? <span>*</span></h3>
@@ -74,40 +78,40 @@ const standartOfOsago = ref(1680)
 
 const driverOptions = [
   {
-    label: 'Любой водитель',
+    label: 'Неограниченное кол-во водителей',
     value: 1,
   },
   {
-    label: 'Конкретные водители',
+    label: 'До 4х водителей',
     value: 2,
   },
 ]
 const experienceOptions = [
   {
-    label: 'До 25 лет включительно, со стажем вождения до 3 лет включительно',
+    label: 'до 25-ти лет и стажем до 3-х лет',
     value: 1.4,
   },
   {
-    label: 'До 25 лет включительно, со стажем вождения свыше 3 лет',
+    label: 'до 25-ти лет и стажем от 4-х лет',
     value: 1.3,
   },
   {
-    label: 'Более 25 лет, со стажем вождения до 3 лет включительно',
+    label: 'от 26-ти лет и стажем до 3-х лет',
     value: 1.2,
   },
   {
-    label: 'Более 25 лет, со стажем вождения свыше 3 лет',
+    label: 'от 26-ти лет и стажем от 4-х лет',
     value: 1,
   },
 ]
 
 const insuranceDurations = [
   {
-    label: 'От 5 до 15 дней',
+    label: 'до 15 дней',
     value: 0.2,
   },
   {
-    label: 'От 16 дней до 1 месяца',
+    label: 'до 1 месяца',
     value: 0.3,
   },
   {
@@ -133,22 +137,23 @@ const formData = reactive({
   driverExperience: 1.4,
   diagnosticCard: 1,
   insuranceDuration: 1,
+  previousAgreement: 1,
 })
 
 watch(
   () => formData,
   () => {
-    const basePrice = 1680;
+    const basePrice = 1680
     const coefficients = [
       formData.driver || 1,
       formData.driverExperience || 1,
       formData.diagnosticCard || 1,
       formData.insuranceDuration || 1,
-    ];
+    ]
 
-    const totalMultiplier = coefficients.reduce((acc, coef) => acc * coef, 1);
+    const totalMultiplier = coefficients.reduce((acc, coef) => acc * coef, 1)
 
-    standartOfOsago.value = Math.ceil(basePrice * totalMultiplier);
+    standartOfOsago.value = Math.ceil(basePrice * totalMultiplier)
 
     standartOfOsago.value = Math.ceil(standartOfOsago.value * 1.03)
   },
@@ -174,10 +179,10 @@ watch(
     }
 
     .radio-group {
-      @apply grid grid-cols-2 space-x-4;
+      @apply grid grid-cols-2 gap-5;
 
       label {
-        @apply flex items-center space-x-2 bg-[#F7F8FA] border border-gray-300 rounded-md shadow-sm p-[12px];
+        @apply flex items-center bg-[#F7F8FA] border border-gray-300 rounded-md shadow-sm p-[12px];
 
         input {
           @apply mr-2;
@@ -186,10 +191,10 @@ watch(
     }
 
     .insurance-duration {
-      @apply grid grid-cols-4 gap-[8px];
+      @apply grid grid-cols-3 gap-[8px];
 
       button {
-        @apply px-4 py-2 border rounded-lg text-[12px];
+        @apply px-4 py-2 border rounded-lg text-[11px];
 
         &.active {
           @apply border-[#005CAA] bg-[#005CAA14];

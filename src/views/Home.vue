@@ -1,34 +1,74 @@
 <template>
   <section class="home">
-    <Header title="БАКАЙ ИНШУРЕНС" />
+    <Header title="ОПЕРАТОР СТРАХОВАНИЯ" />
     <Container>
       <div class="home__content">
         <div class="home__top">
-          <img src="../assets/images/home-img.png" alt="car-shield" />
+          <img src="../assets/images/home-img.png" alt="shield" />
         </div>
+        <p class="text-center">ОСАГО</p>
+        <p class="text-center">Обязательное страхование автогражданской ответственности</p>
         <div class="home__btns">
           <router-link to="/documents-form" class="button">ОСАГО</router-link>
-          <router-link to="/" class="button">Найти полис</router-link>
           <router-link to="/" class="button">КАСКО</router-link>
-        </div>
-        <div class="home__bottom">
-          <label>
-            <input type="checkbox" />
-            Я ознакомлен с <span>Тарифами</span>
-          </label>
-          <label>
-            <input type="checkbox" />
-            Я согласен с <span>Правилами</span>
-          </label>
+          <router-link to="/" class="button">Найти полис</router-link>
         </div>
       </div>
     </Container>
+    <footer class="footer">
+      <Container>
+        <div class="footer__content">
+          <p class="footer__text">
+            Открытое акционерное общество «Государственная страховая организация» (ОАО «ГСО»)
+            Кыргызской Республики
+          </p>
+          <p>Телефон: <a href="tel:+996553545452" class="footer__link">+996 553 545 452</a></p>
+          <p>
+            Электронная почта: <a href="mailto:info@gso.kg" class="footer__link">info@gso.kg</a>
+          </p>
+          <p>Головной офис: г. Бишкек, пр. Ч. Айтматова 1, строение 2, 4 этаж</p>
+          <p>
+            ОАО «ГСО» обладает лицензией № 09, номер бланка № 0017 серии «С» от 5 февраля 2016 года,
+            выданной Службой регулирования и надзора за финансовым рынком при Министерстве экономики
+            и коммерции Кыргызской Республики.
+          </p>
+          <p>
+            Общество с ограниченной ответственностью «Оператор КГ» является авторизованным
+            представителем (агентом) ОАО «ГСО».
+          </p>
+          <!-- Иконки соц. сетей -->
+          <div class="footer__socials">
+            <a
+              href="https://wa.me/996553545452"
+              target="_blank"
+              class="footer__social-link"
+              aria-label="WhatsApp"
+            >
+              <!-- WhatsApp SVG -->
+               <Whatsapp class="w-[35px]" />
+            </a>
+            <a
+              href="https://t.me/yourTelegramUsername"
+              target="_blank"
+              class="footer__social-link"
+              aria-label="Telegram"
+            >
+              <!-- Telegram SVG -->
+               <Telegram class="w-[35px]" />
+            </a>
+          </div>
+          <p class="footer__copyright">© 2024 Авторское право. Все права защищены.</p>
+        </div>
+      </Container>
+    </footer>
   </section>
 </template>
 
 <script setup>
 import Header from '@/components/Header.vue'
 import Container from '@/components/Container.vue'
+import Telegram from '@/assets/icons/telegram.vue';
+import Whatsapp from '@/assets/icons/whatsapp.vue';
 </script>
 
 <style scoped lang="scss">
@@ -39,7 +79,7 @@ import Container from '@/components/Container.vue'
     @apply flex justify-center pt-[35px];
 
     img {
-      @apply w-[175px];
+      @apply w-[105px];
     }
   }
 
@@ -55,29 +95,27 @@ import Container from '@/components/Container.vue'
     }
   }
 
-  &__bottom {
-    @apply flex flex-col gap-[20px];
+  .footer {
+    @apply bg-[#2C2C2C] text-[#fff] py-8 text-sm leading-relaxed;
 
-    label {
-        display: flex;
-        align-items: center;
-        gap: 14px
+    &__content {
+      @apply space-y-2 text-center;
     }
 
-    span {
-        @apply text-[#3D9CEC] underline;
+    &__link {
+      @apply text-[#00A6FF] hover:underline;
     }
 
-    input {
-        appearance: none;
-        border: 2px solid #005CAA;
-        width: 20px;
-        height: 20px;
-        border-radius: 3px;
+    &__socials {
+      @apply flex justify-center space-x-4 mt-4;
 
-        &:checked {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23005CAA' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
-        }
+      &-link {
+        @apply inline-block transition-transform transform hover:scale-110;
+      }
+    }
+
+    &__copyright {
+      @apply mt-4 text-xs text-[#AFAFAF];
     }
   }
 }

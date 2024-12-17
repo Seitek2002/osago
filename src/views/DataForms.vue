@@ -4,21 +4,17 @@
       <div class="form-section__content">
         <h2 class="form-title">Проверка данных</h2>
 
-        <h3>
-          Цель использования ТС <span>*</span>
-        </h3>
+        <h3>Цель использования ТС <span>*</span></h3>
         <Dropdown
           v-model="formData.purpose"
           :options="purposeOptions"
           placeholder="Для личных целей"
         />
 
-        <FormInput
-          v-model="formData.address"
-          label="Адрес фактического проживания"
-          placeholder="Введите адрес"
-          id="address"
-        />
+        <div class="form-group">
+          <label class="form-label" for="address"> Адрес фактического проживания </label>
+          <textarea class="form-input" :value="formData.address" id="address"></textarea>
+        </div>
 
         <FormInput
           v-model="formData.phone"
@@ -27,27 +23,7 @@
           id="phoneNumber"
         />
 
-        <Dropdown
-          v-model="formData.passport"
-          placeholder="Данные паспорта"
-        >
-          <template #content>
-            <div>
-              <DropdownDetail label="ФИО" :value="passportDetails.name" />
-              <DropdownDetail label="ИНН" :value="passportDetails.inn" />
-              <DropdownDetail label="Серия и номер паспорта" :value="passportDetails.number" />
-              <div class="dropdown__bottom">
-                <DropdownDetail label="Орган выдачи" :value="passportDetails.issuer" />
-                <DropdownDetail label="Дата выдачи" :value="passportDetails.issueDate" />
-              </div>
-            </div>
-          </template>
-        </Dropdown>
-
-        <Dropdown
-          v-model="formData.idData"
-          placeholder="Данные с ID паспорта"
-        >
+        <Dropdown v-model="formData.passport" placeholder="Данные с ID паспорта">
           <template #content>
             <div>
               <DropdownDetail label="ФИО" :value="idDetails.name" />
@@ -56,6 +32,34 @@
               <div class="dropdown__bottom">
                 <DropdownDetail label="Орган выдачи" :value="idDetails.issuer" />
                 <DropdownDetail label="Дата выдачи" :value="idDetails.issueDate" />
+              </div>
+            </div>
+          </template>
+        </Dropdown>
+
+        <Dropdown v-model="formData.idData" placeholder="Данные водительского удостоверения">
+          <template #content>
+            <div>
+              <DropdownDetail label="ФИО" :value="driverLicenseDetails.name" />
+              <DropdownDetail label="ИНН" :value="driverLicenseDetails.inn" />
+              <DropdownDetail label="Серия и номер" :value="driverLicenseDetails.number" />
+              <div class="dropdown__bottom">
+                <DropdownDetail label="Орган выдачи" :value="driverLicenseDetails.issuer" />
+                <DropdownDetail label="Дата выдачи" :value="driverLicenseDetails.issueDate" />
+              </div>
+            </div>
+          </template>
+        </Dropdown>
+
+        <Dropdown v-model="formData.idData" placeholder="Данные свидетельства о регистрации ТС">
+          <template #content>
+            <div>
+              <DropdownDetail label="ФИО" :value="vehicleRegistrationDetails.name" />
+              <DropdownDetail label="ИНН" :value="vehicleRegistrationDetails.inn" />
+              <DropdownDetail label="Серия и номер" :value="vehicleRegistrationDetails.number" />
+              <div class="dropdown__bottom">
+                <DropdownDetail label="Орган выдачи" :value="vehicleRegistrationDetails.issuer" />
+                <DropdownDetail label="Дата выдачи" :value="vehicleRegistrationDetails.issueDate" />
               </div>
             </div>
           </template>
@@ -86,6 +90,22 @@ const purposeOptions = [
   'Прочее',
 ]
 
+const driverLicenseDetails = {
+  name: 'Тургунов Бекжан Сапарович',
+  inn: '68245884935',
+  number: 'DL 2456789',
+  issuer: 'ГАИ МВД',
+  issueDate: '25.06.2021',
+}
+
+const vehicleRegistrationDetails = {
+  name: 'Тургунов Бекжан Сапарович',
+  inn: '68245884935',
+  number: 'VR 4561234',
+  issuer: 'МРЭО №7',
+  issueDate: '01.03.2022',
+}
+
 const formData = reactive({
   purpose: null,
   address: 'Нарынская обл., г. Нарын, ул. Айтматова, д. 25, кв. 6',
@@ -95,7 +115,7 @@ const formData = reactive({
 })
 
 const passportDetails = {
-  name: 'Асанов Усон Жаныбаевич',
+  name: 'Тургунов Бекжан Сапарович',
   inn: '68245884935',
   number: 'AN 1234567',
   issuer: 'MKK-50',
@@ -107,7 +127,7 @@ const idDetails = { ...passportDetails }
 
 <style scoped lang="scss">
 .form-section {
-  @apply pt-6 pb-[100px];
+  @apply pt-14 pb-[100px];
 
   &__content {
     @apply space-y-4;
