@@ -23,7 +23,7 @@ const handleClick = () => {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .footer {
     @apply fixed bottom-0 left-0 w-full;
 

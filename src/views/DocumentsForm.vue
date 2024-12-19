@@ -47,7 +47,7 @@ const handleFileChange = (event) => {
 <template>
   <section class="passport">
     <Container>
-      <h2 class="passport__title">Загрузка документов</h2>
+      <h2 class="text-title">Загрузка документов</h2>
 
       <DocumentUploader
         v-for="doc in documents"
@@ -72,7 +72,7 @@ const handleFileChange = (event) => {
   </section>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .passport {
   @apply py-14 pb-[100px];
 

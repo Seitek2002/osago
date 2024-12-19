@@ -7,7 +7,7 @@ defineEmits(['file-change'])
 
 <template>
   <div>
-    <h2>{{ title }}</h2>
+    <h2 class="text-suptitle">{{ title }}</h2>
     <div class="grid grid-cols-2 gap-[12px] mb-[30px]">
       <label v-for="({ field, file, url }, i) in fields" :key="field" :for="field">
         <div class="content">
@@ -27,10 +27,6 @@ defineEmits(['file-change'])
 </template>
 
 <style lang="scss" scoped>
-h2 {
-  @apply font-medium text-[14px] mb-[6px];
-}
-
 span {
   @apply mt-[10px] text-[12px];
 }

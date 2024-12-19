@@ -2,7 +2,7 @@
   <header class="header" :class="{ service: type }">
     <Container>
       <div class="header__content">
-        <headerIcon @click="handleClick" />
+        <headerIcon @click="handleClick" v-if="title !== 'ОПЕРАТОР СТРАХОВАНИЯ'" />
         <span>{{ title || 'ОСАГО' }}</span>
       </div>
     </Container>

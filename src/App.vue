@@ -1,5 +1,5 @@
 <script setup>
-import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { RouterView, useRouter } from 'vue-router'
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 
@@ -30,4 +30,11 @@ router.afterEach(() => {
   </component>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+.text-title {
+  @apply text-[20px] font-semibold mb-4;
+}
+.text-suptitle {
+  @apply text-[16px] font-semibold;
+}
+</style>

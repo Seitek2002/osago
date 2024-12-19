@@ -6,10 +6,10 @@
         <div class="home__top">
           <img src="../assets/images/home-img.png" alt="shield" />
         </div>
-        <p class="text-center">ОСАГО</p>
-        <p class="text-center">Обязательное страхование автогражданской ответственности</p>
+        <!-- <p class="text-center">ОСАГО</p>
+        <p class="text-center"></p> -->
         <div class="home__btns">
-          <router-link to="/documents-form" class="button">ОСАГО</router-link>
+          <router-link to="/documents-form" class="button"><span class="text-[20px]">ОСАГО</span> <br> <span class="text-[14px]">Обязательное страхование автогражданской ответственности</span></router-link>
           <router-link to="/" class="button">КАСКО</router-link>
           <router-link to="/" class="button">Найти полис</router-link>
         </div>
@@ -36,7 +36,6 @@
             Общество с ограниченной ответственностью «Оператор КГ» является авторизованным
             представителем (агентом) ОАО «ГСО».
           </p>
-          <!-- Иконки соц. сетей -->
           <div class="footer__socials">
             <a
               href="https://wa.me/996553545452"
@@ -44,8 +43,7 @@
               class="footer__social-link"
               aria-label="WhatsApp"
             >
-              <!-- WhatsApp SVG -->
-               <Whatsapp class="w-[35px]" />
+              <Whatsapp class="w-[35px]" />
             </a>
             <a
               href="https://t.me/yourTelegramUsername"
@@ -53,8 +51,7 @@
               class="footer__social-link"
               aria-label="Telegram"
             >
-              <!-- Telegram SVG -->
-               <Telegram class="w-[35px]" />
+              <Telegram class="w-[35px]" />
             </a>
           </div>
           <p class="footer__copyright">© 2024 Авторское право. Все права защищены.</p>
@@ -67,8 +64,8 @@
 <script setup>
 import Header from '@/components/Header.vue'
 import Container from '@/components/Container.vue'
-import Telegram from '@/assets/icons/telegram.vue';
-import Whatsapp from '@/assets/icons/whatsapp.vue';
+import Telegram from '@/assets/icons/telegram.vue'
+import Whatsapp from '@/assets/icons/whatsapp.vue'
 </script>
 
 <style scoped lang="scss">
@@ -87,7 +84,7 @@ import Whatsapp from '@/assets/icons/whatsapp.vue';
     @apply mt-[100px];
 
     .button {
-      @apply flex justify-center w-full py-[14px] bg-[#005CAA] rounded-[6px] text-[#fff] text-[16px] mb-[16px];
+      @apply block py-[14px] bg-[#005CAA] rounded-[6px] text-[#fff] text-[16px] mb-[16px] text-center;
 
       &:disabled {
         @apply opacity-50 cursor-not-allowed;

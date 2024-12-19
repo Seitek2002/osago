@@ -2,9 +2,20 @@
   <section class="form-section">
     <Container>
       <div class="form-section__content">
-        <h2 class="form-title">Проверка данных</h2>
+        <h2 class="text-title">Проверка данных</h2>
 
-        <h3>Цель использования ТС <span>*</span></h3>
+        <div class="form-group">
+          <label class="text-suptitle"> Номер телефона </label>
+          <input
+            type="text"
+            placeholder="+996 (502) 235-509"
+            :value="formData.phone"
+            class="form-input mt-[12px]"
+            v-mask="'+996 (###) ###-###'"
+          />
+        </div>
+
+        <h3 class="text-suptitle">Цель использования ТС <span>*</span></h3>
         <Dropdown
           v-model="formData.purpose"
           :options="purposeOptions"
@@ -12,16 +23,17 @@
         />
 
         <div class="form-group">
-          <label class="form-label" for="address"> Адрес фактического проживания </label>
+          <label class="text-suptitle mb-[12px] block" for="address"> Адрес фактического проживания </label>
           <textarea class="form-input" :value="formData.address" id="address"></textarea>
         </div>
 
-        <FormInput
+        <!-- <FormInput
           v-model="formData.phone"
           label="Номер телефона"
-          placeholder="Введите номер телефона"
+          placeholder="+996-555-123-123"
           id="phoneNumber"
-        />
+          v-mask="'+996 (###) ###-##-##'"
+        /> -->
 
         <Dropdown v-model="formData.passport" placeholder="Данные с ID паспорта">
           <template #content>
@@ -74,7 +86,6 @@
 import Container from '@/components/Container.vue'
 import Footer from '@/components/Footer.vue'
 import Dropdown from '@/components/Dropdown.vue'
-import FormInput from '@/components/FormInput.vue'
 import DropdownDetail from '@/components/DropdownDetail.vue'
 import { reactive } from 'vue'
 
@@ -109,7 +120,7 @@ const vehicleRegistrationDetails = {
 const formData = reactive({
   purpose: null,
   address: 'Нарынская обл., г. Нарын, ул. Айтматова, д. 25, кв. 6',
-  phone: '+996 555 123 123',
+  phone: '',
   passport: null,
   idData: null,
 })
@@ -133,8 +144,6 @@ const idDetails = { ...passportDetails }
     @apply space-y-4;
 
     h3 {
-      @apply text-[#040415] font-medium;
-
       span {
         @apply text-[#FC3400];
       }
@@ -144,5 +153,21 @@ const idDetails = { ...passportDetails }
 
 .form-title {
   @apply text-[#000B16] text-[20px] font-semibold mb-4;
+}
+
+.form-group {
+  @apply mt-4;
+}
+
+.form-label {
+  @apply block text-[16px] font-medium text-gray-700 mb-2;
+}
+
+.required {
+  @apply text-red-500;
+}
+
+.form-input {
+  @apply w-full bg-[#F7F8FA] border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500;
 }
 </style>
