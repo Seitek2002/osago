@@ -1,5 +1,8 @@
 <script setup>
 import uploadIcon from '@/assets/icons/upload.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 defineProps(['title', 'fields'])
 defineEmits(['file-change'])
@@ -17,8 +20,8 @@ defineEmits(['file-change'])
           </template>
         </div>
         <div class="text-center">
-          <span v-if="i % 2 === 0">Лицевая сторона</span>
-          <span v-else>Обратная сторона</span>
+          <span v-if="i % 2 === 0">{{ t('documents_form.frontSide') }}</span>
+          <span v-else>{{ t('documents_form.backSide') }}</span>
         </div>
         <input type="file" :data-name="field" :id="field" @change="$emit('file-change', $event)" />
       </label>

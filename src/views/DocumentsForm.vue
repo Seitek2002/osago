@@ -5,20 +5,22 @@ import { useDocumentStore } from '@/stores/useDocumentStore'
 import Container from '@/components/Container.vue'
 import DocumentUploader from '@/components/DocumentUploader.vue'
 import Footer from '@/components/Footer.vue'
+import { useI18n } from 'vue-i18n'
 
 const documentStore = useDocumentStore()
 const isValid = ref(true)
+const { t } = useI18n()
 
 const documents = [
-  { id: 'passport', title: 'ID паспорт', fields: ['passport-front-side', 'passport-back-side'] },
+  { id: 'passport', title: t('documents_form.idPassport'), fields: ['passport-front-side', 'passport-back-side'] },
   {
     id: 'license',
-    title: 'Водительское удостоверение',
+    title: t('documents_form.license'),
     fields: ['license-front-side', 'license-back-side'],
   },
   {
     id: 'certificate',
-    title: 'Свидетельство о регистрации ТС',
+    title: t('documents_form.certificate'),
     fields: ['certificate-front-side', 'certificate-back-side'],
   },
 ]
@@ -36,10 +38,8 @@ const handleFileChange = (event) => {
     ? { file: selectedFile, url: URL.createObjectURL(selectedFile) }
     : { file: null, url: null }
 
-  // Обновляем данные в store
   documentStore.updateDocument(fieldName, data)
 
-  // Проводим валидацию
   documentStore.areMandatoryDocumentsUploaded ? (isValid.value = false) : (isValid.value = true)
 }
 </script>
@@ -47,7 +47,7 @@ const handleFileChange = (event) => {
 <template>
   <section class="passport">
     <Container>
-      <h2 class="text-title">Загрузка документов</h2>
+      <h2 class="text-title">{{ t('documents_form.title') }}</h2>
 
       <DocumentUploader
         v-for="doc in documents"
@@ -60,7 +60,7 @@ const handleFileChange = (event) => {
       <div class="passport__bottom">
         <label>
           <input type="checkbox" checked />
-          Я соглашаюсь на сбор и обработку моих персональных данных.
+          {{t('documents_form.personalData')}}
         </label>
         <!-- <label>
           <input type="checkbox" checked />

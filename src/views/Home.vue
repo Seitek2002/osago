@@ -1,6 +1,6 @@
 <template>
   <section class="home">
-    <Header title="ОПЕРАТОР СТРАХОВАНИЯ" />
+    <Header :title="t('home.title')" />
     <Container>
       <div class="home__content">
         <div class="home__top">
@@ -9,9 +9,12 @@
         <!-- <p class="text-center">ОСАГО</p>
         <p class="text-center"></p> -->
         <div class="home__btns">
-          <router-link to="/documents-form" class="button"><span class="text-[20px]">ОСАГО</span> <br> <span class="text-[14px]">Обязательное страхование автогражданской ответственности</span></router-link>
-          <router-link to="/" class="button">КАСКО</router-link>
-          <router-link to="/" class="button">Найти полис</router-link>
+          <router-link to="/documents-form" class="button"
+            ><span class="text-[20px]">{{ t('title') }}</span> <br />
+            <span class="text-[14px]">{{ t('home.OSAGO') }}</span></router-link
+          >
+          <router-link to="/" class="button">{{ t('home.KASKO') }}</router-link>
+          <router-link to="/" class="button">{{ t('home.findPolicy') }}</router-link>
         </div>
       </div>
     </Container>
@@ -19,22 +22,21 @@
       <Container>
         <div class="footer__content">
           <p class="footer__text">
-            Открытое акционерное общество «Государственная страховая организация» (ОАО «ГСО»)
-            Кыргызской Республики
-          </p>
-          <p>Телефон: <a href="tel:+996553545452" class="footer__link">+996 553 545 452</a></p>
-          <p>
-            Электронная почта: <a href="mailto:info@gso.kg" class="footer__link">info@gso.kg</a>
-          </p>
-          <p>Головной офис: г. Бишкек, пр. Ч. Айтматова 1, строение 2, 4 этаж</p>
-          <p>
-            ОАО «ГСО» обладает лицензией № 09, номер бланка № 0017 серии «С» от 5 февраля 2016 года,
-            выданной Службой регулирования и надзора за финансовым рынком при Министерстве экономики
-            и коммерции Кыргызской Республики.
+            {{ t('footer.GSO') }}
           </p>
           <p>
-            Общество с ограниченной ответственностью «Оператор КГ» является авторизованным
-            представителем (агентом) ОАО «ГСО».
+            {{ t('footer.phoneNumber') }}:
+            <a href="tel:+996553545452" class="footer__link">+996 553 545 452</a>
+          </p>
+          <p>
+            {{ t('footer.email') }}: <a href="mailto:info@gso.kg" class="footer__link">info@gso.kg</a>
+          </p>
+          <p>{{ t('footer.address') }}</p>
+          <p>
+            {{ t('footer.OAO') }}
+          </p>
+          <p>
+            {{ t('footer.naming') }}
           </p>
           <div class="footer__socials">
             <a
@@ -54,7 +56,7 @@
               <Telegram class="w-[35px]" />
             </a>
           </div>
-          <p class="footer__copyright">© 2024 Авторское право. Все права защищены.</p>
+          <p class="footer__copyright">{{ t('footer.roots') }}</p>
         </div>
       </Container>
     </footer>
@@ -66,6 +68,9 @@ import Header from '@/components/Header.vue'
 import Container from '@/components/Container.vue'
 import Telegram from '@/assets/icons/telegram.vue'
 import Whatsapp from '@/assets/icons/whatsapp.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 </script>
 
 <style scoped lang="scss">

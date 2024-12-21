@@ -1,0 +1,27 @@
+{
+  "title": "OSAGO",
+  "documents_form": {
+    "title": "Document Upload",
+    "idPassport": "ID Passport",
+    "license": "Driver's License",
+    "certificate": "Vehicle Registration Certificate",
+    "frontSide": "Front Side",
+    "backSide": "Back Side",
+    "personalData": "I agree to the collection and processing of my personal data."
+  },
+  "home": {
+    "title": "INSURANCE OPERATOR",
+    "OSAGO": "Mandatory Motor Third-Party Liability Insurance",
+    "KASKO": "CASCO",
+    "findPolicy": "Find Policy"
+  },
+  "footer": {
+    "phoneNumber": "Phone Number",
+    "address": "Head Office: Bishkek, Ch. Aitmatov Ave. 1, Building 2, 4th Floor",
+    "naming": "The Limited Liability Company “Operator KG” is an authorized representative (agent) of OJSC “GSO”.",
+    "OAO": "OJSC “GSO” holds License No. 09, Form No. 0017, Series “C” issued on February 5, 2016, by the Financial Market Regulation and Supervision Service under the Ministry of Economy and Commerce of the Kyrgyz Republic.",
+    "email": "Email",
+    "roots": "© 2024 Copyright. All rights reserved.",
+    "GSO": "Open Joint Stock Company “State Insurance Organization” (OJSC “GSO”) of the Kyrgyz Republic"
+  }
+}

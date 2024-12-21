@@ -2,8 +2,13 @@
   <header class="header" :class="{ service: type }">
     <Container>
       <div class="header__content">
-        <headerIcon @click="handleClick" v-if="title !== 'ОПЕРАТОР СТРАХОВАНИЯ'" />
+        <headerIcon @click="handleClick" v-if="title !== t('home.title')" />
         <span>{{ title || 'ОСАГО' }}</span>
+        <select v-model="lang">
+          <option value="ru">RU</option>
+          <option value="kg">KG</option>
+          <option value="en">ENG</option>
+        </select>
       </div>
     </Container>
   </header>
@@ -13,6 +18,9 @@
 import { useRouter } from 'vue-router'
 import Container from './Container.vue'
 import headerIcon from '@/assets/icons/headerIcon.vue'
+import { ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+const { locale, t } = useI18n();
 
 defineProps(['type', 'title'])
 
@@ -21,6 +29,12 @@ const router = useRouter()
 const handleClick = () => {
   router.back()
 }
+
+const lang = ref(locale.value);
+
+watch(lang, (newLang) => {
+  locale.value = newLang;
+});
 </script>
 
 <style lang="scss">
@@ -41,6 +55,10 @@ const handleClick = () => {
     span {
       @apply text-[16px];
     }
+  }
+
+  select {
+    @apply text-[#000] absolute right-0 top-0;
   }
 }
 
