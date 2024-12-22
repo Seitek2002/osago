@@ -1,11 +1,11 @@
 <template>
   <section class="form-section">
     <Container>
-      <div class="form-section__content">
-        <h2 class="text-title">Проверка данных</h2>
+      <div class="form-section__content"> 
+        <h2 class="text-title">{{ t('dataForms.title') }}</h2>
 
         <div class="form-group">
-          <label class="text-suptitle"> Номер телефона </label>
+          <label class="text-suptitle">{{ t('dataForms.numberPhone') }}</label>
           <input
             type="text"
             placeholder="+996 (502) 235-509"
@@ -15,15 +15,15 @@
           />
         </div>
 
-        <h3 class="text-suptitle">Цель использования ТС <span>*</span></h3>
+        <h3 class="text-suptitle">{{ t('dataForms.carUse') }} <span>*</span></h3>
         <Dropdown
           v-model="formData.purpose"
           :options="purposeOptions"
-          placeholder="Для личных целей"
+          :placeholder="t('dataForms.carUsePlac')"
         />
 
         <div class="form-group">
-          <label class="text-suptitle mb-[12px] block" for="address"> Адрес фактического проживания </label>
+          <label class="text-suptitle mb-[12px] block" for="address"> {{ t('dataForms.addressHome') }} </label>
           <textarea class="form-input" :value="formData.address" id="address"></textarea>
         </div>
 
@@ -35,43 +35,43 @@
           v-mask="'+996 (###) ###-##-##'"
         /> -->
 
-        <Dropdown v-model="formData.passport" placeholder="Данные с ID паспорта">
+        <Dropdown v-model="formData.passport" :placeholder="t('dataForms.dataID')">
           <template #content>
             <div>
-              <DropdownDetail label="ФИО" :value="idDetails.name" />
-              <DropdownDetail label="ИНН" :value="idDetails.inn" />
-              <DropdownDetail label="Серия и номер паспорта" :value="idDetails.number" />
+              <DropdownDetail :label="t('dataForms.fullName')" :value="idDetails.name" />
+              <DropdownDetail :label="t('dataForms.inn')" :value="idDetails.inn" />
+              <DropdownDetail :label="t('dataForms.partID')" :value="idDetails.number" />
               <div class="dropdown__bottom">
-                <DropdownDetail label="Орган выдачи" :value="idDetails.issuer" />
-                <DropdownDetail label="Дата выдачи" :value="idDetails.issueDate" />
+                <DropdownDetail :label="t('dataForms.organGet')" :value="idDetails.issuer" />
+                <DropdownDetail :label="t('dataForms.dateGet')" :value="idDetails.issueDate" />
               </div>
             </div>
           </template>
         </Dropdown>
 
-        <Dropdown v-model="formData.idData" placeholder="Данные водительского удостоверения">
+        <Dropdown v-model="formData.idData" :placeholder="t('dataForms.dataDriverID')">
           <template #content>
             <div>
-              <DropdownDetail label="ФИО" :value="driverLicenseDetails.name" />
-              <DropdownDetail label="ИНН" :value="driverLicenseDetails.inn" />
-              <DropdownDetail label="Серия и номер" :value="driverLicenseDetails.number" />
+              <DropdownDetail :label="t('dataForms.fullName')" :value="driverLicenseDetails.name" />
+              <DropdownDetail :label="t('dataForms.inn')" :value="driverLicenseDetails.inn" />
+              <DropdownDetail :label="t('dataForms.partNumber')" :value="driverLicenseDetails.number" />
               <div class="dropdown__bottom">
-                <DropdownDetail label="Орган выдачи" :value="driverLicenseDetails.issuer" />
-                <DropdownDetail label="Дата выдачи" :value="driverLicenseDetails.issueDate" />
+                <DropdownDetail :label="t('dataForms.organGet')" :value="driverLicenseDetails.issuer" />
+                <DropdownDetail :label="t('dataForms.dateGet')" :value="driverLicenseDetails.issueDate" />
               </div>
             </div>
           </template>
         </Dropdown>
 
-        <Dropdown v-model="formData.idData" placeholder="Данные свидетельства о регистрации ТС">
+        <Dropdown v-model="formData.idData" :placeholder="t('dataForms.dataRegisterCar')">
           <template #content>
             <div>
-              <DropdownDetail label="ФИО" :value="vehicleRegistrationDetails.name" />
-              <DropdownDetail label="ИНН" :value="vehicleRegistrationDetails.inn" />
-              <DropdownDetail label="Серия и номер" :value="vehicleRegistrationDetails.number" />
+              <DropdownDetail :label="t('dataForms.fullName')" :value="vehicleRegistrationDetails.name" />
+              <DropdownDetail :label="t('dataForms.inn')" :value="vehicleRegistrationDetails.inn" />
+              <DropdownDetail :label="t('dataForms.partNumber')" :value="vehicleRegistrationDetails.number" />
               <div class="dropdown__bottom">
-                <DropdownDetail label="Орган выдачи" :value="vehicleRegistrationDetails.issuer" />
-                <DropdownDetail label="Дата выдачи" :value="vehicleRegistrationDetails.issueDate" />
+                <DropdownDetail :label="t('dataForms.organGet')" :value="vehicleRegistrationDetails.issuer" />
+                <DropdownDetail :label="t('dataForms.dateGet')" :value="vehicleRegistrationDetails.issueDate" />
               </div>
             </div>
           </template>
@@ -87,9 +87,14 @@ import Container from '@/components/Container.vue'
 import Footer from '@/components/Footer.vue'
 import Dropdown from '@/components/Dropdown.vue'
 import DropdownDetail from '@/components/DropdownDetail.vue'
-import { reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { locale, t } = useI18n()
 
-const purposeOptions = [
+
+
+
+const purposeOptionsRu = [
   'Личная',
   'Учебная езда',
   'Такси',
@@ -100,6 +105,43 @@ const purposeOptions = [
   'Экстренные службы',
   'Прочее',
 ]
+
+const purposeOptionsKg = [
+  'Жеке',
+  'Окутуу үчүн айдоо',
+  'Такси',
+  'Кооптуу жүктөрдү ташуу',
+  'Прокат/кыска мөөнөттүү ижара',
+  'Туруктуу жүргүнчүлөрдү ташуу',
+  'Жол жана атайын каражаттар',
+  'Куткаруу кызматтары',
+  'Башка',
+]
+
+const purposeOptionsEn = [
+  'Personal',
+  'Driving training',
+  'Taxi',
+  'Transportation of dangerous goods',
+  'Rental/short-term lease',
+  'Regular passenger transportation',
+  'Road and special vehicles',
+  'Emergency services',
+  'Other',
+]
+
+const purposeOptions = computed(() => {
+  switch (locale.value) {
+    case 'ru':
+      return purposeOptionsRu
+    case 'kg':
+      return purposeOptionsKg
+    case 'en':
+      return purposeOptionsEn
+    default:
+      return purposeOptionsRu 
+  }
+})
 
 const driverLicenseDetails = {
   name: 'Тургунов Бекжан Сапарович',

@@ -18,9 +18,9 @@
 import { useRouter } from 'vue-router'
 import Container from './Container.vue'
 import headerIcon from '@/assets/icons/headerIcon.vue'
-import { ref, watch } from 'vue';
-import { useI18n } from 'vue-i18n';
-const { locale, t } = useI18n();
+import { ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { locale, t } = useI18n()
 
 defineProps(['type', 'title'])
 
@@ -30,11 +30,11 @@ const handleClick = () => {
   router.back()
 }
 
-const lang = ref(locale.value);
+const lang = ref(locale.value)
 
 watch(lang, (newLang) => {
-  locale.value = newLang;
-});
+  locale.value = newLang
+})
 </script>
 
 <style lang="scss">

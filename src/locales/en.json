@@ -1,5 +1,7 @@
 {
   "title": "OSAGO",
+  "btn":"Next",
+  "pay": "Pay",
   "documents_form": {
     "title": "Document Upload",
     "idPassport": "ID Passport",
@@ -14,6 +16,35 @@
     "OSAGO": "Mandatory Motor Third-Party Liability Insurance",
     "KASKO": "CASCO",
     "findPolicy": "Find Policy"
+  },
+  "dataForms": {
+    "title": "Data Verification",
+    "numberPhone": "Phone Number",
+    "carUse": "Purpose of Vehicle Use *",
+    "carUsePlac": "For personal purposes",
+    "addressHome": "Actual Residence Address",
+    "dataID": "ID Passport Data",
+    "dataDriverID": "Driver's License Data",
+    "dataRegisterCar": "Vehicle Registration Certificate Data",
+    "fullName": "Full Name",
+    "inn": "INN",
+    "partID": "Passport Series and Number",
+    "partNumber": "Series and Number",
+    "organGet": "Issuing Authority",
+    "dateGet": "Date of Issue"
+  },
+  "calculator": {
+    "title": "Mandatory Vehicle Insurance Calculator",
+    "quantityDrivers": "Number of Drivers",
+    "experienceAge": "Enter the age and experience of the youngest driver",
+    "diagnostic": "Do you have a vehicle diagnostic inspection card?",
+    "yeah": "Yes",
+    "nauh": "No",
+    "contract": "Have you previously signed a mandatory vehicle insurance contract?",
+    "insuranceAge": "Enter the insurance period",
+    "price": "Insurance policy cost:",
+    "secPrice": "The price includes a 3% Nsp",
+    "som": "som"
   },
   "footer": {
     "phoneNumber": "Phone Number",

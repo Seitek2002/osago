@@ -1,18 +1,22 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useDocumentStore } from '@/stores/useDocumentStore'
+import { useI18n } from 'vue-i18n'
 
 import Container from '@/components/Container.vue'
 import DocumentUploader from '@/components/DocumentUploader.vue'
 import Footer from '@/components/Footer.vue'
-import { useI18n } from 'vue-i18n'
 
 const documentStore = useDocumentStore()
 const isValid = ref(true)
-const { t } = useI18n()
+const { locale, t } = useI18n()
 
-const documents = [
-  { id: 'passport', title: t('documents_form.idPassport'), fields: ['passport-front-side', 'passport-back-side'] },
+const documents = computed(() => [
+  {
+    id: 'passport',
+    title: t('documents_form.idPassport'),
+    fields: ['passport-front-side', 'passport-back-side'],
+  },
   {
     id: 'license',
     title: t('documents_form.license'),
@@ -23,7 +27,7 @@ const documents = [
     title: t('documents_form.certificate'),
     fields: ['certificate-front-side', 'certificate-back-side'],
   },
-]
+])
 
 const handleFileChange = (event) => {
   const fieldName = event.target.dataset.name
@@ -37,7 +41,7 @@ const handleFileChange = (event) => {
   const data = selectedFile
     ? { file: selectedFile, url: URL.createObjectURL(selectedFile) }
     : { file: null, url: null }
-
+  
   documentStore.updateDocument(fieldName, data)
 
   documentStore.areMandatoryDocumentsUploaded ? (isValid.value = false) : (isValid.value = true)
@@ -62,15 +66,12 @@ const handleFileChange = (event) => {
           <input type="checkbox" checked />
           {{t('documents_form.personalData')}}
         </label>
-        <!-- <label>
-          <input type="checkbox" checked />
-          Я согласен с <span>Правилами</span>
-        </label> -->
       </div>
       <Footer :isValid="false" navigateTo="/data-forms" />
     </Container>
   </section>
 </template>
+
 
 <style lang="scss" scoped>
 .passport {

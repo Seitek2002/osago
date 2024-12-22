@@ -3,7 +3,7 @@
         <Container>
             <div class="footer__content">
                 <button @click="handleClick" :disabled="isValid">
-                    {{title || 'Продолжить'}}
+                    {{title || t('btn') }}
                 </button>
             </div>
         </Container>
@@ -14,6 +14,8 @@
 import Container from "./Container.vue";
 import { useButtonState } from "@/composables/useButtonState";
 import { useRouter } from "vue-router";
+import { useI18n } from 'vue-i18n'
+const { locale, t } = useI18n()
 const props = defineProps(['isValid', 'navigateTo', 'title'])
 
 const router = useRouter();

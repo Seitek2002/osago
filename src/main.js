@@ -10,15 +10,17 @@ import router from './router'
 
 import en from './locales/en.json';
 import ru from './locales/ru.json';
+import kg from './locales/kg.json';
 
 const app = createApp(App)
 
-const messages = { en, ru };
+const messages = { en, ru, kg };
 
 const i18n = createI18n({
     legacy: false,
     locale: 'ru',
     fallbackLocale: 'en',
+    fallbackLocale: 'kg',
     messages,
 });
 
