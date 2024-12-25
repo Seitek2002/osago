@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown__detail">
-    <span>{{ label }}</span>
-    <input type="text" :defaultValue="value">
+    <span class="litle-title">{{ label }}</span>
+    <input class="litle-input" type="text" :defaultValue="value">
   </div>
 </template>
 
@@ -18,16 +18,4 @@ defineProps({
 })
 </script>
 
-<style lang="scss" scoped>
-.dropdown__detail {
-  @apply flex flex-col gap-[6px];
-
-  span {
-    @apply text-[#2D465B] opacity-60 text-[12px];
-  }
-
-  input {
-    @apply text-[#2D465B] text-[15px] rounded-[5px] pl-[5px];
-  }
-}
-</style>
+<style lang="scss" scoped></style>

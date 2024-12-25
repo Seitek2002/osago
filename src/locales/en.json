@@ -20,7 +20,7 @@
   "dataForms": {
     "title": "Data Verification",
     "numberPhone": "Phone Number",
-    "carUse": "Purpose of Vehicle Use *",
+    "carUse": "Purpose of Vehicle Use ",
     "carUsePlac": "For personal purposes",
     "addressHome": "Actual Residence Address",
     "dataID": "ID Passport Data",
