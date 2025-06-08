@@ -9,7 +9,7 @@ import Footer from '@/components/Footer.vue'
 
 const documentStore = useDocumentStore()
 const isValid = ref(true)
-const { locale, t } = useI18n()
+const { t } = useI18n()
 
 const documents = computed(() => [
   {
@@ -41,7 +41,7 @@ const handleFileChange = (event) => {
   const data = selectedFile
     ? { file: selectedFile, url: URL.createObjectURL(selectedFile) }
     : { file: null, url: null }
-  
+
   documentStore.updateDocument(fieldName, data)
 
   documentStore.areMandatoryDocumentsUploaded ? (isValid.value = false) : (isValid.value = true)
