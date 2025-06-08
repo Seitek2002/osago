@@ -80,7 +80,7 @@ const standartOfOsago = ref(1680)
 const driverOptionsRu = [
   {
     label: 'Неограниченное кол-во водителей',
-    value: 1,
+    value: 1.6,
   },
   {
     label: 'До 4х водителей',
@@ -90,7 +90,7 @@ const driverOptionsRu = [
 const driverOptionsEn = [
   {
     label: "Unlimited number of drivers",
-    value: 1
+    value: 1.6
   },
   {
     label: "Up to 4 drivers",
@@ -100,7 +100,7 @@ const driverOptionsEn = [
 const driverOptionsKg = [
   {
     label: "Чектелбеген айдоочулардын саны",
-    value: 1
+    value: 1.6
   },
   {
     label: "Төрт айдоочуга чейин",
@@ -117,7 +117,7 @@ const driverOptions = computed(() => {
     case 'en':
       return driverOptionsEn
     default:
-      return driverOptionsRu 
+      return driverOptionsRu
   }
 })
 
@@ -185,7 +185,7 @@ const experienceOptions = computed(() => {
     case 'en':
       return experienceOptionsEn
     default:
-      return experienceOptionsRu 
+      return experienceOptionsRu
   }
 })
 
@@ -277,13 +277,13 @@ const insuranceDurations = computed(() => {
     case 'en':
       return insuranceDurationsEn
     default:
-      return insuranceDurationsRu 
+      return insuranceDurationsRu
   }
 })
 
 
 const formData = reactive({
-  driver: 1,
+  driver: 1.6,
   driverExperience: 1.4,
   diagnosticCard: 1,
   insuranceDuration: 1,

@@ -1,7 +1,7 @@
 <template>
   <section class="form-section">
     <Container>
-      <div class="form-section__content"> 
+      <div class="form-section__content">
         <h2 class="text-title">{{ t('dataForms.title') }}</h2>
 
         <div class="form-group">
@@ -23,7 +23,9 @@
         />
 
         <div class="form-group">
-          <label class="text-suptitle mb-[12px] block" for="address"> {{ t('dataForms.addressHome') }} </label>
+          <label class="text-suptitle mb-[12px] block" for="address">
+            {{ t('dataForms.addressHome') }}
+          </label>
           <textarea class="form-input" :value="formData.address" id="address"></textarea>
         </div>
 
@@ -49,33 +51,35 @@
           </template>
         </Dropdown>
 
-        <Dropdown v-model="formData.idData" :placeholder="t('dataForms.dataDriverID')">
-          <template #content>
-            <div>
-              <DropdownDetail :label="t('dataForms.fullName')" :value="driverLicenseDetails.name" />
-              <DropdownDetail :label="t('dataForms.inn')" :value="driverLicenseDetails.inn" />
-              <DropdownDetail :label="t('dataForms.partNumber')" :value="driverLicenseDetails.number" />
-              <div class="dropdown__bottom">
-                <DropdownDetail :label="t('dataForms.organGet')" :value="driverLicenseDetails.issuer" />
-                <DropdownDetail :label="t('dataForms.dateGet')" :value="driverLicenseDetails.issueDate" />
-              </div>
-            </div>
-          </template>
-        </Dropdown>
+<Dropdown v-model="formData.idData" :placeholder="t('dataForms.dataDriverID')">
+  <template #content>
+    <div>
+      <DropdownDetail :label="t('dataForms.fullName')" :value="driverLicenseDetails.name" />
+      <DropdownDetail label="Дата рождения" :value="driverLicenseDetails.birthDate" />
+      <DropdownDetail :label="t('dataForms.partNumber')" :value="driverLicenseDetails.number" />
+      <DropdownDetail label="Дата выдачи" :value="driverLicenseDetails.issueDate" />
+      <DropdownDetail label="Срок действия" :value="driverLicenseDetails.expiryDate" />
+      <DropdownDetail :label="t('dataForms.organGet')" :value="driverLicenseDetails.issuer" />
+      <DropdownDetail label="Категория" :value="driverLicenseDetails.category" />
+    </div>
+  </template>
+</Dropdown>
 
-        <Dropdown v-model="formData.idData" :placeholder="t('dataForms.dataRegisterCar')">
-          <template #content>
-            <div>
-              <DropdownDetail :label="t('dataForms.fullName')" :value="vehicleRegistrationDetails.name" />
-              <DropdownDetail :label="t('dataForms.inn')" :value="vehicleRegistrationDetails.inn" />
-              <DropdownDetail :label="t('dataForms.partNumber')" :value="vehicleRegistrationDetails.number" />
-              <div class="dropdown__bottom">
-                <DropdownDetail :label="t('dataForms.organGet')" :value="vehicleRegistrationDetails.issuer" />
-                <DropdownDetail :label="t('dataForms.dateGet')" :value="vehicleRegistrationDetails.issueDate" />
-              </div>
-            </div>
-          </template>
-        </Dropdown>
+<Dropdown v-model="formData.idData" :placeholder="t('dataForms.dataRegisterCar')">
+  <template #content>
+    <div>
+      <DropdownDetail label="ФИО владельца" :value="vehicleRegistrationDetails.owner" />
+      <DropdownDetail label="VIN" :value="vehicleRegistrationDetails.vin" />
+      <DropdownDetail label="Марка/модель" :value="vehicleRegistrationDetails.model" />
+      <DropdownDetail label="Регистрационный номер" :value="vehicleRegistrationDetails.regNumber" />
+      <DropdownDetail label="Год выпуска" :value="vehicleRegistrationDetails.year" />
+      <DropdownDetail label="Цвет" :value="vehicleRegistrationDetails.color" />
+      <DropdownDetail label="Категория" :value="vehicleRegistrationDetails.category" />
+      <DropdownDetail label="Дата регистрации" :value="vehicleRegistrationDetails.regDate" />
+      <DropdownDetail label="Орган выдачи" :value="vehicleRegistrationDetails.issuer" />
+    </div>
+  </template>
+</Dropdown>
       </div>
       <Footer :isValid="false" navigateTo="/calculator" />
     </Container>
@@ -90,9 +94,6 @@ import DropdownDetail from '@/components/DropdownDetail.vue'
 import { computed, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 const { locale, t } = useI18n()
-
-
-
 
 const purposeOptionsRu = [
   'Личная',
@@ -139,24 +140,30 @@ const purposeOptions = computed(() => {
     case 'en':
       return purposeOptionsEn
     default:
-      return purposeOptionsRu 
+      return purposeOptionsRu
   }
 })
 
 const driverLicenseDetails = {
   name: 'Тургунов Бекжан Сапарович',
-  inn: '68245884935',
+  birthDate: '15.04.1990',
   number: 'DL 2456789',
-  issuer: 'ГАИ МВД',
   issueDate: '25.06.2021',
+  expiryDate: '25.06.2031',
+  issuer: 'ГАИ МВД',
+  category: 'B',
 }
 
 const vehicleRegistrationDetails = {
-  name: 'Тургунов Бекжан Сапарович',
-  inn: '68245884935',
-  number: 'VR 4561234',
+  owner: 'Тургунов Бекжан Сапарович',
+  vin: 'X1234567890ABCDEF',
+  model: 'Toyota Camry',
+  regNumber: '01KG123ABC',
+  year: '2020',
+  color: 'Белый',
+  category: 'B',
+  regDate: '01.03.2022',
   issuer: 'МРЭО №7',
-  issueDate: '01.03.2022',
 }
 
 const formData = reactive({
