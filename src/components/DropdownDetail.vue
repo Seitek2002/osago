@@ -1,7 +1,9 @@
 <template>
-  <div class="dropdown__detail">
-    <span class="litle-title">{{ label }}</span>
-    <input class="litle-input" type="text" :defaultValue="value">
+  <div class="dropdown__details-card">
+    <div class="dropdown__detail">
+      <span class="litle-title">{{ label }}</span>
+      <input class="litle-input" type="text" :defaultValue="value" />
+    </div>
   </div>
 </template>
 
@@ -18,4 +20,21 @@ defineProps({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+.dropdown__details-card {
+  @apply bg-white rounded-xl flex flex-col gap-4 mb-4;
+}
+
+.dropdown__detail {
+  @apply flex flex-col gap-1;
+}
+
+.litle-title {
+  @apply text-[#6B7280] text-[14px] font-medium mb-1;
+}
+
+.litle-input {
+  @apply bg-white border border-[#0072DE] rounded-[8px] py-2 px-3 text-[16px] text-[#201F1F] placeholder:text-[#ADB0BA] outline-none focus:border-[#0051FF] transition-colors;
+  box-shadow: 0 1px 4px 0 #e5e7eb22;
+}
+</style>

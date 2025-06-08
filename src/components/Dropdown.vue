@@ -1,19 +1,33 @@
 <template>
-  <div class="dropdown-container">
-    <button @click="toggle" class="dropdown-button">
-      {{ selected || placeholder }}
-      <span class="dropdown-icon">
-        <dropdownArrow :style="{ transform: isOpen ? 'rotate(180deg)' : '' }" />
+  <div
+    :class="[
+      'relative w-full border rounded-[10px] overflow-hidden transition-colors',
+      isOpen ? 'border-[#0072DE]' : 'border-[#E5E7EB]',
+    ]"
+  >
+    <button
+      @click="toggle"
+      type="button"
+      class="w-full text-left bg-[#F5F5F5] rounded-[10px] py-3 px-[14px] text-[16px] text-[#201F1F] outline-none transition-colors flex items-center justify-between"
+    >
+      <span class="font-semibold">
+        {{ selected || placeholder }}
+      </span>
+      <span
+        class="ml-2 transition-transform duration-200"
+        :style="{ transform: isOpen ? 'rotate(180deg)' : '' }"
+      >
+        <dropdownArrow />
       </span>
     </button>
-    <div v-if="isOpen" class="dropdown-menu">
+    <div v-if="isOpen" class="w-full bg-white border border-[#E5E7EB] shadow-lg p-2">
       <slot name="content">
-        <ul>
+        <ul class="space-y-2">
           <li
             v-for="option in options"
             :key="option"
             @click="selectOption(option)"
-            class="dropdown-item"
+            class="px-4 py-2 cursor-pointer hover:bg-[#F5F5F5] text-[16px] text-[#201F1F] rounded-[8px] transition-colors"
           >
             {{ option.label ?? option }}
           </li>
@@ -44,4 +58,4 @@ const selectOption = (option) => {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss"></style>
