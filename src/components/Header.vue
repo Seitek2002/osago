@@ -39,7 +39,7 @@ watch(lang, (newLang) => {
 
 <style lang="scss">
 .header {
-  @apply fixed top-0 left-0 w-full py-[16px] z-20 text-[#fff];
+  @apply fixed top-0 left-0 w-full py-[16px] z-20 text-[#fff] bg-white;
 
   &__content {
     @apply relative flex justify-center;

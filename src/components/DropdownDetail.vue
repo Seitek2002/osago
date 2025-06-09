@@ -2,13 +2,18 @@
   <div class="dropdown__details-card">
     <div class="dropdown__detail">
       <span class="litle-title">{{ label }}</span>
-      <input class="litle-input" type="text" :defaultValue="value" />
+      <input
+        :class="['litle-input', !value || value.trim() === '' ? 'border-red-500' : '']"
+        type="text"
+        :value="value"
+        @input="$emit('update:value', $event.target.value)"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   label: {
     type: String,
     required: true,
@@ -18,6 +23,7 @@ defineProps({
     required: true,
   },
 })
+const emit = defineEmits(['update:value'])
 </script>
 
 <style lang="scss">
