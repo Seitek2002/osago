@@ -1,6 +1,8 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useDocumentStore } from '@/stores/useDocumentStore'
+import { useOcrStore } from '@/stores/useOcrStore'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 import Container from '@/components/Container.vue'
@@ -8,8 +10,29 @@ import DocumentUploader from '@/components/DocumentUploader.vue'
 import Footer from '@/components/Footer.vue'
 
 const documentStore = useDocumentStore()
+const ocrStore = useOcrStore()
+const router = useRouter()
 const isValid = ref(true)
+const loading = ref(false)
 const { t } = useI18n()
+
+const handleFooterClick = async () => {
+  loading.value = true
+  try {
+    await ocrStore.recognizeAllDocuments(documentStore)
+    if (ocrStore.error) {
+      alert(ocrStore.error)
+      loading.value = false
+      return
+    }
+    ocrStore.saveToLocalStorage()
+    router.push('/data-forms')
+  } catch (e) {
+    alert(e.message || 'Ошибка при распознавании документов')
+  } finally {
+    loading.value = false
+  }
+}
 
 const documents = computed(() => [
   {
@@ -67,7 +90,14 @@ const handleFileChange = (event) => {
           {{t('documents_form.personalData')}}
         </label>
       </div>
-      <Footer :isValid="false" navigateTo="/data-forms" />
+      <Footer
+        :isValid="!documentStore.areMandatoryDocumentsUploaded || loading"
+        @click="handleFooterClick"
+        :navigateTo="'/data-forms'"
+      />
+      <div v-if="loading" class="text-center mt-4">
+        <span>{{ t('documents_form.loading') || 'Загрузка...' }}</span>
+      </div>
     </Container>
   </section>
 </template>

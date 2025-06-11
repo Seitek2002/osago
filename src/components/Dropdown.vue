@@ -57,10 +57,12 @@ const selected = ref(
 )
 const isInvalid = computed(() => props.isInvalid)
 
+// Следим за изменением modelValue, чтобы selected всегда был актуальным
 watch(
-  () => isInvalid,
+  () => props.modelValue,
   (newVal) => {
-    selected.value = props.options?.find((opt) => (opt.value ?? opt) === newVal)?.label ?? newVal
+    selected.value =
+      props.options?.find((opt) => (opt.value ?? opt) === newVal)?.label ?? newVal
   },
 )
 

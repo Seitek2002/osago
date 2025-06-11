@@ -44,7 +44,9 @@
         >
           <template #content>
             <div>
-              <DropdownDetail :label="t('dataForms.fullName')" v-model:value="idDetails.name" />
+              <DropdownDetail :label="t('dataForms.surname')" v-model:value="idDetails.surname" />
+              <DropdownDetail :label="t('dataForms.name')" v-model:value="idDetails.name" />
+              <DropdownDetail :label="t('dataForms.patronymic')" v-model:value="idDetails.patronymic" />
               <DropdownDetail :label="t('dataForms.inn')" v-model:value="idDetails.inn" />
               <DropdownDetail :label="t('dataForms.partID')" v-model:value="idDetails.number" />
               <div class="dropdown__bottom">
@@ -58,11 +60,7 @@
           </template>
         </Dropdown>
 
-        <Dropdown
-          v-model="formData.idData"
-          :placeholder="t('dataForms.dataDriverID')"
-          :isInvalid="isDriverInvalid"
-        >
+        <Dropdown :placeholder="t('dataForms.dataDriverID')" :isInvalid="isDriverInvalid">
           <template #content>
             <div>
               <DropdownDetail
@@ -92,7 +90,7 @@
         </Dropdown>
 
         <Dropdown
-          v-model="formData.idData"
+          v-model="formData.vehicleCert"
           :placeholder="t('dataForms.dataRegisterCar')"
           :isInvalid="isVehicleInvalid"
         >
@@ -139,9 +137,183 @@ import Container from '@/components/Container.vue'
 import Footer from '@/components/Footer.vue'
 import Dropdown from '@/components/Dropdown.vue'
 import DropdownDetail from '@/components/DropdownDetail.vue'
-import { computed, reactive } from 'vue'
+import { computed, reactive, onMounted, watch } from 'vue'
+import { useOcrStore } from '@/stores/useOcrStore'
 import { useI18n } from 'vue-i18n'
 const { locale, t } = useI18n()
+const ocrStore = useOcrStore()
+
+
+
+const driverLicenseDetails = reactive({
+  name: 'Тургунов Бекжан Сапарович',
+  birthDate: '15.04.1990',
+  number: 'DL 2456789',
+  issueDate: '25.06.2021',
+  expiryDate: '25.06.2031',
+  issuer: 'ГАИ МВД',
+  category: 'B',
+})
+
+const vehicleRegistrationDetails = reactive({
+  owner: 'Тургунов Бекжан Сапарович',
+  vin: 'X1234567890ABCDEF',
+  model: 'Toyota Camry',
+  regNumber: '01KG123ABC',
+  year: '2020',
+  color: 'Белый',
+  category: 'B',
+  regDate: '01.03.2022',
+  issuer: 'МРЭО №7',
+})
+
+const formData = reactive({
+  purpose: null,
+  address: 'Нарынская обл., г. Нарын, ул. Айтматова, д. 25, кв. 6',
+  phone: '',
+  passport: null,
+  driverLicense: null,
+  vehicleCert: null,
+  idData: null,
+})
+
+const passportDetails = {
+  name: 'Тургунов Бекжан Сапарович',
+  inn: '68245884935',
+  number: 'AN 1234567',
+  issuer: 'MKK-50',
+  issueDate: '20.12.1996',
+}
+
+const idDetails = reactive({ ...passportDetails })
+
+watch(
+  vehicleRegistrationDetails,
+  (newVal) => {
+    ocrStore.vehicle_cert = {
+      ...ocrStore.vehicle_cert,
+      ownerFullName: newVal.owner,
+      vin: newVal.vin,
+      brandModel: newVal.model,
+      number: newVal.regNumber,
+      yearOfManufacture: newVal.year,
+      color: newVal.color,
+      vehicleCategory: newVal.category,
+      registrationDate: newVal.regDate,
+      authority: newVal.issuer,
+    }
+    ocrStore.saveToLocalStorage()
+  },
+  { deep: true }
+)
+
+// Двусторонняя связь для driverLicenseDetails
+watch(
+  driverLicenseDetails,
+  (newVal) => {
+    ocrStore.driver_license = {
+      ...ocrStore.driver_license,
+      surname: '', // если нужно, можно добавить отдельные поля
+      name: newVal.name,
+      birthDate: newVal.birthDate,
+      licenceNumber: newVal.number,
+      issueDate: newVal.issueDate,
+      expiryDate: newVal.expiryDate,
+      authority: newVal.issuer,
+      categories: newVal.category,
+    }
+    ocrStore.saveToLocalStorage()
+  },
+  { deep: true }
+)
+
+watch(
+  idDetails,
+  (newVal) => {
+    ocrStore.passport = {
+      ...ocrStore.passport,
+      surname: newVal.surname,
+      name: newVal.name,
+      patronymic: newVal.patronymic,
+      personalNumber: newVal.inn,
+      documentNumber: newVal.number,
+      authority: newVal.issuer,
+      issueDate: newVal.issueDate,
+    }
+    ocrStore.saveToLocalStorage()
+  },
+  { deep: true }
+)
+
+onMounted(() => {
+  // Загрузка из localStorage, если store пуст
+  if (!ocrStore.passport && !ocrStore.driver_license && !ocrStore.vehicle_cert) {
+    ocrStore.loadFromLocalStorage()
+  }
+
+  // Сброс всех полей перед подстановкой новых данных
+  idDetails.surname = ''
+  idDetails.name = ''
+  idDetails.patronymic = ''
+  idDetails.inn = ''
+  idDetails.number = ''
+  idDetails.issuer = ''
+  idDetails.issueDate = ''
+
+  driverLicenseDetails.name = ''
+  driverLicenseDetails.birthDate = ''
+  driverLicenseDetails.number = ''
+  driverLicenseDetails.issueDate = ''
+  driverLicenseDetails.expiryDate = ''
+  driverLicenseDetails.issuer = ''
+  driverLicenseDetails.category = ''
+
+  vehicleRegistrationDetails.owner = ''
+  vehicleRegistrationDetails.vin = ''
+  vehicleRegistrationDetails.model = ''
+  vehicleRegistrationDetails.regNumber = ''
+  vehicleRegistrationDetails.year = ''
+  vehicleRegistrationDetails.color = ''
+  vehicleRegistrationDetails.category = ''
+  vehicleRegistrationDetails.regDate = ''
+  vehicleRegistrationDetails.issuer = ''
+
+  // Паспорт
+  if (ocrStore.passport) {
+    idDetails.surname = ocrStore.passport.surname || ''
+    idDetails.name = ocrStore.passport.name || ''
+    idDetails.patronymic = ocrStore.passport.patronymic || ''
+    idDetails.inn = ocrStore.passport.personalNumber || ''
+    idDetails.number = ocrStore.passport.documentNumber || ''
+    idDetails.issuer = ocrStore.passport.authority || ''
+    idDetails.issueDate = ocrStore.passport.issueDate || ''
+  }
+  // Водительское удостоверение
+  if (ocrStore.driver_license) {
+    driverLicenseDetails.name = [ocrStore.driver_license.surname, ocrStore.driver_license.name]
+      .filter(Boolean)
+      .join(' ')
+    driverLicenseDetails.birthDate = ocrStore.driver_license.birthDate || ''
+    driverLicenseDetails.number = ocrStore.driver_license.licenceNumber || ''
+    driverLicenseDetails.issueDate = ocrStore.driver_license.issueDate || ''
+    driverLicenseDetails.expiryDate = ocrStore.driver_license.expiryDate || ''
+    driverLicenseDetails.issuer = ocrStore.driver_license.authority || ''
+    driverLicenseDetails.category = ocrStore.driver_license.categories || ''
+  }
+  // Техпаспорт (vehicle_cert)
+  if (ocrStore.vehicle_cert) {
+    // Маппинг по ключам из ответа сервера
+    vehicleRegistrationDetails.owner = ocrStore.vehicle_cert.ownerFullName || ''
+    vehicleRegistrationDetails.vin = ocrStore.vehicle_cert.vin || ''
+    vehicleRegistrationDetails.model = ocrStore.vehicle_cert.brandModel || ''
+    vehicleRegistrationDetails.regNumber = ocrStore.vehicle_cert.number || ''
+    vehicleRegistrationDetails.year = ocrStore.vehicle_cert.yearOfManufacture || ''
+    vehicleRegistrationDetails.color = ocrStore.vehicle_cert.color || ''
+    vehicleRegistrationDetails.category = ocrStore.vehicle_cert.vehicleCategory || ''
+    vehicleRegistrationDetails.regDate = ocrStore.vehicle_cert.registrationDate || ''
+    vehicleRegistrationDetails.issuer = ocrStore.vehicle_cert.authority || ''
+  }
+})
 
 const purposeOptionsRu = [
   'Личная',
@@ -191,46 +363,6 @@ const purposeOptions = computed(() => {
       return purposeOptionsRu
   }
 })
-
-const driverLicenseDetails = {
-  name: 'Тургунов Бекжан Сапарович',
-  birthDate: '15.04.1990',
-  number: 'DL 2456789',
-  issueDate: '25.06.2021',
-  expiryDate: '25.06.2031',
-  issuer: 'ГАИ МВД',
-  category: 'B',
-}
-
-const vehicleRegistrationDetails = {
-  owner: 'Тургунов Бекжан Сапарович',
-  vin: 'X1234567890ABCDEF',
-  model: 'Toyota Camry',
-  regNumber: '01KG123ABC',
-  year: '2020',
-  color: 'Белый',
-  category: 'B',
-  regDate: '01.03.2022',
-  issuer: 'МРЭО №7',
-}
-
-const formData = reactive({
-  purpose: null,
-  address: 'Нарынская обл., г. Нарын, ул. Айтматова, д. 25, кв. 6',
-  phone: '',
-  passport: null,
-  idData: null,
-})
-
-const passportDetails = {
-  name: 'Тургунов Бекжан Сапарович',
-  inn: '68245884935',
-  number: 'AN 1234567',
-  issuer: 'MKK-50',
-  issueDate: '20.12.1996',
-}
-
-const idDetails = reactive({ ...passportDetails })
 
 const isPassportInvalid = computed(() => {
   return (

@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   label: {
     type: String,
     required: true,
@@ -23,7 +23,6 @@ const props = defineProps({
     required: true,
   },
 })
-const emit = defineEmits(['update:value'])
 </script>
 
 <style lang="scss">
