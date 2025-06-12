@@ -88,11 +88,11 @@ router.afterEach(() => {
 }
 
 .file-upload-content {
-  @apply flex flex-col items-center justify-center w-full h-full;
+  @apply flex flex-col items-center justify-center w-full h-full overflow-hidden;
 }
 
 .file-upload-image {
-  @apply max-w-full max-h-full object-contain;
+  @apply max-w-[160px] max-h-[160px] object-contain;
 }
 
 </style>

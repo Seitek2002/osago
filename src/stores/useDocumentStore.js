@@ -11,12 +11,12 @@ export const useDocumentStore = defineStore('documentStore', {
   state: () => ({
     isDisabled: true,
     uploadedDocuments: {
-      'passport-front-side': { file: passportFrontSide, url: passportFrontSide },
-      'passport-back-side': { file: passportBackSide, url: passportBackSide },
-      'license-front-side': { file: prava_front, url: prava_front },
-      'license-back-side': { file: prava_back, url: prava_back },
-      'certificate-front-side': { file: tp_front, url: tp_back },
-      'certificate-back-side': { file: tp_front, url: tp_back },
+      'passport-front-side': { file: null, url: passportFrontSide },
+      'passport-back-side': { file: null, url: passportBackSide },
+      'license-front-side': { file: null, url: prava_front },
+      'license-back-side': { file: null, url: prava_back },
+      'certificate-front-side': { file: null, url: tp_front },
+      'certificate-back-side': { file: null, url: tp_back },
     },
   }),
   actions: {

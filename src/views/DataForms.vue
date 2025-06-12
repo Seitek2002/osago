@@ -127,7 +127,7 @@
           </template>
         </Dropdown>
       </div>
-      <Footer :isValid="false" navigateTo="/calculator" />
+      <Footer :isValid="false" navigateTo="/calculator" @click="handleFooterClick" />
     </Container>
   </section>
 </template>
@@ -187,63 +187,6 @@ const passportDetails = {
 
 const idDetails = reactive({ ...passportDetails })
 
-watch(
-  vehicleRegistrationDetails,
-  (newVal) => {
-    ocrStore.vehicle_cert = {
-      ...ocrStore.vehicle_cert,
-      ownerFullName: newVal.owner,
-      vin: newVal.vin,
-      brandModel: newVal.model,
-      number: newVal.regNumber,
-      yearOfManufacture: newVal.year,
-      color: newVal.color,
-      vehicleCategory: newVal.category,
-      registrationDate: newVal.regDate,
-      authority: newVal.issuer,
-    }
-    ocrStore.saveToLocalStorage()
-  },
-  { deep: true }
-)
-
-// Двусторонняя связь для driverLicenseDetails
-watch(
-  driverLicenseDetails,
-  (newVal) => {
-    ocrStore.driver_license = {
-      ...ocrStore.driver_license,
-      surname: '', // если нужно, можно добавить отдельные поля
-      name: newVal.name,
-      birthDate: newVal.birthDate,
-      licenceNumber: newVal.number,
-      issueDate: newVal.issueDate,
-      expiryDate: newVal.expiryDate,
-      authority: newVal.issuer,
-      categories: newVal.category,
-    }
-    ocrStore.saveToLocalStorage()
-  },
-  { deep: true }
-)
-
-watch(
-  idDetails,
-  (newVal) => {
-    ocrStore.passport = {
-      ...ocrStore.passport,
-      surname: newVal.surname,
-      name: newVal.name,
-      patronymic: newVal.patronymic,
-      personalNumber: newVal.inn,
-      documentNumber: newVal.number,
-      authority: newVal.issuer,
-      issueDate: newVal.issueDate,
-    }
-    ocrStore.saveToLocalStorage()
-  },
-  { deep: true }
-)
 
 onMounted(() => {
   // Загрузка из localStorage, если store пуст
@@ -399,6 +342,46 @@ const isVehicleInvalid = computed(() => {
     !vehicleRegistrationDetails.issuer
   )
 })
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+function handleFooterClick() {
+  // Сохраняем данные только по кнопке
+  ocrStore.passport = {
+    ...ocrStore.passport,
+    surname: idDetails.surname,
+    name: idDetails.name,
+    patronymic: idDetails.patronymic,
+    personalNumber: idDetails.inn,
+    documentNumber: idDetails.number,
+    authority: idDetails.issuer,
+    issueDate: idDetails.issueDate,
+  }
+  ocrStore.driver_license = {
+    ...ocrStore.driver_license,
+    name: driverLicenseDetails.name,
+    birthDate: driverLicenseDetails.birthDate,
+    licenceNumber: driverLicenseDetails.number,
+    issueDate: driverLicenseDetails.issueDate,
+    expiryDate: driverLicenseDetails.expiryDate,
+    authority: driverLicenseDetails.issuer,
+    categories: driverLicenseDetails.category,
+  }
+  ocrStore.vehicle_cert = {
+    ...ocrStore.vehicle_cert,
+    ownerFullName: vehicleRegistrationDetails.owner,
+    vin: vehicleRegistrationDetails.vin,
+    brandModel: vehicleRegistrationDetails.model,
+    number: vehicleRegistrationDetails.regNumber,
+    yearOfManufacture: vehicleRegistrationDetails.year,
+    color: vehicleRegistrationDetails.color,
+    vehicleCategory: vehicleRegistrationDetails.category,
+    registrationDate: vehicleRegistrationDetails.regDate,
+    authority: vehicleRegistrationDetails.issuer,
+  }
+  ocrStore.saveToLocalStorage()
+  router.push('/calculator')
+}
 </script>
 
 <style scoped lang="scss">

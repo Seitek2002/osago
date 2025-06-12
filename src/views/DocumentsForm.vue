@@ -8,11 +8,12 @@ import { useI18n } from 'vue-i18n'
 import Container from '@/components/Container.vue'
 import DocumentUploader from '@/components/DocumentUploader.vue'
 import Footer from '@/components/Footer.vue'
+import loader from '@/assets/icons/loader.vue'
 
 const documentStore = useDocumentStore()
 const ocrStore = useOcrStore()
 const router = useRouter()
-const isValid = ref(true)
+const isValid = computed(() => !documentStore.areMandatoryDocumentsUploaded || loading.value)
 const loading = ref(false)
 const { t } = useI18n()
 
@@ -66,8 +67,6 @@ const handleFileChange = (event) => {
     : { file: null, url: null }
 
   documentStore.updateDocument(fieldName, data)
-
-  documentStore.areMandatoryDocumentsUploaded ? (isValid.value = false) : (isValid.value = true)
 }
 </script>
 
@@ -91,12 +90,17 @@ const handleFileChange = (event) => {
         </label>
       </div>
       <Footer
-        :isValid="!documentStore.areMandatoryDocumentsUploaded || loading"
+        :isValid="isValid"
         @click="handleFooterClick"
         :navigateTo="'/data-forms'"
       />
-      <div v-if="loading" class="text-center mt-4">
-        <span>{{ t('documents_form.loading') || 'Загрузка...' }}</span>
+      <div v-if="loading" class="fixed z-[10000] top-0 left-0 w-full h-full flex items-center justify-center bg-[rgba(0,0,0,0.5)]">
+        <div class="w-[50%] h-[40%] bg-white flex flex-col items-center justify-center rounded">
+          <loader class="w-[150px] h-[150px]" />
+          <p class="text-center text-[16px]">
+            Идет сканирование документов
+          </p>
+        </div>
       </div>
     </Container>
   </section>
