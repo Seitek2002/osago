@@ -83,33 +83,45 @@ const handleFileChange = (event) => {
         @file-change="handleFileChange"
       />
 
+      <div class="form-group">
+        <label for="referal-id" class="text-suptitle">ID реферала</label>
+        <br />
+        <input
+          type="text"
+          placeholder="235-509"
+          class="form-input mt-[12px]"
+          v-mask="'+996 (###) ###-###'"
+          id="referal-id"
+        />
+      </div>
+
       <div class="passport__bottom">
         <label>
           <input type="checkbox" checked />
-          {{t('documents_form.personalData')}}
+          {{ t('documents_form.personalData') }}
         </label>
       </div>
-      <Footer
-        :isValid="isValid"
-        @click="handleFooterClick"
-        :navigateTo="'/data-forms'"
-      />
-      <div v-if="loading" class="fixed z-[10000] top-0 left-0 w-full h-full flex items-center justify-center bg-[rgba(0,0,0,0.5)]">
+      <Footer :isValid="isValid" @click="handleFooterClick" :navigateTo="'/data-forms'" />
+      <div
+        v-if="loading"
+        class="fixed z-[10000] top-0 left-0 w-full h-full flex items-center justify-center bg-[rgba(0,0,0,0.5)]"
+      >
         <div class="w-[50%] h-[40%] bg-white flex flex-col items-center justify-center rounded">
           <loader class="w-[150px] h-[150px]" />
-          <p class="text-center text-[16px]">
-            Идет сканирование документов
-          </p>
+          <p class="text-center text-[16px]">Идет сканирование документов</p>
         </div>
       </div>
     </Container>
   </section>
 </template>
 
-
-<style lang="scss" scoped>
+<style lang="scss">
 .passport {
   @apply py-14 pb-[100px];
+
+  .form-input {
+    @apply w-full bg-[#F7F8FA] border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500;
+  }
 
   &__title {
     @apply text-[#000B16] text-[20px] font-semibold mb-4;

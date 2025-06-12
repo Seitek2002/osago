@@ -384,7 +384,7 @@ function handleFooterClick() {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .form-section {
   @apply pt-14 pb-[100px];
 
