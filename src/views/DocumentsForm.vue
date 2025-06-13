@@ -21,8 +21,11 @@ const handleFooterClick = async () => {
   loading.value = true
   try {
     await ocrStore.recognizeAllDocuments(documentStore)
-    if (ocrStore.error) {
-      alert(ocrStore.error)
+    if (
+      ocrStore.passportError ||
+      ocrStore.driverLicenseError ||
+      ocrStore.vehicleCertError
+    ) {
       loading.value = false
       return
     }
@@ -80,6 +83,7 @@ const handleFileChange = (event) => {
         :key="doc.id"
         :title="doc.title"
         :fields="doc.fields.map((field) => ({ field, ...documentStore.uploadedDocuments[field] }))"
+        :error="doc.id === 'passport' ? ocrStore.passportError : doc.id === 'license' ? ocrStore.driverLicenseError : ocrStore.vehicleCertError"
         @file-change="handleFileChange"
       />
 

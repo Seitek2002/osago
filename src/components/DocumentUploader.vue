@@ -8,7 +8,7 @@ const { t } = useI18n()
 
 const isChange = ref({})
 
-const props = defineProps(['title', 'fields'])
+const props = defineProps(['title', 'fields', 'error'])
 const emits = defineEmits(['file-change'])
 
 const handleChange = (event) => {
@@ -16,7 +16,6 @@ const handleChange = (event) => {
     emits('file-change', event)
     const fieldName = event.target.dataset.name
     isChange.value[fieldName] = true
-    console.log([])
   }
 }
 
@@ -47,12 +46,12 @@ const handleReset = (field) => {
       >
         <div class="file-upload-content">
           <div v-if="isChange[field]" class="relative">
-            <cross class="absolute top-3 right-[-10px] z-10 bg-white rounded" @click.stop.prevent="handleReset(field)" />
+            <cross class="absolute top-3 right-[-10px] z-[1] bg-white rounded" @click.stop.prevent="handleReset(field)" />
             <img class="file-upload-image" :src="url" alt="Изображение" />
           </div>
           <div v-else class="relative">
             <uploadIcon
-              class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-10 bg-white rounded"
+              class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[1] bg-white rounded"
             />
             <img class="file-upload-image blur-sm" :src="url" alt="Изображение" />
           </div>
@@ -71,6 +70,9 @@ const handleReset = (field) => {
           @change="handleChange"
         />
       </label>
+    </div>
+    <div v-if="props.error" class="text-red-500 text-center text-[12px] mt-2">
+      {{ props.error }}
     </div>
   </div>
 </template>
