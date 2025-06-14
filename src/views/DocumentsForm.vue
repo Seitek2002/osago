@@ -13,6 +13,18 @@ import loader from '@/assets/icons/loader.vue'
 const documentStore = useDocumentStore()
 const ocrStore = useOcrStore()
 const router = useRouter()
+import { onMounted } from 'vue'
+
+const showReferalInput = ref(false)
+const referalId = ref('')
+
+onMounted(() => {
+  const id = router.currentRoute.value.params.id
+  if (id) {
+    referalId.value = id
+    showReferalInput.value = true
+  }
+})
 const personalDataChecked = ref(false)
 const isValid = computed(() =>
   !documentStore.areMandatoryDocumentsUploaded ||
@@ -93,15 +105,27 @@ const handleFileChange = (event) => {
       />
 
       <div class="form-group">
-        <label for="referal-id" class="text-suptitle">ID реферала</label>
-        <br />
-        <input
-          type="text"
-          placeholder="235-509"
-          class="form-input mt-[12px]"
-          v-mask="'+996 (###) ###-###'"
-          id="referal-id"
-        />
+        <template v-if="!showReferalInput && !referalId">
+          <button
+            class="bg-blue-500 text-white px-4 py-2 rounded mb-2"
+            type="button"
+            @click="showReferalInput = true"
+          >
+            Указать агента
+          </button>
+        </template>
+        <template v-if="showReferalInput || referalId">
+          <label for="referal-id" class="text-suptitle">ID реферала</label>
+          <br />
+          <input
+            type="text"
+            placeholder="235-509"
+            class="form-input mt-[12px]"
+            v-model="referalId"
+            id="referal-id"
+            :readonly="!!referalId && router.currentRoute.value.params.id"
+          />
+        </template>
       </div>
 
       <div class="passport__bottom">

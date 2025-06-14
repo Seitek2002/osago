@@ -23,6 +23,14 @@ const router = createRouter({
       },
     },
     {
+      path: '/documents-form/:id',
+      name: 'documents-form-referal',
+      component: () => import('../views/DocumentsForm.vue'),
+      meta: {
+        layout: ServicesLayout,
+      },
+    },
+    {
       path: '/data-forms',
       name: 'data-forms',
       component: () => import('../views/DataForms.vue'),
