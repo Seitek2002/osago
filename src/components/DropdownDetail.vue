@@ -5,7 +5,7 @@
       <input
         :class="['litle-input', !value || value.trim() === '' ? 'border-red-500' : '']"
         type="text"
-        :value="value"
+        :value="value ?? ''"
         @input="$emit('update:value', $event.target.value)"
       />
     </div>

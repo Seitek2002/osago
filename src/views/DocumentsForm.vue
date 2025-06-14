@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, reactive } from 'vue'
 import { useDocumentStore } from '@/stores/useDocumentStore'
 import { useOcrStore } from '@/stores/useOcrStore'
 import { useRouter } from 'vue-router'
@@ -18,11 +18,34 @@ import { onMounted } from 'vue'
 const showReferalInput = ref(false)
 const referalId = ref('')
 
+const idDetails = reactive({
+  surname: '',
+  name: '',
+  patronymic: '',
+  inn: '',
+  number: '',
+  issuer: '',
+  issueDate: ''
+})
+
 onMounted(() => {
   const id = router.currentRoute.value.params.id
   if (id) {
     referalId.value = id
     showReferalInput.value = true
+  }
+
+  // ... (остальной сброс и инициализация)
+
+  // Паспорт
+  if (ocrStore.passport) {
+    idDetails.surname = ocrStore.passport.surname || ''
+    idDetails.name = ocrStore.passport.name || ''
+    idDetails.patronymic = ocrStore.passport.patronymic || ''
+    idDetails.inn = ocrStore.passport.personalNumber || ''
+    idDetails.number = ocrStore.passport.documentNumber || ''
+    idDetails.issuer = ocrStore.passport.authority || ''
+    idDetails.issueDate = ocrStore.passport.issueDate || ''
   }
 })
 const personalDataChecked = ref(false)

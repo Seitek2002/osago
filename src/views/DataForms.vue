@@ -44,9 +44,7 @@
         >
           <template #content>
             <div>
-              <DropdownDetail :label="t('dataForms.surname')" v-model:value="idDetails.surname" />
-              <DropdownDetail :label="t('dataForms.name')" v-model:value="idDetails.name" />
-              <DropdownDetail :label="t('dataForms.patronymic')" v-model:value="idDetails.patronymic" />
+              <DropdownDetail :label="t('dataForms.fullName')" v-model:value="idDetails.fullName" />
               <DropdownDetail :label="t('dataForms.inn')" v-model:value="idDetails.inn" />
               <DropdownDetail :label="t('dataForms.partID')" v-model:value="idDetails.number" />
               <div class="dropdown__bottom">
@@ -137,13 +135,11 @@ import Container from '@/components/Container.vue'
 import Footer from '@/components/Footer.vue'
 import Dropdown from '@/components/Dropdown.vue'
 import DropdownDetail from '@/components/DropdownDetail.vue'
-import { computed, reactive, onMounted, watch } from 'vue'
+import { computed, reactive, onMounted } from 'vue'
 import { useOcrStore } from '@/stores/useOcrStore'
 import { useI18n } from 'vue-i18n'
 const { locale, t } = useI18n()
 const ocrStore = useOcrStore()
-
-
 
 const driverLicenseDetails = reactive({
   name: 'Тургунов Бекжан Сапарович',
@@ -177,16 +173,13 @@ const formData = reactive({
   idData: null,
 })
 
-const passportDetails = {
-  name: 'Тургунов Бекжан Сапарович',
-  inn: '68245884935',
-  number: 'AN 1234567',
-  issuer: 'MKK-50',
-  issueDate: '20.12.1996',
-}
-
-const idDetails = reactive({ ...passportDetails })
-
+const idDetails = reactive({
+  fullName: '',
+  inn: '',
+  number: '',
+  issuer: '',
+  issueDate: ''
+})
 
 onMounted(() => {
   // Загрузка из localStorage, если store пуст
@@ -223,9 +216,7 @@ onMounted(() => {
 
   // Паспорт
   if (ocrStore.passport) {
-    idDetails.surname = ocrStore.passport.surname || ''
-    idDetails.name = ocrStore.passport.name || ''
-    idDetails.patronymic = ocrStore.passport.patronymic || ''
+    idDetails.fullName = [ocrStore.passport.surname, ocrStore.passport.name, ocrStore.passport.patronymic].filter(Boolean).join(' ')
     idDetails.inn = ocrStore.passport.personalNumber || ''
     idDetails.number = ocrStore.passport.documentNumber || ''
     idDetails.issuer = ocrStore.passport.authority || ''
@@ -309,7 +300,7 @@ const purposeOptions = computed(() => {
 
 const isPassportInvalid = computed(() => {
   return (
-    !idDetails.name ||
+    !idDetails.fullName ||
     !idDetails.inn ||
     !idDetails.number ||
     !idDetails.issuer ||
