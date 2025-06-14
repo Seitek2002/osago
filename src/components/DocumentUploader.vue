@@ -51,7 +51,7 @@ const handleReset = (field) => {
           </div>
           <div v-else class="relative">
             <uploadIcon
-              class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[1] bg-white rounded"
+              class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[1]"
             />
             <img class="file-upload-image blur-sm" :src="url" alt="Изображение" />
           </div>
