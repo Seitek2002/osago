@@ -13,7 +13,12 @@ import loader from '@/assets/icons/loader.vue'
 const documentStore = useDocumentStore()
 const ocrStore = useOcrStore()
 const router = useRouter()
-const isValid = computed(() => !documentStore.areMandatoryDocumentsUploaded || loading.value)
+const personalDataChecked = ref(false)
+const isValid = computed(() =>
+  !documentStore.areMandatoryDocumentsUploaded ||
+  loading.value ||
+  !personalDataChecked.value
+)
 const loading = ref(false)
 const { t } = useI18n()
 
@@ -101,7 +106,7 @@ const handleFileChange = (event) => {
 
       <div class="passport__bottom">
         <label>
-          <input type="checkbox" checked />
+          <input type="checkbox" v-model="personalDataChecked" />
           {{ t('documents_form.personalData') }}
         </label>
       </div>

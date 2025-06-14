@@ -24,7 +24,7 @@ const handleClick = () => {
 
 <style lang="scss" scoped>
 .footer {
-  @apply fixed bottom-0 left-0 w-full;
+  @apply w-full mt-[40px];
 
   &__content {
     @apply w-full;
