@@ -72,7 +72,7 @@ const handleReset = (field) => {
       </label>
     </div>
     <div v-if="props.error" class="text-red-500 text-center text-[12px] mt-2">
-      {{ props.error }}
+      Ошибка сканирования или загрузки документа
     </div>
   </div>
 </template>
