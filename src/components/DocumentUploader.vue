@@ -37,7 +37,7 @@ const handleReset = (field) => {
 <template>
   <div>
     <h2 class="text-suptitle">{{ title }}</h2>
-    <div class="grid grid-cols-2 gap-[12px] mb-[40px]">
+    <div class="grid grid-cols-2 gap-[12px] mb-[30px]">
       <label
         class="file-upload-container"
         v-for="({ field, url }, i) in fields"
