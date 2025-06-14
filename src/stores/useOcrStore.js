@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { reactive } from 'vue'
 
 export const useOcrStore = defineStore('ocrStore', {
   state: () => {
