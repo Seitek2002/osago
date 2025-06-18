@@ -55,12 +55,24 @@
           </button>
         </div>
       </div>
-      <div class="fixed left-[15px] bottom-[69px] w-[94%] bg-white">
+      <div class="bg-white mt-[50px]">
         <div class="flex items-center justify-between border-t-[2px] py-[5px]">
           <h3>{{ t('calculator.price') }}</h3>
           <b>{{ standartOfOsago }} {{ t('calculator.som') }}</b>
         </div>
-        <Footer :isValid="false" navigateTo="/" :title="t('pay') + ' ' + standartOfOsago + ' ' + t('calculator.som')" />
+        <!-- <Footer
+          :isValid="false"
+          navigateTo="/"
+          :title="t('pay') + ' ' + standartOfOsago + ' ' + t('calculator.som')"
+        /> -->
+
+        <footer class="footer">
+          <Container>
+            <div class="footer__content">
+              <button @click="handleClick" :disabled="isValid">{{ t('pay') }}</button>
+            </div>
+          </Container>
+        </footer>
         <p class="text-[12px]">{{ t('calculator.secPrice') }}</p>
       </div>
     </Container>
@@ -73,214 +85,36 @@ import Footer from '@/components/Footer.vue'
 import Dropdown from '@/components/Dropdown.vue'
 import { computed, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { calcConstants } from '@/stores/calcConstants'
 const { locale, t } = useI18n()
 
-const standartOfOsago = ref(1680)
+const standartOfOsago = ref(calcConstants.BASE_RATE)
 
-const driverOptionsRu = [
-  {
-    label: 'Неограниченное кол-во водителей',
-    value: 1.6,
-  },
-  {
-    label: 'До 4х водителей',
-    value: 2,
-  },
-]
-const driverOptionsEn = [
-  {
-    label: "Unlimited number of drivers",
-    value: 1.6
-  },
-  {
-    label: "Up to 4 drivers",
-    value: 2
-  }
-]
-const driverOptionsKg = [
-  {
-    label: "Чектелбеген айдоочулардын саны",
-    value: 1.6
-  },
-  {
-    label: "Төрт айдоочуга чейин",
-    value: 2
-  }
-]
+// КОЭФФИЦИЕНТЫ ТЕПЕРЬ ИЗ calcConstants
 
-const driverOptions = computed(() => {
-  switch (locale.value) {
-    case 'ru':
-      return driverOptionsRu
-    case 'kg':
-      return driverOptionsKg
-    case 'en':
-      return driverOptionsEn
-    default:
-      return driverOptionsRu
-  }
-})
+const driverOptions = computed(() => [
+  {
+    label:
+      locale.value === 'ru' ? 'Неограниченное кол-во водителей' : 'Unlimited number of drivers',
+    value: calcConstants.DRIVER_COEFFICIENTS?.unlimited ?? 1.6,
+  },
+  {
+    label: locale.value === 'ru' ? 'До 4х водителей' : 'Up to 4 drivers',
+    value: calcConstants.DRIVER_COEFFICIENTS?.limited ?? 2,
+  },
+])
 
-const experienceOptionsRu = [
-  {
-    label: 'до 25-ти лет и стажем до 3-х лет',
-    value: 1.4,
-  },
-  {
-    label: 'до 25-ти лет и стажем от 4-х лет',
-    value: 1.3,
-  },
-  {
-    label: 'от 26-ти лет и стажем до 3-х лет',
-    value: 1.2,
-  },
-  {
-    label: 'от 26-ти лет и стажем от 4-х лет',
-    value: 1,
-  },
-]
-const experienceOptionsEn = [
-  {
-    label: "Under 25 years old and up to 3 years of experience",
-    value: 1.4
-  },
-  {
-    label: "Under 25 years old and 4 years or more of experience",
-    value: 1.3
-  },
-  {
-    label: "Over 26 years old and up to 3 years of experience",
-    value: 1.2
-  },
-  {
-    label: "Over 26 years old and 4 years or more of experience",
-    value: 1
-  }
-]
-const experienceOptionsKg = [
-  {
-    label: "25 жашка чейин жана 3 жылдан аз тажрыйба",
-    value: 1.4
-  },
-  {
-    label: "25 жашка чейин жана 4 жана андан көп жыл тажрыйба",
-    value: 1.3
-  },
-  {
-    label: "26 жаштан жогору жана 3 жылга чейин тажрыйба",
-    value: 1.2
-  },
-  {
-    label: "26 жаштан жогору жана 4 жана андан көп жыл тажрыйба",
-    value: 1
-  }
-]
+const experienceOptions = computed(
+  () =>
+    calcConstants.EXPERIENCE_COEFFICIENTS_UI[locale.value] ||
+    calcConstants.EXPERIENCE_COEFFICIENTS_UI['ru'],
+)
 
-const experienceOptions = computed(() => {
-  switch (locale.value) {
-    case 'ru':
-      return experienceOptionsRu
-    case 'kg':
-      return experienceOptionsKg
-    case 'en':
-      return experienceOptionsEn
-    default:
-      return experienceOptionsRu
-  }
-})
-
-const insuranceDurationsRu = [
-  {
-    label: '15 дней',
-    value: 0.2,
-  },
-  {
-    label: '1 месяца',
-    value: 0.3,
-  },
-  {
-    label: '3 месяцев',
-    value: 0.5,
-  },
-  {
-    label: '6 месяцев',
-    value: 0.7,
-  },
-  {
-    label: '9 месяцев',
-    value: 0.9,
-  },
-  {
-    label: '12 месяцев',
-    value: 1,
-  },
-]
-const insuranceDurationsEn = [
-{
-    "label": "15 days",
-    "value": 0.2
-  },
-  {
-    "label": "1 month",
-    "value": 0.3
-  },
-  {
-    "label": "3 months",
-    "value": 0.5
-  },
-  {
-    "label": "6 months",
-    "value": 0.7
-  },
-  {
-    "label": "9 months",
-    "value": 0.9
-  },
-  {
-    "label": "12 months",
-    "value": 1
-  }
-]
-const insuranceDurationsKg = [
-{
-    "label": "15 күн",
-    "value": 0.2
-  },
-  {
-    "label": "1 ай",
-    "value": 0.3
-  },
-  {
-    "label": "3 ай",
-    "value": 0.5
-  },
-  {
-    "label": "6 ай",
-    "value": 0.7
-  },
-  {
-    "label": "9 ай",
-    "value": 0.9
-  },
-  {
-    "label": "12 ай",
-    "value": 1
-  }
-]
-
-const insuranceDurations = computed(() => {
-  switch (locale.value) {
-    case 'ru':
-      return insuranceDurationsRu
-    case 'kg':
-      return insuranceDurationsKg
-    case 'en':
-      return insuranceDurationsEn
-    default:
-      return insuranceDurationsRu
-  }
-})
-
+const insuranceDurations = computed(
+  () =>
+    calcConstants.INSURANCE_DURATIONS_UI[locale.value] ||
+    calcConstants.INSURANCE_DURATIONS_UI['ru'],
+)
 
 const formData = reactive({
   driver: 1.6,
@@ -293,7 +127,7 @@ const formData = reactive({
 watch(
   () => formData,
   () => {
-    const basePrice = 1680
+    const basePrice = calcConstants.BASE_RATE
     const coefficients = [
       formData.driver || 1,
       formData.driverExperience || 1,
@@ -305,7 +139,7 @@ watch(
 
     standartOfOsago.value = Math.ceil(basePrice * totalMultiplier)
 
-    standartOfOsago.value = Math.ceil(standartOfOsago.value * 1.03)
+    standartOfOsago.value = Math.ceil(standartOfOsago.value * (1 + calcConstants.TAX))
   },
   {
     deep: true,
@@ -315,7 +149,23 @@ watch(
 
 <style scoped lang="scss">
 .calculator {
-  @apply pt-14 pb-[130px];
+  @apply pt-14 pb-[20px];
+
+  .footer {
+    @apply w-full mt-[40px];
+
+    &__content {
+      @apply w-full;
+
+      button {
+        @apply flex justify-center w-full py-[14px] bg-[#005CAA] rounded-[6px] text-[#fff] text-[16px] mb-[16px];
+
+        &:disabled {
+          @apply opacity-50 cursor-not-allowed;
+        }
+      }
+    }
+  }
 
   &__content {
     @apply space-y-4;
