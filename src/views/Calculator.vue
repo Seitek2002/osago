@@ -7,6 +7,7 @@
 
         <h3 class="text-suptitle">{{ t('calculator.quantityDrivers') }} <span>*</span></h3>
         <Dropdown
+          v-if="driverOptions.length"
           v-model="formData.driver"
           :options="driverOptions"
           :placeholder="driverOptions[0].label"
@@ -14,6 +15,7 @@
 
         <h3 class="text-suptitle">{{ t('calculator.experienceAge') }} <span>*</span></h3>
         <Dropdown
+          v-if="experienceOptions.length"
           v-model="formData.driverExperience"
           :options="experienceOptions"
           :placeholder="experienceOptions[0].label"
@@ -45,14 +47,16 @@
 
         <h3 class="text-suptitle">{{ t('calculator.insuranceAge') }} <span>*</span></h3>
         <div class="insurance-duration">
-          <button
-            v-for="({ label, value }, index) in insuranceDurations"
-            :key="index"
-            :class="{ active: formData.insuranceDuration === value }"
-            @click="formData.insuranceDuration = value"
-          >
-            {{ label }}
-          </button>
+          <template v-if="insuranceDurations.length">
+            <button
+              v-for="({ label, value }, index) in insuranceDurations"
+              :key="index"
+              :class="{ active: formData.insuranceDuration === value }"
+              @click="formData.insuranceDuration = value"
+            >
+              {{ label }}
+            </button>
+          </template>
         </div>
       </div>
       <div class="bg-white mt-[50px]">
@@ -69,7 +73,7 @@
         <footer class="footer">
           <Container>
             <div class="footer__content">
-              <button @click="handleClick" :disabled="isValid">{{ t('pay') }}</button>
+              <button @click="handleClick" :disabled="isPayDisabled">{{ t('pay') }}</button>
             </div>
           </Container>
         </footer>
@@ -81,40 +85,45 @@
 
 <script setup>
 import Container from '@/components/Container.vue'
-import Footer from '@/components/Footer.vue'
 import Dropdown from '@/components/Dropdown.vue'
 import { computed, reactive, ref, watch } from 'vue'
+
+const isPayDisabled = computed(() => standartOfOsago.value === 0)
 import { useI18n } from 'vue-i18n'
-import { calcConstants } from '@/stores/calcConstants'
+import { useCalcApiStore } from '@/stores/calcApiStore'
 const { locale, t } = useI18n()
+import { onMounted } from 'vue'
 
-const standartOfOsago = ref(calcConstants.BASE_RATE)
+const calcApiStore = useCalcApiStore()
+const standartOfOsago = ref(0)
 
-// КОЭФФИЦИЕНТЫ ТЕПЕРЬ ИЗ calcConstants
+onMounted(() => {
+  if (!calcApiStore.coefficients) calcApiStore.fetchCoefficients()
+})
 
-const driverOptions = computed(() => [
-  {
-    label:
-      locale.value === 'ru' ? 'Неограниченное кол-во водителей' : 'Unlimited number of drivers',
-    value: calcConstants.DRIVER_COEFFICIENTS?.unlimited ?? 1.6,
-  },
-  {
-    label: locale.value === 'ru' ? 'До 4х водителей' : 'Up to 4 drivers',
-    value: calcConstants.DRIVER_COEFFICIENTS?.limited ?? 2,
-  },
-])
+const driverOptions = computed(() => {
+  if (!calcApiStore.coefficients) return []
+  return calcApiStore.coefficients.driver.map(opt => ({
+    label: locale.value === 'ru' ? opt.labelRu : opt.labelKy,
+    value: opt.value
+  }))
+})
 
-const experienceOptions = computed(
-  () =>
-    calcConstants.EXPERIENCE_COEFFICIENTS_UI[locale.value] ||
-    calcConstants.EXPERIENCE_COEFFICIENTS_UI['ru'],
-)
+const experienceOptions = computed(() => {
+  if (!calcApiStore.coefficients) return []
+  return calcApiStore.coefficients.experienceUi.map(opt => ({
+    label: locale.value === 'ru' ? opt.labelRu : opt.labelKy,
+    value: opt.value
+  }))
+})
 
-const insuranceDurations = computed(
-  () =>
-    calcConstants.INSURANCE_DURATIONS_UI[locale.value] ||
-    calcConstants.INSURANCE_DURATIONS_UI['ru'],
-)
+const insuranceDurations = computed(() => {
+  if (!calcApiStore.coefficients) return []
+  return calcApiStore.coefficients.insuranceDurationUi.map(opt => ({
+    label: locale.value === 'ru' ? opt.labelRu : opt.labelKy,
+    value: opt.value
+  }))
+})
 
 const formData = reactive({
   driver: 1.6,
@@ -127,7 +136,8 @@ const formData = reactive({
 watch(
   () => formData,
   () => {
-    const basePrice = calcConstants.BASE_RATE
+    if (!calcApiStore.coefficients) return
+    const basePrice = calcApiStore.coefficients.baseRate?.[0]?.value || 0
     const coefficients = [
       formData.driver || 1,
       formData.driverExperience || 1,
@@ -137,9 +147,9 @@ watch(
 
     const totalMultiplier = coefficients.reduce((acc, coef) => acc * coef, 1)
 
-    standartOfOsago.value = Math.ceil(basePrice * totalMultiplier)
-
-    standartOfOsago.value = Math.ceil(standartOfOsago.value * (1 + calcConstants.TAX))
+    let price = Math.ceil(basePrice * totalMultiplier)
+    const tax = calcApiStore.coefficients.tax?.[0]?.value || 0
+    standartOfOsago.value = Math.ceil(price * (1 + tax))
   },
   {
     deep: true,
