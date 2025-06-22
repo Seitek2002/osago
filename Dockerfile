@@ -44,5 +44,5 @@ COPY . .
 RUN npm run build
 EXPOSE 3000
 
-CMD ["cp", "-r", "/app/dist/.", "/frontend_static/"]
+CMD ["cp", "-r", "/app/dist/.", "/frontend2_static/"]
 CMD ["npm", "run", "serve"]
