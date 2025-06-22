@@ -12,6 +12,7 @@
             :value="formData.phone"
             class="form-input mt-[12px]"
             v-mask="'+996 (###) ###-###'"
+            required
           />
         </div>
 
@@ -26,7 +27,7 @@
           <label class="text-suptitle mb-[12px] block" for="address">
             {{ t('dataForms.addressHome') }}
           </label>
-          <textarea class="form-input" :value="formData.address" id="address"></textarea>
+          <textarea class="form-input" :value="formData.address" id="address" required></textarea>
         </div>
 
         <!-- <FormInput
@@ -64,14 +65,22 @@
               <DropdownDetail
                 :label="t('dataForms.fullName')"
                 v-model:value="driverLicenseDetails.name"
+                required
               />
-              <DropdownDetail
-                label="Дата рождения"
-                v-model:value="driverLicenseDetails.birthDate"
-              />
+              <div class="form-group">
+                <label class="text-suptitle" for="birthDate">Дата рождения</label>
+                <input
+                  type="date"
+                  class="form-input"
+                  id="birthDate"
+                  v-model="driverLicenseDetails.birthDate"
+                  required
+                />
+              </div>
               <DropdownDetail
                 :label="t('dataForms.partNumber')"
                 v-model:value="driverLicenseDetails.number"
+                required
               />
               <DropdownDetail label="Дата выдачи" v-model:value="driverLicenseDetails.issueDate" />
               <DropdownDetail
@@ -125,7 +134,7 @@
           </template>
         </Dropdown>
       </div>
-      <Footer :isValid="false" navigateTo="/calculator" @click="handleFooterClick" />
+      <Footer :isValid="!isFormValid" navigateTo="/calculator" @click="handleFooterClick" />
     </Container>
   </section>
 </template>
@@ -142,30 +151,30 @@ const { locale, t } = useI18n()
 const ocrStore = useOcrStore()
 
 const driverLicenseDetails = reactive({
-  name: 'Тургунов Бекжан Сапарович',
-  birthDate: '15.04.1990',
-  number: 'DL 2456789',
-  issueDate: '25.06.2021',
-  expiryDate: '25.06.2031',
-  issuer: 'ГАИ МВД',
-  category: 'B',
+  name: '',
+  birthDate: '',
+  number: '',
+  issueDate: '',
+  expiryDate: '',
+  issuer: '',
+  category: '',
 })
 
 const vehicleRegistrationDetails = reactive({
-  owner: 'Тургунов Бекжан Сапарович',
-  vin: 'X1234567890ABCDEF',
-  model: 'Toyota Camry',
-  regNumber: '01KG123ABC',
-  year: '2020',
-  color: 'Белый',
-  category: 'B',
-  regDate: '01.03.2022',
-  issuer: 'МРЭО №7',
+  owner: '',
+  vin: '',
+  model: '',
+  regNumber: '',
+  year: '',
+  color: '',
+  category: '',
+  regDate: '',
+  issuer: '',
 })
 
 const formData = reactive({
   purpose: null,
-  address: 'Нарынская обл., г. Нарын, ул. Айтматова, д. 25, кв. 6',
+  address: '',
   phone: '',
   passport: null,
   driverLicense: null,
@@ -331,6 +340,16 @@ const isVehicleInvalid = computed(() => {
     !vehicleRegistrationDetails.category ||
     !vehicleRegistrationDetails.regDate ||
     !vehicleRegistrationDetails.issuer
+  )
+})
+
+const isFormValid = computed(() => {
+  return (
+    !isPassportInvalid.value &&
+    !isDriverInvalid.value &&
+    !isVehicleInvalid.value &&
+    formData.phone &&
+    formData.address
   )
 })
 import { useRouter } from 'vue-router'
