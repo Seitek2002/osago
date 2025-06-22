@@ -7,7 +7,7 @@
 
         <h3 class="text-suptitle">{{ t('calculator.quantityDrivers') }} <span>*</span></h3>
         <Dropdown
-          v-if="driverOptions.length"
+          v-if="driverOptions?.length"
           v-model="formData.driver"
           :options="driverOptions"
           :placeholder="driverOptions[0].label"
@@ -15,7 +15,7 @@
 
         <h3 class="text-suptitle">{{ t('calculator.experienceAge') }} <span>*</span></h3>
         <Dropdown
-          v-if="experienceOptions.length"
+          v-if="experienceOptions?.length"
           v-model="formData.driverExperience"
           :options="experienceOptions"
           :placeholder="experienceOptions[0].label"
@@ -47,7 +47,7 @@
 
         <h3 class="text-suptitle">{{ t('calculator.insuranceAge') }} <span>*</span></h3>
         <div class="insurance-duration">
-          <template v-if="insuranceDurations.length">
+          <template v-if="insuranceDurations?.length">
             <button
               v-for="({ label, value }, index) in insuranceDurations"
               :key="index"
@@ -84,26 +84,28 @@
 </template>
 
 <script setup>
+import { computed, reactive, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { onMounted } from 'vue'
+import { useCalcApiStore } from '@/stores/calcApiStore'
 import Container from '@/components/Container.vue'
 import Dropdown from '@/components/Dropdown.vue'
-import { computed, reactive, ref, watch } from 'vue'
 
 const isPayDisabled = computed(() => standartOfOsago.value === 0)
-import { useI18n } from 'vue-i18n'
-import { useCalcApiStore } from '@/stores/calcApiStore'
 const { locale, t } = useI18n()
-import { onMounted } from 'vue'
 
 const calcApiStore = useCalcApiStore()
 const standartOfOsago = ref(0)
 
 onMounted(() => {
-  if (!calcApiStore.coefficients) calcApiStore.fetchCoefficients()
+  if (!calcApiStore.coefficients) {
+    calcApiStore.fetchCoefficients()
+  }
 })
 
 const driverOptions = computed(() => {
   if (!calcApiStore.coefficients) return []
-  return calcApiStore.coefficients.driver.map(opt => ({
+  return calcApiStore.coefficients.driver?.map(opt => ({
     label: locale.value === 'ru' ? opt.labelRu : opt.labelKy,
     value: opt.value
   }))
@@ -111,7 +113,7 @@ const driverOptions = computed(() => {
 
 const experienceOptions = computed(() => {
   if (!calcApiStore.coefficients) return []
-  return calcApiStore.coefficients.experienceUi.map(opt => ({
+  return calcApiStore.coefficients.experienceUi?.map(opt => ({
     label: locale.value === 'ru' ? opt.labelRu : opt.labelKy,
     value: opt.value
   }))
@@ -119,7 +121,7 @@ const experienceOptions = computed(() => {
 
 const insuranceDurations = computed(() => {
   if (!calcApiStore.coefficients) return []
-  return calcApiStore.coefficients.insuranceDurationUi.map(opt => ({
+  return calcApiStore.coefficients.insuranceDurationUi?.map(opt => ({
     label: locale.value === 'ru' ? opt.labelRu : opt.labelKy,
     value: opt.value
   }))
