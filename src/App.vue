@@ -6,7 +6,6 @@ import { useRoute } from "vue-router";
 import Loader from "@/components/Loader.vue";
 
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
-import ServicesLayout from "@/layouts/ServicesLayout.vue";
 
 const route = useRoute();
 const router = useRouter();

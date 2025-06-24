@@ -9,10 +9,11 @@
         <!-- <p class="text-center">ОСАГО</p>
         <p class="text-center"></p> -->
         <div class="home__btns">
-          <router-link to="/documents-form" class="button"
-            ><span class="text-[20px]">{{ t('title') }}</span> <br />
-            <span class="text-[14px]">{{ t('home.OSAGO') }}</span></router-link
-          >
+          <router-link to="/documents-form" class="button">
+            <span class="text-[20px]">{{ t('title') }}</span>
+            <br />
+            <span class="text-[14px]">{{ t('home.OSAGO') }}</span>
+          </router-link>
           <router-link to="/" class="button">{{ t('home.KASKO') }}</router-link>
           <router-link to="/" class="button">{{ t('home.findPolicy') }}</router-link>
         </div>
@@ -26,12 +27,15 @@
           </p>
           <p>
             {{ t('footer.phoneNumber') }}:
-            <a href="tel:+996553545452" class="footer__link">+996 553 545 452</a>
+            <a href="tel:+996777394080" class="footer__link">+996 777 39 40 80</a>
           </p>
           <p>
-            {{ t('footer.email') }}: <a href="mailto:info@gso.kg" class="footer__link">info@gso.kg</a>
+            {{ t('footer.email') }}:
+            <a href="mailto:office@insurancebakai.kg" class="footer__link">office@insurancebakai.kg</a>
           </p>
           <p>{{ t('footer.address') }}</p>
+          <p>{{ t('footer.agentAddress') }}</p>
+          <p>{{ t('footer.agentInn') }}</p>
           <p>
             {{ t('footer.OAO') }}
           </p>
@@ -40,7 +44,7 @@
           </p>
           <div class="footer__socials">
             <a
-              href="https://wa.me/996553545452"
+              href="https://wa.me/996777394080"
               target="_blank"
               class="footer__social-link"
               aria-label="WhatsApp"

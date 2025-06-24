@@ -10,7 +10,7 @@
             type="text"
             placeholder="+996 (502) 235-509"
             :value="formData.phone"
-            class="form-input mt-[12px]"
+            :class="['form-input mt-[12px]', !formData.phone ? 'border-red-500' : '']"
             v-mask="'+996 (###) ###-###'"
             required
           />
@@ -27,7 +27,12 @@
           <label class="text-suptitle mb-[12px] block" for="address">
             {{ t('dataForms.addressHome') }}
           </label>
-          <textarea class="form-input" :value="formData.address" id="address" required></textarea>
+          <textarea
+            :class="['form-input', !formData.address ? 'border-red-500' : '']"
+            :value="formData.address"
+            id="address"
+            required
+          ></textarea>
         </div>
 
         <!-- <FormInput
