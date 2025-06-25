@@ -12,6 +12,7 @@
           <router-link to="/documents-form" class="button">
             <span class="text-[20px]">{{ t('title') }}</span>
             <br />
+            
             <span class="text-[14px]">{{ t('home.OSAGO') }}</span>
           </router-link>
           <router-link to="/" class="button">{{ t('home.KASKO') }}</router-link>
