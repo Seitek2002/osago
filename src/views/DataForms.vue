@@ -9,7 +9,7 @@
           <input
             type="text"
             placeholder="+996 (502) 235-509"
-            :value="formData.phone"
+            v-model="formData.phone"
             :class="['form-input mt-[12px]', !formData.phone ? 'border-red-500' : '']"
             v-mask="'+996 (###) ###-###'"
             required
@@ -29,7 +29,7 @@
           </label>
           <textarea
             :class="['form-input', !formData.address ? 'border-red-500' : '']"
-            :value="formData.address"
+            v-model="formData.address"
             id="address"
             required
           ></textarea>
@@ -361,6 +361,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 function handleFooterClick() {
+  if (!isFormValid.value) return;
   // Сохраняем данные только по кнопке
   ocrStore.passport = {
     ...ocrStore.passport,
