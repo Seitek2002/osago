@@ -3,12 +3,22 @@
     <Container>
       <div class="header__content">
         <headerIcon @click="handleClick" v-if="title !== t('home.title')" />
-        <span>{{ title || 'ОСАГО' }}</span>
-        <select v-model="lang">
-          <option value="ru">RU</option>
-          <option value="kg">KG</option>
-          <option value="en">ENG</option>
-        </select>
+        <span :style="{ paddingRight: title ? '50px' : '' }">{{ title || 'ОСАГО' }}</span>
+        <span
+          class="lang-switch"
+          :style="{
+            color: '#000',
+            position: 'absolute',
+            right: '-10px',
+            top: 0,
+            cursor: 'pointer',
+            background: 'white',
+            padding: '0 10px'
+          }"
+          @click="toggleLang"
+        >
+          {{ lang === 'kg' ? 'Кыргызча' : 'Русский' }}
+        </span>
       </div>
     </Container>
   </header>
@@ -18,7 +28,7 @@
 import { useRouter } from 'vue-router'
 import Container from './Container.vue'
 import headerIcon from '@/assets/icons/headerIcon.vue'
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 const { locale, t } = useI18n();
 
@@ -30,11 +40,16 @@ const handleClick = () => {
   router.back()
 }
 
-const lang = ref(locale.value);
+const savedLang = localStorage.getItem('lang');
+const lang = ref(savedLang || locale.value);
+locale.value = lang.value;
 
-watch(lang, (newLang) => {
+function toggleLang() {
+  const newLang = lang.value === 'kg' ? 'ru' : 'kg';
+  localStorage.setItem('lang', newLang);
+  lang.value = newLang;
   locale.value = newLang;
-});
+}
 </script>
 
 <style lang="scss">
@@ -57,8 +72,8 @@ watch(lang, (newLang) => {
     }
   }
 
-  select {
-    @apply text-[#000] absolute right-0 top-0;
+  .lang-switch {
+    /* Стили заданы инлайн */
   }
 }
 
