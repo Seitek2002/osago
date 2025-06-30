@@ -96,7 +96,19 @@
                 :label="t('dataForms.organGet')"
                 v-model:value="driverLicenseDetails.issuer"
               />
-              <DropdownDetail label="Категория" v-model:value="driverLicenseDetails.category" />
+              <div class="form-group">
+                <label class="text-suptitle">Категории</label>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                  <label v-for="cat in allCategories" :key="cat" style="display: flex; align-items: center; gap: 4px;">
+                    <input
+                      type="checkbox"
+                      :value="cat"
+                      v-model="driverLicenseDetails.category"
+                    />
+                    {{ cat }}
+                  </label>
+                </div>
+              </div>
             </div>
           </template>
         </Dropdown>
@@ -155,6 +167,10 @@ import { useI18n } from 'vue-i18n'
 const { locale, t } = useI18n()
 const ocrStore = useOcrStore()
 
+const allCategories = [
+  "A", "A1", "B", "B1", "C", "C1", "D", "D1", "BE", "CE", "C1E", "DE", "D1E"
+];
+
 const driverLicenseDetails = reactive({
   name: '',
   birthDate: '',
@@ -162,7 +178,7 @@ const driverLicenseDetails = reactive({
   issueDate: '',
   expiryDate: '',
   issuer: '',
-  category: '',
+  category: [],
 })
 
 const vehicleRegistrationDetails = reactive({
@@ -246,7 +262,14 @@ onMounted(() => {
     driverLicenseDetails.issueDate = ocrStore.driver_license.issueDate || ''
     driverLicenseDetails.expiryDate = ocrStore.driver_license.expiryDate || ''
     driverLicenseDetails.issuer = ocrStore.driver_license.authority || ''
-    driverLicenseDetails.category = ocrStore.driver_license.categories || ''
+    // categories: строка -> массив
+    if (typeof ocrStore.driver_license.categories === 'string') {
+      driverLicenseDetails.category = ocrStore.driver_license.categories.split(',').map(s => s.trim());
+    } else if (Array.isArray(ocrStore.driver_license.categories)) {
+      driverLicenseDetails.category = ocrStore.driver_license.categories;
+    } else {
+      driverLicenseDetails.category = [];
+    }
   }
   // Техпаспорт (vehicle_cert)
   if (ocrStore.vehicle_cert) {
@@ -330,7 +353,7 @@ const isDriverInvalid = computed(() => {
     !driverLicenseDetails.issueDate ||
     !driverLicenseDetails.expiryDate ||
     !driverLicenseDetails.issuer ||
-    !driverLicenseDetails.category
+    !driverLicenseDetails.category.length
   )
 })
 
@@ -381,7 +404,7 @@ function handleFooterClick() {
     issueDate: driverLicenseDetails.issueDate,
     expiryDate: driverLicenseDetails.expiryDate,
     authority: driverLicenseDetails.issuer,
-    categories: driverLicenseDetails.category,
+    categories: driverLicenseDetails.category.join(', '),
   }
   ocrStore.vehicle_cert = {
     ...ocrStore.vehicle_cert,
@@ -396,6 +419,11 @@ function handleFooterClick() {
     authority: vehicleRegistrationDetails.issuer,
   }
   ocrStore.saveToLocalStorage()
+  // Вывод всех данных в консоль перед переходом
+  console.log('passport:', ocrStore.passport);
+  console.log('driver_license:', ocrStore.driver_license);
+  console.log('vehicle_cert:', ocrStore.vehicle_cert);
+  console.log('formData:', JSON.parse(JSON.stringify(formData)));
   router.push('/calculator')
 }
 </script>
