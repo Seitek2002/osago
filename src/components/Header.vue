@@ -17,7 +17,7 @@
           }"
           @click="toggleLang"
         >
-          {{ lang === 'kg' ? 'Кыргызча' : 'Русский' }}
+          {{ lang === 'kg' ? 'Русский' : 'Кыргызча' }}
         </span>
       </div>
     </Container>
