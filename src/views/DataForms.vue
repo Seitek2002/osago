@@ -8,7 +8,7 @@
           <label class="text-suptitle">{{ t('dataForms.numberPhone') }}</label>
           <input
             type="text"
-            placeholder="+996 (502) Введите ID"
+            placeholder="+996 (502) 235-509"
             v-model="formData.phone"
             :class="['form-input mt-[12px]', !formData.phone ? 'border-red-500' : '']"
             v-mask="'+996 (###) ###-###'"
