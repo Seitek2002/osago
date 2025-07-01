@@ -64,7 +64,7 @@ const handleFooterClick = async () => {
       return
     }
     ocrStore.saveToLocalStorage()
-    router.push('/data-forms')
+    router.push('/data-forms-2')
   } catch (e) {
     alert(e.message || 'Ошибка при распознавании документов')
   } finally {

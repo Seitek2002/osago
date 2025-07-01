@@ -44,9 +44,9 @@ const handleReset = (field) => {
         :key="field"
         :for="field"
       >
-        <div class="file-upload-content">
-          <div v-if="isChange[field]" class="relative">
-            <cross class="absolute top-3 right-[-10px] z-[1] bg-white rounded" @click.stop.prevent="handleReset(field)" />
+        <div class="file-upload-content relative">
+          <div v-if="isChange[field]">
+            <cross class="absolute top-0 right-0 z-[1] bg-white rounded" @click.stop.prevent="handleReset(field)" />
             <img class="file-upload-image" :src="url" alt="Изображение" />
           </div>
           <div v-else class="relative">

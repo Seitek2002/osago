@@ -63,6 +63,14 @@ const router = createRouter({
       },
     },
     {
+      path: '/data-forms-2',
+      name: 'data-forms-2',
+      component: () => import('../views/DataForms2.vue'),
+      meta: {
+        layout: ServicesLayout,
+      },
+    },
+    {
       path: '/calculator',
       name: 'calculator',
       component: () => import('../views/Calculator.vue'),
