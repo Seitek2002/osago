@@ -5,9 +5,12 @@
         <h2 class="text-title">{{ t('dataForms.title') }}</h2>
 
         <div class="form-group">
-          <label class="text-suptitle">{{ t('dataForms.numberPhone') }}</label>
+          <label class="text-suptitle" for="phoneNumber"
+            >{{ t('dataForms.numberPhone') }} <span class="required">*</span></label
+          >
           <input
             type="text"
+            id="phoneNumber"
             placeholder="+996 (502) 235-509"
             v-model="formData.phone"
             :class="['form-input mt-[12px]', !formData.phone ? 'border-red-500' : '']"
@@ -16,7 +19,7 @@
           />
         </div>
 
-        <h3 class="text-suptitle">{{ t('dataForms.carUse') }} <span>*</span></h3>
+        <h3 class="text-suptitle">{{ t('dataForms.carUse') }} <span class="required">*</span></h3>
         <Dropdown
           v-model="formData.purpose"
           :options="purposeOptions"
@@ -25,14 +28,15 @@
 
         <div class="form-group">
           <label class="text-suptitle mb-[12px] block" for="address">
-            {{ t('dataForms.addressHome') }}
+            {{ t('dataForms.addressHome') }} <span class="required">*</span>
           </label>
-          <textarea
+          <input
             :class="['form-input', !formData.address ? 'border-red-500' : '']"
             v-model="formData.address"
+            placeholder="Введите адрес"
             id="address"
             required
-          ></textarea>
+          />
         </div>
 
         <!-- <FormInput
@@ -43,6 +47,7 @@
           v-mask="'+996 (###) ###-##-##'"
         /> -->
 
+        <h3 class="text-suptitle"> Проверьте ваши данные <span class="required">*</span></h3>
         <Dropdown
           v-model="formData.passport"
           :placeholder="t('dataForms.dataID')"
