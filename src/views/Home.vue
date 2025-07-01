@@ -9,14 +9,10 @@
         <!-- <p class="text-center">ОСАГО</p>
         <p class="text-center"></p> -->
         <div class="home__btns">
-          <router-link to="/documents-form" class="button">
+          <router-link to="/choose-form" class="button">
             <span class="text-[20px]">{{ t('title') }}</span>
             <br />
-            
-            <span class="text-[14px]">{{ t('home.OSAGO') }}</span>
           </router-link>
-          <router-link to="/" class="button">{{ t('home.KASKO') }}</router-link>
-          <router-link to="/" class="button">{{ t('home.findPolicy') }}</router-link>
         </div>
       </div>
     </Container>

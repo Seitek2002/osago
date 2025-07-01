@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, reactive } from 'vue'
+import { computed, ref, reactive, onMounted } from 'vue'
 import { useDocumentStore } from '@/stores/useDocumentStore'
 import { useOcrStore } from '@/stores/useOcrStore'
 import { useRouter } from 'vue-router'
@@ -13,7 +13,6 @@ import loader from '@/assets/icons/loader.vue'
 const documentStore = useDocumentStore()
 const ocrStore = useOcrStore()
 const router = useRouter()
-import { onMounted } from 'vue'
 
 const showReferalInput = ref(false)
 const referalId = ref('')
@@ -49,8 +48,9 @@ onMounted(() => {
   }
 })
 const personalDataChecked = ref(false)
-const isValid = computed(
-  () => !documentStore.areMandatoryDocumentsUploaded || loading.value || !personalDataChecked.value,
+const isDisabled = computed(
+  () =>
+    !documentStore.areMandatoryDocumentsUploaded2 || loading.value || !personalDataChecked.value,
 )
 const loading = ref(false)
 const { t } = useI18n()
@@ -59,7 +59,7 @@ const handleFooterClick = async () => {
   loading.value = true
   try {
     await ocrStore.recognizeAllDocuments(documentStore)
-    if (ocrStore.passportError || ocrStore.driverLicenseError || ocrStore.vehicleCertError) {
+    if (ocrStore.passportError || ocrStore.vehicleCertError) {
       loading.value = false
       return
     }
@@ -77,11 +77,6 @@ const documents = computed(() => [
     id: 'passport',
     title: t('documents_form.idPassport'),
     fields: ['passport-front-side', 'passport-back-side'],
-  },
-  {
-    id: 'license',
-    title: t('documents_form.license'),
-    fields: ['license-front-side', 'license-back-side'],
   },
   {
     id: 'certificate',
@@ -117,13 +112,7 @@ const handleFileChange = (event) => {
         :key="doc.id"
         :title="doc.title"
         :fields="doc.fields.map((field) => ({ field, ...documentStore.uploadedDocuments[field] }))"
-        :error="
-          doc.id === 'passport'
-            ? ocrStore.passportError
-            : doc.id === 'license'
-              ? ocrStore.driverLicenseError
-              : ocrStore.vehicleCertError
-        "
+        :error="doc.id === 'passport' ? ocrStore.passportError : ocrStore.vehicleCertError"
         @file-change="handleFileChange"
       />
 
@@ -157,7 +146,7 @@ const handleFileChange = (event) => {
           {{ t('documents_form.personalData') }}
         </label>
       </div>
-      <Footer :isValid="isValid" @click="handleFooterClick" :navigateTo="'/data-forms'" />
+      <Footer :isValid="isDisabled" @click="handleFooterClick" :navigateTo="'/data-forms'" />
       <div
         v-if="loading"
         class="fixed z-[10000] top-0 left-0 w-full h-full flex items-center justify-center bg-[rgba(0,0,0,0.5)]"

@@ -8,7 +8,7 @@
           <label class="text-suptitle">{{ t('dataForms.numberPhone') }}</label>
           <input
             type="text"
-            placeholder="+996 (502) 235-509"
+            placeholder="+996 (502) Введите ID"
             v-model="formData.phone"
             :class="['form-input mt-[12px]', !formData.phone ? 'border-red-500' : '']"
             v-mask="'+996 (###) ###-###'"
@@ -98,13 +98,13 @@
               />
               <div class="form-group">
                 <label class="text-suptitle">Категории</label>
-                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                  <label v-for="cat in allCategories" :key="cat" style="display: flex; align-items: center; gap: 4px;">
-                    <input
-                      type="checkbox"
-                      :value="cat"
-                      v-model="driverLicenseDetails.category"
-                    />
+                <div style="display: flex; flex-wrap: wrap; gap: 8px">
+                  <label
+                    v-for="cat in allCategories"
+                    :key="cat"
+                    style="display: flex; align-items: center; gap: 4px"
+                  >
+                    <input type="checkbox" :value="cat" v-model="driverLicenseDetails.category" />
                     {{ cat }}
                   </label>
                 </div>
@@ -167,9 +167,7 @@ import { useI18n } from 'vue-i18n'
 const { locale, t } = useI18n()
 const ocrStore = useOcrStore()
 
-const allCategories = [
-  "A", "A1", "B", "B1", "C", "C1", "D", "D1", "BE", "CE", "C1E", "DE", "D1E"
-];
+const allCategories = ['A', 'A1', 'B', 'B1', 'C', 'C1', 'D', 'D1', 'BE', 'CE', 'C1E', 'DE', 'D1E']
 
 const driverLicenseDetails = reactive({
   name: '',
@@ -208,7 +206,7 @@ const idDetails = reactive({
   inn: '',
   number: '',
   issuer: '',
-  issueDate: ''
+  issueDate: '',
 })
 
 onMounted(() => {
@@ -246,7 +244,13 @@ onMounted(() => {
 
   // Паспорт
   if (ocrStore.passport) {
-    idDetails.fullName = [ocrStore.passport.surname, ocrStore.passport.name, ocrStore.passport.patronymic].filter(Boolean).join(' ')
+    idDetails.fullName = [
+      ocrStore.passport.surname,
+      ocrStore.passport.name,
+      ocrStore.passport.patronymic,
+    ]
+      .filter(Boolean)
+      .join(' ')
     idDetails.inn = ocrStore.passport.personalNumber || ''
     idDetails.number = ocrStore.passport.documentNumber || ''
     idDetails.issuer = ocrStore.passport.authority || ''
@@ -264,11 +268,13 @@ onMounted(() => {
     driverLicenseDetails.issuer = ocrStore.driver_license.authority || ''
     // categories: строка -> массив
     if (typeof ocrStore.driver_license.categories === 'string') {
-      driverLicenseDetails.category = ocrStore.driver_license.categories.split(',').map(s => s.trim());
+      driverLicenseDetails.category = ocrStore.driver_license.categories
+        .split(',')
+        .map((s) => s.trim())
     } else if (Array.isArray(ocrStore.driver_license.categories)) {
-      driverLicenseDetails.category = ocrStore.driver_license.categories;
+      driverLicenseDetails.category = ocrStore.driver_license.categories
     } else {
-      driverLicenseDetails.category = [];
+      driverLicenseDetails.category = []
     }
   }
   // Техпаспорт (vehicle_cert)
@@ -384,7 +390,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 function handleFooterClick() {
-  if (!isFormValid.value) return;
+  if (!isFormValid.value) return
   // Сохраняем данные только по кнопке
   ocrStore.passport = {
     ...ocrStore.passport,
@@ -420,10 +426,10 @@ function handleFooterClick() {
   }
   ocrStore.saveToLocalStorage()
   // Вывод всех данных в консоль перед переходом
-  console.log('passport:', ocrStore.passport);
-  console.log('driver_license:', ocrStore.driver_license);
-  console.log('vehicle_cert:', ocrStore.vehicle_cert);
-  console.log('formData:', JSON.parse(JSON.stringify(formData)));
+  console.log('passport:', ocrStore.passport)
+  console.log('driver_license:', ocrStore.driver_license)
+  console.log('vehicle_cert:', ocrStore.vehicle_cert)
+  console.log('formData:', JSON.parse(JSON.stringify(formData)))
   router.push('/calculator')
 }
 </script>

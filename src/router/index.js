@@ -15,9 +15,33 @@ const router = createRouter({
       },
     },
     {
+      path: '/choose-form',
+      name: 'choose-form',
+      component: () => import('../views/ChooseForm.vue'),
+      meta: {
+        layout: ServicesLayout,
+      },
+    },
+    {
+      path: '/success',
+      name: 'success',
+      component: () => import('../views/Success.vue'),
+      meta: {
+        layout: ServicesLayout,
+      },
+    },
+    {
       path: '/documents-form',
       name: 'documents-form',
       component: () => import('../views/DocumentsForm.vue'),
+      meta: {
+        layout: ServicesLayout,
+      },
+    },
+    {
+      path: '/documents-form-2',
+      name: 'documents-form-2',
+      component: () => import('../views/DocumentsForm2.vue'),
       meta: {
         layout: ServicesLayout,
       },

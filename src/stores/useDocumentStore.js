@@ -39,5 +39,14 @@ export const useDocumentStore = defineStore('documentStore', {
       ]
       return mandatoryFields.every((field) => state.uploadedDocuments[field].file)
     },
+    areMandatoryDocumentsUploaded2: (state) => {
+      const mandatoryFields = [
+        'passport-front-side',
+        'passport-back-side',
+        'certificate-front-side',
+        'certificate-back-side',
+      ]
+      return mandatoryFields.every((field) => state.uploadedDocuments[field].file)
+    },
   },
 })
