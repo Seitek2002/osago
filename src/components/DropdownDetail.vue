@@ -3,7 +3,7 @@
     <div class="dropdown__detail">
       <span class="litle-title">{{ label }}</span>
       <input
-        :class="['litle-input', !value || value.trim() === '' ? 'border-red-500' : '']"
+        :class="['litle-input', !value || value.trim() === '' ? 'border-red-500' : 'border-[#0072DE] focus:border-[#0051FF]']"
         type="text"
         :value="value ?? ''"
         @input="$emit('update:value', $event.target.value)"
@@ -39,7 +39,7 @@ defineProps({
 }
 
 .litle-input {
-  @apply bg-white border border-[#0072DE] rounded-[8px] py-2 px-3 text-[16px] text-[#201F1F] placeholder:text-[#ADB0BA] outline-none focus:border-[#0051FF] transition-colors;
+  @apply bg-white border rounded-[8px] py-2 px-3 text-[16px] text-[#201F1F] placeholder:text-[#ADB0BA] outline-none transition-colors;
   box-shadow: 0 1px 4px 0 #e5e7eb22;
 }
 </style>

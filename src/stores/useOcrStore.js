@@ -42,7 +42,7 @@ export const useOcrStore = defineStore('ocrStore', {
         formData.append('backImage', back)
 
         try {
-          const response = await fetch(`https://oa.kg/api/ocr2/?documentType=${apiType}`, {
+          const response = await fetch(`https://oa.kg/api/ocr/?documentType=${apiType}`, {
             method: 'POST',
             body: formData,
           })

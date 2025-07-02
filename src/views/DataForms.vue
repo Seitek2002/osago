@@ -13,7 +13,7 @@
             id="phoneNumber"
             placeholder="+996 (502) 235-509"
             v-model="formData.phone"
-            :class="['form-input mt-[12px]', !formData.phone ? 'border-red-500' : '']"
+            :class="['form-input mt-[12px]', !formData.phone ? 'border-red-500' : 'border-gray-300']"
             v-mask="'+996 (###) ###-###'"
             required
           />
@@ -31,7 +31,7 @@
             {{ t('dataForms.addressHome') }} <span class="required">*</span>
           </label>
           <input
-            :class="['form-input', !formData.address ? 'border-red-500' : '']"
+            :class="['form-input', !formData.address ? 'border-red-500' : 'border-gray-300']"
             v-model="formData.address"
             placeholder="Введите адрес"
             id="address"
@@ -471,6 +471,6 @@ function handleFooterClick() {
 }
 
 .form-input {
-  @apply w-full bg-[#F7F8FA] border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500;
+  @apply w-full bg-[#F7F8FA] border rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500;
 }
 </style>
