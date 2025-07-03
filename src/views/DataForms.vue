@@ -78,10 +78,10 @@
                 required
               />
               <div class="form-group">
-                <label class="text-suptitle" for="birthDate">Дата рождения</label>
+                <label class="litle-title" for="birthDate">Дата рождения</label>
                 <input
                   type="date"
-                  class="form-input"
+                  class="form-input w-full"
                   id="birthDate"
                   v-model="driverLicenseDetails.birthDate"
                   required
@@ -210,6 +210,7 @@ const idDetails = reactive({
   fullName: '',
   inn: '',
   number: '',
+  series: '',
   issuer: '',
   issueDate: '',
 })
@@ -257,7 +258,7 @@ onMounted(() => {
       .filter(Boolean)
       .join(' ')
     idDetails.inn = ocrStore.passport.personalNumber || ''
-    idDetails.number = ocrStore.passport.documentNumber || ''
+    idDetails.number = ocrStore.passport.series + ocrStore.passport.number || ''
     idDetails.issuer = ocrStore.passport.authority || ''
     idDetails.issueDate = ocrStore.passport.issueDate || ''
   }
