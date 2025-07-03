@@ -13,7 +13,10 @@
             id="phoneNumber"
             placeholder="+996 (502) 235-509"
             v-model="formData.phone"
-            :class="['form-input mt-[12px]', !formData.phone ? 'border-red-500' : 'border-gray-300']"
+            :class="[
+              'form-input mt-[12px]',
+              !formData.phone ? 'border-red-500' : 'border-gray-300',
+            ]"
             v-mask="'+996 (###) ###-###'"
             required
           />
@@ -47,7 +50,7 @@
           v-mask="'+996 (###) ###-##-##'"
         /> -->
 
-        <h3 class="text-suptitle"> Проверьте ваши данные <span class="required">*</span></h3>
+        <h3 class="text-suptitle">Проверьте ваши данные <span class="required">*</span></h3>
         <Dropdown
           v-model="formData.passport"
           :placeholder="t('dataForms.dataID')"
@@ -60,10 +63,20 @@
               <DropdownDetail :label="t('dataForms.partID')" v-model:value="idDetails.number" />
               <div class="dropdown__bottom">
                 <DropdownDetail :label="t('dataForms.organGet')" v-model:value="idDetails.issuer" />
-                <DropdownDetail
-                  :label="t('dataForms.dateGet')"
-                  v-model:value="idDetails.issueDate"
-                />
+                <div class="dropdown__details-card">
+                  <div class="dropdown__detail">
+                    <label class="litle-title" for="idIssueDate">{{
+                      t('dataForms.dateGet')
+                    }}</label>
+                    <input
+                      type="date"
+                      class="form-input w-full"
+                      id="idIssueDate"
+                      v-model="idDetails.issueDate"
+                      required
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </template>
@@ -77,26 +90,47 @@
                 v-model:value="driverLicenseDetails.name"
                 required
               />
-              <div class="form-group">
-                <label class="litle-title" for="birthDate">Дата рождения</label>
-                <input
-                  type="date"
-                  class="form-input w-full"
-                  id="birthDate"
-                  v-model="driverLicenseDetails.birthDate"
-                  required
-                />
+              <div class="dropdown__details-card">
+                <div class="dropdown__detail">
+                  <label class="litle-title" for="birthDate">Дата рождения</label>
+                  <input
+                    type="date"
+                    class="form-input w-full"
+                    id="birthDate"
+                    v-model="driverLicenseDetails.birthDate"
+                    required
+                  />
+                </div>
               </div>
               <DropdownDetail
                 :label="t('dataForms.partNumber')"
                 v-model:value="driverLicenseDetails.number"
                 required
               />
-              <DropdownDetail label="Дата выдачи" v-model:value="driverLicenseDetails.issueDate" />
-              <DropdownDetail
-                label="Срок действия"
-                v-model:value="driverLicenseDetails.expiryDate"
-              />
+              <div class="dropdown__details-card">
+                <div class="dropdown__detail">
+                  <label class="litle-title" for="driverIssueDate">Дата выдачи</label>
+                  <input
+                    type="date"
+                    class="form-input w-full"
+                    id="driverIssueDate"
+                    v-model="driverLicenseDetails.issueDate"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="dropdown__details-card">
+                <div class="dropdown__detail">
+                  <label class="litle-title" for="driverExpiryDate">Срок действия</label>
+                  <input
+                    type="date"
+                    class="form-input w-full"
+                    id="driverExpiryDate"
+                    v-model="driverLicenseDetails.expiryDate"
+                    required
+                  />
+                </div>
+              </div>
               <DropdownDetail
                 :label="t('dataForms.organGet')"
                 v-model:value="driverLicenseDetails.issuer"
@@ -144,10 +178,18 @@
                 label="Категория"
                 v-model:value="vehicleRegistrationDetails.category"
               />
-              <DropdownDetail
-                label="Дата регистрации"
-                v-model:value="vehicleRegistrationDetails.regDate"
-              />
+              <div class="dropdown__details-card">
+                <div class="dropdown__detail">
+                  <label class="litle-title" for="vehicleRegDate">Дата регистрации</label>
+                  <input
+                    type="date"
+                    class="form-input w-full"
+                    id="vehicleRegDate"
+                    v-model="vehicleRegistrationDetails.regDate"
+                    required
+                  />
+                </div>
+              </div>
               <DropdownDetail
                 label="Орган выдачи"
                 v-model:value="vehicleRegistrationDetails.issuer"
