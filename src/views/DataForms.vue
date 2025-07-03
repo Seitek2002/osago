@@ -59,8 +59,15 @@
           <template #content>
             <div>
               <DropdownDetail :label="t('dataForms.fullName')" v-model:value="idDetails.fullName" />
+              <DropdownDetail label="Фамилия" v-model:value="idDetails.surname" />
+              <DropdownDetail label="Имя" v-model:value="idDetails.name" />
+              <DropdownDetail label="Отчество" v-model:value="idDetails.patronymic" />
               <DropdownDetail :label="t('dataForms.inn')" v-model:value="idDetails.inn" />
               <DropdownDetail :label="t('dataForms.partID')" v-model:value="idDetails.number" />
+              <DropdownDetail label="Серия" v-model:value="idDetails.series" />
+              <DropdownDetail label="Пол" v-model:value="idDetails.gender" :options="['Мужской', 'Женский']" />
+              <DropdownDetail label="Место рождения" v-model:value="idDetails.birthPlace" />
+              <DropdownDetail label="Национальность" v-model:value="idDetails.ethnicity" />
               <div class="dropdown__bottom">
                 <DropdownDetail :label="t('dataForms.organGet')" v-model:value="idDetails.issuer" />
                 <div class="dropdown__details-card">
@@ -73,6 +80,31 @@
                       class="form-input w-full"
                       id="idIssueDate"
                       v-model="idDetails.issueDate"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="dropdown__details-card">
+                  <div class="dropdown__detail">
+                    <label class="litle-title" for="idExpiryDate">Срок действия</label>
+                    <input
+                      type="date"
+                      class="form-input w-full"
+                      id="idExpiryDate"
+                      v-model="idDetails.expiryDate"
+                    />
+                  </div>
+                </div>
+                <div class="dropdown__details-card">
+                  <div class="dropdown__detail">
+                    <label class="litle-title" for="birthDate">{{
+                      t('dataForms.birthDate')
+                    }}</label>
+                    <input
+                      type="date"
+                      class="form-input w-full"
+                      id="birthDate"
+                      v-model="idDetails.birthDate"
                       required
                     />
                   </div>
@@ -165,8 +197,12 @@
               />
               <DropdownDetail label="VIN" v-model:value="vehicleRegistrationDetails.vin" />
               <DropdownDetail
-                label="Марка/модель"
-                v-model:value="vehicleRegistrationDetails.model"
+                label="Марка"
+                v-model:value="vehicleRegistrationDetails.brand"
+              />
+              <DropdownDetail
+                label="Модель"
+                v-model:value="vehicleRegistrationDetails.carModel"
               />
               <DropdownDetail
                 label="Регистрационный номер"
@@ -229,7 +265,8 @@ const driverLicenseDetails = reactive({
 const vehicleRegistrationDetails = reactive({
   owner: '',
   vin: '',
-  model: '',
+  carModel: '',
+  brand: '',
   regNumber: '',
   year: '',
   color: '',
@@ -255,6 +292,14 @@ const idDetails = reactive({
   series: '',
   issuer: '',
   issueDate: '',
+  birthDate: '',
+  surname: '',
+  name: '',
+  patronymic: '',
+  gender: '',
+  birthPlace: '',
+  ethnicity: '',
+  expiryDate: '',
 })
 
 onMounted(() => {
@@ -303,6 +348,14 @@ onMounted(() => {
     idDetails.number = ocrStore.passport.series + ocrStore.passport.number || ''
     idDetails.issuer = ocrStore.passport.authority || ''
     idDetails.issueDate = ocrStore.passport.issueDate || ''
+    idDetails.surname = ocrStore.passport.surname || ''
+    idDetails.name = ocrStore.passport.name || ''
+    idDetails.patronymic = ocrStore.passport.patronymic || ''
+    idDetails.gender = ocrStore.passport.gender || ''
+    idDetails.birthPlace = ocrStore.passport.birthPlace || ''
+    idDetails.ethnicity = ocrStore.passport.ethnicity || ''
+    idDetails.expiryDate = ocrStore.passport.expiryDate || ''
+    idDetails.series = ocrStore.passport.series || ''
   }
   // Водительское удостоверение
   if (ocrStore.driver_license) {
@@ -395,7 +448,15 @@ const isPassportInvalid = computed(() => {
     !idDetails.inn ||
     !idDetails.number ||
     !idDetails.issuer ||
-    !idDetails.issueDate
+    !idDetails.issueDate ||
+    !idDetails.surname ||
+    !idDetails.name ||
+    !idDetails.patronymic ||
+    !idDetails.gender ||
+    !idDetails.birthPlace ||
+    !idDetails.ethnicity ||
+    !idDetails.expiryDate ||
+    !idDetails.series
   )
 })
 
