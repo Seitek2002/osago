@@ -383,7 +383,8 @@ onMounted(() => {
     // Маппинг по ключам из ответа сервера
     vehicleRegistrationDetails.owner = ocrStore.vehicle_cert.ownerFullName || ''
     vehicleRegistrationDetails.vin = ocrStore.vehicle_cert.vin || ''
-    vehicleRegistrationDetails.model = ocrStore.vehicle_cert.brandModel || ''
+    vehicleRegistrationDetails.brand = ocrStore.vehicle_cert.brand || ''
+    vehicleRegistrationDetails.carModel = ocrStore.vehicle_cert.carModel || ''
     vehicleRegistrationDetails.regNumber = ocrStore.vehicle_cert.number || ''
     vehicleRegistrationDetails.year = ocrStore.vehicle_cert.yearOfManufacture || ''
     vehicleRegistrationDetails.color = ocrStore.vehicle_cert.color || ''
