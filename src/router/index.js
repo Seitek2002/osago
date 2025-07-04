@@ -39,7 +39,23 @@ const router = createRouter({
       },
     },
     {
+      path: '/documents-form/:id',
+      name: 'documents-form',
+      component: () => import('../views/DocumentsForm.vue'),
+      meta: {
+        layout: ServicesLayout,
+      },
+    },
+    {
       path: '/documents-form-2',
+      name: 'documents-form-2',
+      component: () => import('../views/DocumentsForm2.vue'),
+      meta: {
+        layout: ServicesLayout,
+      },
+    },
+    {
+      path: '/documents-form-2/:id',
       name: 'documents-form-2',
       component: () => import('../views/DocumentsForm2.vue'),
       meta: {
@@ -49,7 +65,7 @@ const router = createRouter({
     {
       path: '/:id',
       name: 'documents-form-referal',
-      component: () => import('../views/DocumentsForm.vue'),
+      component: () => import('../views/ChooseForm.vue'),
       meta: {
         layout: ServicesLayout,
       },
