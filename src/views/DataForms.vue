@@ -391,6 +391,7 @@ onMounted(() => {
     vehicleRegistrationDetails.category = ocrStore.vehicle_cert.vehicleCategory || ''
     vehicleRegistrationDetails.regDate = ocrStore.vehicle_cert.registrationDate || ''
     vehicleRegistrationDetails.issuer = ocrStore.vehicle_cert.authority || ''
+    formData.address = ocrStore.vehicle_cert.ownerAddress || ''
   }
 })
 
