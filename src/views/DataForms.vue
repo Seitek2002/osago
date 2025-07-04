@@ -167,7 +167,7 @@
                 :label="t('dataForms.organGet')"
                 v-model:value="driverLicenseDetails.issuer"
               />
-              <div class="form-group">
+              <div class="form-group" :class="{'border-red-500 border': isDriverInvalid}">
                 <label class="text-suptitle">Категории</label>
                 <div style="display: flex; flex-wrap: wrap; gap: 8px">
                   <label
@@ -370,8 +370,9 @@ onMounted(() => {
     // categories: строка -> массив
     if (typeof ocrStore.driver_license.categories === 'string') {
       driverLicenseDetails.category = ocrStore.driver_license.categories
-        .split(',')
+        .split(/[\s,]+/)
         .map((s) => s.trim())
+        .filter(Boolean)
     } else if (Array.isArray(ocrStore.driver_license.categories)) {
       driverLicenseDetails.category = ocrStore.driver_license.categories
     } else {
