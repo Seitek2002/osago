@@ -40,7 +40,7 @@ const router = createRouter({
     },
     {
       path: '/documents-form/:id',
-      name: 'documents-form',
+      name: 'documents-form-id',
       component: () => import('../views/DocumentsForm.vue'),
       meta: {
         layout: ServicesLayout,
@@ -56,7 +56,7 @@ const router = createRouter({
     },
     {
       path: '/documents-form-2/:id',
-      name: 'documents-form-2',
+      name: 'documents-form-2-id',
       component: () => import('../views/DocumentsForm2.vue'),
       meta: {
         layout: ServicesLayout,
