@@ -63,8 +63,8 @@
               <DropdownDetail label="Имя" v-model:value="idDetails.name" />
               <DropdownDetail label="Отчество" v-model:value="idDetails.patronymic" />
               <DropdownDetail :label="t('dataForms.inn')" v-model:value="idDetails.inn" />
-              <DropdownDetail :label="t('dataForms.partID')" v-model:value="idDetails.number" />
               <DropdownDetail label="Серия" v-model:value="idDetails.series" />
+              <DropdownDetail label="Номер" v-model:value="idDetails.number" />
               <DropdownDetail label="Пол" v-model:value="idDetails.gender" :options="['Мужской', 'Женский']" />
               <DropdownDetail label="Место рождения" v-model:value="idDetails.birthPlace" />
               <DropdownDetail label="Национальность" v-model:value="idDetails.ethnicity" />
@@ -345,7 +345,8 @@ onMounted(() => {
       .filter(Boolean)
       .join(' ')
     idDetails.inn = ocrStore.passport.personalNumber || ''
-    idDetails.number = ocrStore.passport.series + ocrStore.passport.number || ''
+    idDetails.series = ocrStore.passport.series || ''
+    idDetails.number = ocrStore.passport.number || ''
     idDetails.issuer = ocrStore.passport.authority || ''
     idDetails.issueDate = ocrStore.passport.issueDate || ''
     idDetails.surname = ocrStore.passport.surname || ''
@@ -355,7 +356,6 @@ onMounted(() => {
     idDetails.birthPlace = ocrStore.passport.birthPlace || ''
     idDetails.ethnicity = ocrStore.passport.ethnicity || ''
     idDetails.expiryDate = ocrStore.passport.expiryDate || ''
-    idDetails.series = ocrStore.passport.series || ''
   }
   // Водительское удостоверение
   if (ocrStore.driver_license) {
@@ -449,6 +449,7 @@ const isPassportInvalid = computed(() => {
   return (
     !idDetails.fullName ||
     !idDetails.inn ||
+    !idDetails.series ||
     !idDetails.number ||
     !idDetails.issuer ||
     !idDetails.issueDate ||
@@ -459,7 +460,7 @@ const isPassportInvalid = computed(() => {
     !idDetails.birthPlace ||
     !idDetails.ethnicity ||
     !idDetails.expiryDate ||
-    !idDetails.series
+    !idDetails.birthDate
   )
 })
 
@@ -479,7 +480,8 @@ const isVehicleInvalid = computed(() => {
   return (
     !vehicleRegistrationDetails.owner ||
     !vehicleRegistrationDetails.vin ||
-    !vehicleRegistrationDetails.model ||
+    !vehicleRegistrationDetails.brand ||
+    !vehicleRegistrationDetails.carModel ||
     !vehicleRegistrationDetails.regNumber ||
     !vehicleRegistrationDetails.year ||
     !vehicleRegistrationDetails.color ||
@@ -510,7 +512,8 @@ function handleFooterClick() {
     name: idDetails.name,
     patronymic: idDetails.patronymic,
     personalNumber: idDetails.inn,
-    documentNumber: idDetails.number,
+    series: idDetails.series,
+    number: idDetails.number,
     authority: idDetails.issuer,
     issueDate: idDetails.issueDate,
   }

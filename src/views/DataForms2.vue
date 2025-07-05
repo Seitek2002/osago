@@ -57,7 +57,20 @@
             <div>
               <DropdownDetail :label="t('dataForms.fullName')" v-model:value="idDetails.fullName" />
               <DropdownDetail :label="t('dataForms.inn')" v-model:value="idDetails.inn" />
-              <DropdownDetail :label="t('dataForms.partID')" v-model:value="idDetails.number" />
+              <DropdownDetail label="Серия" v-model:value="idDetails.series" />
+              <DropdownDetail label="Номер" v-model:value="idDetails.number" />
+              <div class="dropdown__details-card">
+                <div class="dropdown__detail">
+                  <label class="litle-title" for="birthDate">Дата рождения</label>
+                  <input
+                    type="date"
+                    class="form-input w-full"
+                    id="birthDate"
+                    v-model="idDetails.birthDate"
+                    required
+                  />
+                </div>
+              </div>
               <div class="dropdown__bottom">
                 <DropdownDetail :label="t('dataForms.organGet')" v-model:value="idDetails.issuer" />
                 <DropdownDetail
@@ -82,7 +95,11 @@
               />
               <DropdownDetail label="VIN" v-model:value="vehicleRegistrationDetails.vin" />
               <DropdownDetail
-                label="Марка/модель"
+                label="Марка"
+                v-model:value="vehicleRegistrationDetails.brand"
+              />
+              <DropdownDetail
+                label="Модель"
                 v-model:value="vehicleRegistrationDetails.model"
               />
               <DropdownDetail
@@ -95,10 +112,18 @@
                 label="Категория"
                 v-model:value="vehicleRegistrationDetails.category"
               />
-              <DropdownDetail
-                label="Дата регистрации"
-                v-model:value="vehicleRegistrationDetails.regDate"
-              />
+              <div class="dropdown__details-card">
+                <div class="dropdown__detail">
+                  <label class="litle-title" for="vehicleRegDate">Дата регистрации</label>
+                  <input
+                    type="date"
+                    class="form-input w-full"
+                    id="vehicleRegDate"
+                    v-model="vehicleRegistrationDetails.regDate"
+                    required
+                  />
+                </div>
+              </div>
               <DropdownDetail
                 label="Орган выдачи"
                 v-model:value="vehicleRegistrationDetails.issuer"
@@ -126,6 +151,7 @@ const ocrStore = useOcrStore()
 const vehicleRegistrationDetails = reactive({
   owner: '',
   vin: '',
+  brand: '',
   model: '',
   regNumber: '',
   year: '',
@@ -147,10 +173,22 @@ const formData = reactive({
 const idDetails = reactive({
   fullName: '',
   inn: '',
+  series: '',
   number: '',
   issuer: '',
   issueDate: '',
+  birthDate: '',
 })
+
+function sanitizeString(val) {
+  return typeof val === 'string' && val.trim() !== '' ? val : '';
+}
+function sanitizeDate(val) {
+  // Accepts only valid YYYY-MM-DD format
+  if (typeof val !== 'string') return '';
+  const m = val.match(/^\d{4}-\d{2}-\d{2}$/);
+  return m ? val : '';
+}
 
 onMounted(() => {
   // Загрузка из localStorage, если store пуст
@@ -166,6 +204,7 @@ onMounted(() => {
   idDetails.number = ''
   idDetails.issuer = ''
   idDetails.issueDate = ''
+  idDetails.birthDate = ''
 
   vehicleRegistrationDetails.owner = ''
   vehicleRegistrationDetails.vin = ''
@@ -180,29 +219,32 @@ onMounted(() => {
   // Паспорт
   if (ocrStore.passport) {
     idDetails.fullName = [
-      ocrStore.passport.surname,
-      ocrStore.passport.name,
-      ocrStore.passport.patronymic,
+      sanitizeString(ocrStore.passport.surname),
+      sanitizeString(ocrStore.passport.name),
+      sanitizeString(ocrStore.passport.patronymic),
     ]
       .filter(Boolean)
       .join(' ')
-    idDetails.inn = ocrStore.passport.personalNumber || ''
-    idDetails.number = ocrStore.passport.documentNumber || ''
-    idDetails.issuer = ocrStore.passport.authority || ''
-    idDetails.issueDate = ocrStore.passport.issueDate || ''
+    idDetails.inn = sanitizeString(ocrStore.passport.personalNumber)
+    idDetails.series = sanitizeString(ocrStore.passport.series)
+    idDetails.number = sanitizeString(ocrStore.passport.number)
+    idDetails.issuer = sanitizeString(ocrStore.passport.authority)
+    idDetails.issueDate = sanitizeDate(ocrStore.passport.issueDate)
+    idDetails.birthDate = sanitizeDate(ocrStore.passport.birthDate)
   }
   // Техпаспорт (vehicle_cert)
   if (ocrStore.vehicle_cert) {
     // Маппинг по ключам из ответа сервера
-    vehicleRegistrationDetails.owner = ocrStore.vehicle_cert.ownerFullName || ''
-    vehicleRegistrationDetails.vin = ocrStore.vehicle_cert.vin || ''
-    vehicleRegistrationDetails.model = ocrStore.vehicle_cert.brandModel || ''
-    vehicleRegistrationDetails.regNumber = ocrStore.vehicle_cert.number || ''
-    vehicleRegistrationDetails.year = ocrStore.vehicle_cert.yearOfManufacture || ''
-    vehicleRegistrationDetails.color = ocrStore.vehicle_cert.color || ''
-    vehicleRegistrationDetails.category = ocrStore.vehicle_cert.vehicleCategory || ''
-    vehicleRegistrationDetails.regDate = ocrStore.vehicle_cert.registrationDate || ''
-    vehicleRegistrationDetails.issuer = ocrStore.vehicle_cert.authority || ''
+    vehicleRegistrationDetails.owner = sanitizeString(ocrStore.vehicle_cert.ownerFullName)
+    vehicleRegistrationDetails.vin = sanitizeString(ocrStore.vehicle_cert.vin)
+    vehicleRegistrationDetails.brand = sanitizeString(ocrStore.vehicle_cert.brandName)
+    vehicleRegistrationDetails.model = sanitizeString(ocrStore.vehicle_cert.carModel)
+    vehicleRegistrationDetails.regNumber = sanitizeString(ocrStore.vehicle_cert.number)
+    vehicleRegistrationDetails.year = sanitizeString(ocrStore.vehicle_cert.yearOfManufacture)
+    vehicleRegistrationDetails.color = sanitizeString(ocrStore.vehicle_cert.color)
+    vehicleRegistrationDetails.category = sanitizeString(ocrStore.vehicle_cert.vehicleCategory)
+    vehicleRegistrationDetails.regDate = sanitizeDate(ocrStore.vehicle_cert.registrationDate)
+    vehicleRegistrationDetails.issuer = sanitizeString(ocrStore.vehicle_cert.authority)
   }
 })
 
@@ -259,9 +301,11 @@ const isPassportInvalid = computed(() => {
   return (
     !idDetails.fullName ||
     !idDetails.inn ||
+    !idDetails.series ||
     !idDetails.number ||
     !idDetails.issuer ||
-    !idDetails.issueDate
+    !idDetails.issueDate ||
+    !idDetails.birthDate
   )
 })
 
@@ -269,6 +313,7 @@ const isVehicleInvalid = computed(() => {
   return (
     !vehicleRegistrationDetails.owner ||
     !vehicleRegistrationDetails.vin ||
+    !vehicleRegistrationDetails.brand ||
     !vehicleRegistrationDetails.model ||
     !vehicleRegistrationDetails.regNumber ||
     !vehicleRegistrationDetails.year ||
@@ -299,7 +344,8 @@ function handleFooterClick() {
     name: idDetails.name,
     patronymic: idDetails.patronymic,
     personalNumber: idDetails.inn,
-    documentNumber: idDetails.number,
+    series: idDetails.series,
+    number: idDetails.number,
     authority: idDetails.issuer,
     issueDate: idDetails.issueDate,
   }
@@ -307,7 +353,8 @@ function handleFooterClick() {
     ...ocrStore.vehicle_cert,
     ownerFullName: vehicleRegistrationDetails.owner,
     vin: vehicleRegistrationDetails.vin,
-    brandModel: vehicleRegistrationDetails.model,
+    brandName: vehicleRegistrationDetails.brand,
+    carModel: vehicleRegistrationDetails.model,
     number: vehicleRegistrationDetails.regNumber,
     yearOfManufacture: vehicleRegistrationDetails.year,
     color: vehicleRegistrationDetails.color,
