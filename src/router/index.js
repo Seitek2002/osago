@@ -63,7 +63,7 @@ const router = createRouter({
       },
     },
     {
-      path: '/:id',
+      path: '/I/:id',
       name: 'documents-form-referal',
       component: () => import('../views/ChooseForm.vue'),
       meta: {
