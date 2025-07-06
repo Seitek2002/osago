@@ -363,6 +363,12 @@ function handleFooterClick() {
     authority: vehicleRegistrationDetails.issuer,
   }
   ocrStore.saveToLocalStorage()
+  // Сохраняем номер телефона в ocrData в localStorage
+  try {
+    const ocrData = JSON.parse(localStorage.getItem('ocrData') || '{}')
+    ocrData.phoneNumber = formData.phone
+    localStorage.setItem('ocrData', JSON.stringify(ocrData))
+  } catch {}
   // Вывод всех данных в консоль перед переходом
   console.log('passport:', ocrStore.passport)
   console.log('driver_license:', ocrStore.driver_license)

@@ -89,75 +89,64 @@
 import { computed, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { onMounted } from 'vue'
-import { useCalcApiStore } from '@/stores/calcApiStore'
 import Container from '@/components/Container.vue'
 import Dropdown from '@/components/Dropdown.vue'
 
 const isPayDisabled = computed(() => standartOfOsago.value === 0)
 const { locale, t } = useI18n()
 
-const calcApiStore = useCalcApiStore()
 const standartOfOsago = ref(0)
 
-onMounted(() => {
-  if (!calcApiStore.coefficients) {
-    calcApiStore.fetchCoefficients()
-  }
-})
-
-const driverOptions = computed(() => {
-  if (!calcApiStore.coefficients) return []
-  return calcApiStore.coefficients.driver?.map((opt) => ({
-    label: locale.value === 'ru' ? opt.labelRu : opt.labelKy,
-    value: opt.value,
-  }))
-})
-
-const experienceOptions = computed(() => {
-  if (!calcApiStore.coefficients) return []
-  return calcApiStore.coefficients.experienceUi?.map((opt) => ({
-    label: locale.value === 'ru' ? opt.labelRu : opt.labelKy,
-    value: opt.value,
-  }))
-})
-
-const insuranceDurations = computed(() => {
-  if (!calcApiStore.coefficients) return []
-  return calcApiStore.coefficients.insuranceDurationUi?.map((opt) => ({
-    label: locale.value === 'ru' ? opt.labelRu : opt.labelKy,
-    value: opt.value,
-  }))
-})
-
 const formData = reactive({
-  driver: 1.6,
-  driverExperience: 1.4,
   diagnosticCard: 1,
   insuranceDuration: 1,
   previousAgreement: 1,
+  // Добавьте сюда остальные поля, которые нужны для запроса
 })
 
 watch(
-  () => formData,
-  () => {
-    if (!calcApiStore.coefficients) return
-    const basePrice = calcApiStore.coefficients.baseRate?.[0]?.value || 0
-    const coefficients = [
-      formData.driver || 1,
-      formData.driverExperience || 1,
-      formData.diagnosticCard || 1,
-      formData.insuranceDuration || 1,
-    ]
-
-    const totalMultiplier = coefficients.reduce((acc, coef) => acc * coef, 1)
-
-    let price = Math.ceil(basePrice * totalMultiplier)
-    const tax = calcApiStore.coefficients.tax?.[0]?.value || 0
-    standartOfOsago.value = Math.ceil(price * (1 + tax))
+  formData,
+  async () => {
+    // Получаем данные из localStorage
+    let ocrData = {}
+    try {
+      ocrData = JSON.parse(localStorage.getItem('ocrData') || '{}')
+    } catch {
+      ocrData = {}
+    }
+    // phoneNumber должен быть отдельным полем в ocrData
+    // category должен быть массивом
+    const driverLicense = { ...(ocrData.driver_license || {}) }
+    if (driverLicense.category && typeof driverLicense.category === 'string') {
+      driverLicense.category = driverLicense.category.split(',').map(s => s.trim()).filter(Boolean)
+    }
+    if (!Array.isArray(driverLicense.category)) {
+      driverLicense.category = []
+    }
+    const body = {
+      phoneNumber: ocrData.phoneNumber || '', // теперь используем отдельное поле phoneNumber
+      passport: ocrData.passport || {},
+      driverLicense,
+      vehicleRegistrationCertificate: ocrData.vehicle_cert || {},
+      // добавьте остальные поля, если нужно
+    }
+    try {
+      const response = await fetch('https://oa.kg/api/osago/calculate/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+      if (response.ok) {
+        const data = await response.json()
+        standartOfOsago.value = data.amount || 0
+      } else {
+        standartOfOsago.value = 0
+      }
+    } catch {
+      standartOfOsago.value = 0
+    }
   },
-  {
-    deep: true,
-  },
+  { deep: true, immediate: true }
 )
 </script>
 

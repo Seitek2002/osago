@@ -210,6 +210,14 @@
               />
               <DropdownDetail label="Год выпуска" v-model:value="vehicleRegistrationDetails.year" />
               <DropdownDetail label="Цвет" v-model:value="vehicleRegistrationDetails.color" />
+              <DropdownDetail label="Тип двигателя" v-model:value="vehicleRegistrationDetails.engineType" />
+              <DropdownDetail label="Объем двигателя" v-model:value="vehicleRegistrationDetails.engineCapacity" />
+              <DropdownDetail label="Мощность двигателя" v-model:value="vehicleRegistrationDetails.enginePower" />
+              <DropdownDetail label="Кузов/шасси №" v-model:value="vehicleRegistrationDetails.carBodyChassisNumber" />
+              <DropdownDetail label="Тип кузова" v-model:value="vehicleRegistrationDetails.carBodyType" />
+              <DropdownDetail label="Расположение руля" v-model:value="vehicleRegistrationDetails.steeringLocation" />
+              <DropdownDetail label="Макс. масса" v-model:value="vehicleRegistrationDetails.maxPermissibleMass" />
+              <DropdownDetail label="Собственная масса" v-model:value="vehicleRegistrationDetails.unladenMass" />
               <DropdownDetail
                 label="Категория"
                 v-model:value="vehicleRegistrationDetails.category"
@@ -273,6 +281,14 @@ const vehicleRegistrationDetails = reactive({
   category: '',
   regDate: '',
   issuer: '',
+  engineType: '',
+  engineCapacity: '',
+  enginePower: '',
+  carBodyChassisNumber: '',
+  carBodyType: '',
+  steeringLocation: '',
+  maxPermissibleMass: '',
+  unladenMass: '',
 })
 
 const formData = reactive({
@@ -392,6 +408,14 @@ onMounted(() => {
     vehicleRegistrationDetails.category = ocrStore.vehicle_cert.vehicleCategory || ''
     vehicleRegistrationDetails.regDate = ocrStore.vehicle_cert.registrationDate || ''
     vehicleRegistrationDetails.issuer = ocrStore.vehicle_cert.authority || ''
+    vehicleRegistrationDetails.engineType = ocrStore.vehicle_cert.engineType || ''
+    vehicleRegistrationDetails.engineCapacity = ocrStore.vehicle_cert.engineCapacity || ''
+    vehicleRegistrationDetails.enginePower = ocrStore.vehicle_cert.enginePower || ''
+    vehicleRegistrationDetails.carBodyChassisNumber = ocrStore.vehicle_cert.carBodyChassisNumber || ''
+    vehicleRegistrationDetails.carBodyType = ocrStore.vehicle_cert.carBodyType || ''
+    vehicleRegistrationDetails.steeringLocation = ocrStore.vehicle_cert.steeringLocation || ''
+    vehicleRegistrationDetails.maxPermissibleMass = ocrStore.vehicle_cert.maxPermissibleMass || ''
+    vehicleRegistrationDetails.unladenMass = ocrStore.vehicle_cert.unladenMass || ''
     formData.address = ocrStore.vehicle_cert.ownerAddress || ''
   }
 })
@@ -485,6 +509,14 @@ const isVehicleInvalid = computed(() => {
     !vehicleRegistrationDetails.regNumber ||
     !vehicleRegistrationDetails.year ||
     !vehicleRegistrationDetails.color ||
+    !vehicleRegistrationDetails.engineType ||
+    !vehicleRegistrationDetails.engineCapacity ||
+    !vehicleRegistrationDetails.enginePower ||
+    !vehicleRegistrationDetails.carBodyChassisNumber ||
+    !vehicleRegistrationDetails.carBodyType ||
+    !vehicleRegistrationDetails.steeringLocation ||
+    !vehicleRegistrationDetails.maxPermissibleMass ||
+    !vehicleRegistrationDetails.unladenMass ||
     !vehicleRegistrationDetails.category ||
     !vehicleRegistrationDetails.regDate ||
     !vehicleRegistrationDetails.issuer
@@ -531,15 +563,30 @@ function handleFooterClick() {
     ...ocrStore.vehicle_cert,
     ownerFullName: vehicleRegistrationDetails.owner,
     vin: vehicleRegistrationDetails.vin,
-    brandModel: vehicleRegistrationDetails.model,
+    brand: vehicleRegistrationDetails.brand,
+    carModel: vehicleRegistrationDetails.carModel,
     number: vehicleRegistrationDetails.regNumber,
     yearOfManufacture: vehicleRegistrationDetails.year,
     color: vehicleRegistrationDetails.color,
     vehicleCategory: vehicleRegistrationDetails.category,
     registrationDate: vehicleRegistrationDetails.regDate,
     authority: vehicleRegistrationDetails.issuer,
+    engineType: vehicleRegistrationDetails.engineType,
+    engineCapacity: vehicleRegistrationDetails.engineCapacity,
+    enginePower: vehicleRegistrationDetails.enginePower,
+    carBodyChassisNumber: vehicleRegistrationDetails.carBodyChassisNumber,
+    carBodyType: vehicleRegistrationDetails.carBodyType,
+    steeringLocation: vehicleRegistrationDetails.steeringLocation,
+    maxPermissibleMass: vehicleRegistrationDetails.maxPermissibleMass,
+    unladenMass: vehicleRegistrationDetails.unladenMass,
   }
   ocrStore.saveToLocalStorage()
+  // Сохраняем номер телефона в ocrData в localStorage
+  try {
+    const ocrData = JSON.parse(localStorage.getItem('ocrData') || '{}')
+    ocrData.phoneNumber = (formData.phone || '').replace(/\D/g, '')
+    localStorage.setItem('ocrData', JSON.stringify(ocrData))
+  } catch {}
   // Вывод всех данных в консоль перед переходом
   console.log('passport:', ocrStore.passport)
   console.log('driver_license:', ocrStore.driver_license)
