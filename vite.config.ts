@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -8,5 +9,5 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 3000,
   },
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), legacy()],
 });
