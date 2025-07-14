@@ -40,7 +40,7 @@ const PurposeDropdown: FC<IProps> = ({ userFormData, setUserFormData }) => {
       </h3>
       <div
         className={`relative w-full border rounded-[10px] overflow-hidden transition-colors ${
-          touchedFields.purpose && userFormData.purpose.name === 'Выберите цель'
+          touchedFields.purpose && userFormData.purpose?.name === 'Выберите цель'
             ? 'border-red-500'
             : 'border-[#E5E7EB]'
         }`}
@@ -53,7 +53,7 @@ const PurposeDropdown: FC<IProps> = ({ userFormData, setUserFormData }) => {
             setTouchedFields((prev) => ({ ...prev, purpose: true }))
           }
         >
-          {userFormData.purpose.name === 'Выберите цель' ? (
+          {userFormData.purpose?.name === 'Выберите цель' ? (
             <img src={warning} alt='' className='size-[20px] absolute' />
           ) : (
             <img
