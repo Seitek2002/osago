@@ -97,34 +97,34 @@ const DataForms: React.FC = () => {
 
   // Валидация паспорта по требованиям пользователя (только required из JSON)
   const isPassportValid =
-    !!userFormData.passport.surname &&
-    !!userFormData.passport.name &&
-    !!userFormData.passport.birthDate &&
-    !!userFormData.passport.series &&
-    !!userFormData.passport.number &&
-    !!userFormData.passport.issueDate &&
-    !!userFormData.passport.personalNumber;
+    !!userFormData?.passport?.surname &&
+    !!userFormData?.passport?.name &&
+    !!userFormData?.passport?.birthDate &&
+    !!userFormData?.passport?.series &&
+    !!userFormData?.passport?.number &&
+    !!userFormData?.passport?.issueDate &&
+    !!userFormData?.passport?.personalNumber;
 
   // Валидация техпаспорта по требованиям пользователя (только required из JSON)
   const isVehicleCertValid =
-    !!userFormData.vehicle_cert.number &&
-    !!userFormData.vehicle_cert.vin &&
-    !!userFormData.vehicle_cert.ownerFullName &&
-    !!userFormData.vehicle_cert.personalNumber &&
-    !!userFormData.vehicle_cert.brandId &&
-    !!userFormData.vehicle_cert.carModelId &&
-    !!userFormData.vehicle_cert.steeringLocation &&
-    !!userFormData.vehicle_cert.engineType &&
-    !!userFormData.vehicle_cert.yearOfManufacture &&
-    !!userFormData.vehicle_cert.vehicleCategory;
+    !!userFormData?.vehicle_cert?.number &&
+    !!userFormData?.vehicle_cert?.vin &&
+    !!userFormData?.vehicle_cert?.ownerFullName &&
+    !!userFormData?.vehicle_cert?.personalNumber &&
+    !!userFormData?.vehicle_cert?.brandId &&
+    !!userFormData?.vehicle_cert?.carModelId &&
+    !!userFormData?.vehicle_cert?.steeringLocation &&
+    !!userFormData?.vehicle_cert?.engineType &&
+    !!userFormData?.vehicle_cert?.yearOfManufacture &&
+    !!userFormData?.vehicle_cert?.vehicleCategory;
 
   // Водительское удостоверение не обязательно
   // (isDriverLicenseValid больше не используется)
 
   const isFormValid =
-    !!userFormData.phoneNumber &&
-    !!userFormData.purpose.id &&
-    userFormData.unlimitedDrivers === true &&
+    !!userFormData?.phoneNumber &&
+    !!userFormData?.purpose.id &&
+    userFormData?.unlimitedDrivers === true &&
     isPassportValid &&
     isVehicleCertValid;
 
