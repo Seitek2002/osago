@@ -63,7 +63,7 @@ const PurposeDropdown: FC<IProps> = ({ userFormData, setUserFormData }) => {
             />
           )}
           <span className='font-semibold ml-[25px]'>
-            {userFormData.purpose.name}
+            {userFormData.purpose?.name}
           </span>
           <span className='ml-2 transition-transform duration-200'>
             <img src={dropdownArrow} alt='' />
@@ -81,7 +81,7 @@ const PurposeDropdown: FC<IProps> = ({ userFormData, setUserFormData }) => {
                 className='px-4 py-2 cursor-pointer hover:bg-[#F5F5F5] text-[16px] text-[#201F1F] rounded-[8px] transition-colors'
                 onClick={() => handlePurposeClick(purpose)}
               >
-                {purpose.name}
+                {purpose?.name}
               </li>
             ))}
           </ul>
