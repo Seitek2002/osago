@@ -61,8 +61,8 @@ const localData = JSON.parse(localStorage.getItem('ocrData') || '{}');
 const FORM_STORAGE_KEY = 'formData2';
 
 const getInitialFormState = () => {
-  const saved = localStorage.getItem(FORM_STORAGE_KEY);
-  if (saved) {
+  const saved = JSON.parse(localStorage.getItem(FORM_STORAGE_KEY) || '{}');
+  if (saved?.name) {
     try {
       return JSON.parse(saved);
     } catch {
