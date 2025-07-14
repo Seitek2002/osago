@@ -82,7 +82,7 @@ const UploadIcon = () => (
 const DocumentsForm2: React.FC = () => {
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [recognizeDocument, { isLoading, isError }] =
+  const [recognizeDocument, { isLoading }] =
     useRecognizeDocumentMutation();
 
   const [passportFront, setPassportFront] = React.useState<File | null>(null);
