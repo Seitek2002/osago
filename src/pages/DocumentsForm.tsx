@@ -84,6 +84,9 @@ const UploadIcon = () => (
 const DocumentsForm: React.FC = () => {
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [recognizeDocument, { isLoading, isError }] =
+    useRecognizeDocumentMutation();
+
   const [passportFront, setPassportFront] = React.useState<File | null>(null);
   const [passportBack, setPassportBack] = React.useState<File | null>(null);
   const [tpFront, setTpFront] = React.useState<File | null>(null);
@@ -92,7 +95,31 @@ const DocumentsForm: React.FC = () => {
   const [pravaBack, setPravaBack] = React.useState<File | null>(null);
 
   const [personalDataChecked, setPersonalDataChecked] = React.useState(false);
-  const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
+  // Глобальная ошибка больше не нужна
+  // const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
+
+  // Состояния ошибок для каждого документа
+  const [passportError, setPassportError] = React.useState<string | null>(null);
+  const [pravaError, setPravaError] = React.useState<string | null>(null);
+  const [vehicleError, setVehicleError] = React.useState<string | null>(null);
+
+  // Состояние для таймера
+  const [timer, setTimer] = React.useState(30);
+
+  React.useEffect(() => {
+    let interval: number | null = null;
+    if (isLoading) {
+      setTimer(30); // сброс при каждом новом isLoading
+      interval = window.setInterval(() => {
+        setTimer((prev) => (prev === 1 ? 30 : prev - 1));
+      }, 1000);
+    } else {
+      setTimer(30);
+    }
+    return () => {
+      if (interval !== null) window.clearInterval(interval);
+    };
+  }, [isLoading]);
 
   const isValid = Boolean(
     passportFront &&
@@ -104,11 +131,12 @@ const DocumentsForm: React.FC = () => {
       pravaBack
   );
 
-  const [recognizeDocument, { isLoading, isError }] =
-    useRecognizeDocumentMutation();
-
   const handleSend = async () => {
-    setErrorMsg(null);
+    // Сброс ошибок перед отправкой
+    setPassportError(null);
+    setPravaError(null);
+    setVehicleError(null);
+
     if (
       !passportFront ||
       !passportBack ||
@@ -119,45 +147,72 @@ const DocumentsForm: React.FC = () => {
       !pravaBack
     )
       return;
+
+    let passportRes, vehicleRes, driverRes;
+
+    // Паспорт
     try {
-      const passportRes = await recognizeDocument({
+      passportRes = await recognizeDocument({
         documentType: 'passport',
         front: passportFront,
         back: passportBack,
       }).unwrap();
+    } catch (err: any) {
+      setPassportError(
+        err?.data?.error ||
+        err?.error ||
+        (typeof err === 'string' ? err : 'Ошибка при загрузке или сканировании документов')
+      );
+      return;
+    }
 
-      const vehicleRes = await recognizeDocument({
+    // Свидетельство
+    try {
+      vehicleRes = await recognizeDocument({
         documentType: 'vehicle_cert',
         front: tpFront,
         back: tpBack,
       }).unwrap();
+    } catch (err: any) {
+      setVehicleError(
+        err?.data?.error ||
+        err?.error ||
+        (typeof err === 'string' ? err : 'Ошибка при загрузке или сканировании документов')
+      );
+      return;
+    }
 
-      const driverRes = await recognizeDocument({
+    // Права
+    try {
+      driverRes = await recognizeDocument({
         documentType: 'driver_license',
         front: pravaFront,
         back: pravaBack,
       }).unwrap();
-
-      localStorage.setItem(
-        'ocrData',
-        JSON.stringify({
-          passport: passportRes,
-          vehicle_cert: vehicleRes,
-          driverLicense: driverRes,
-        })
-      );
-
-      if(!driverRes.data?.categories) return
-      if(!vehicleRes.data?.vehicleCategory) return
-
-      navigate('/data-forms');
     } catch (err: any) {
-      setErrorMsg(
+      setPravaError(
         err?.data?.error ||
-          err?.error ||
-          (typeof err === 'string' ? err : 'Ошибка при отправке запроса')
+        err?.error ||
+        (typeof err === 'string' ? err : 'Ошибка при загрузке или сканировании документов')
       );
+      return;
     }
+
+    localStorage.setItem('ocrData', '{}')
+
+    localStorage.setItem(
+      'ocrData',
+      JSON.stringify({
+        passport: passportRes,
+        vehicle_cert: vehicleRes,
+        driverLicense: driverRes,
+      })
+    );
+
+    if (!driverRes.data?.categories) return;
+    if (!vehicleRes.data?.vehicleCategory) return;
+
+    navigate('/data-forms');
   };
 
   return (
@@ -247,9 +302,11 @@ const DocumentsForm: React.FC = () => {
               />
             </label>
           </div>
-          <div className='text-red-500 text-center text-[13px] -mt-2 mb-[20px] hidden'>
-            Ошибка сканирования или загрузки документа
-          </div>
+          {passportError && (
+            <div className='text-red-500 text-center text-[13px] -mt-2 mb-[20px]'>
+              {passportError}
+            </div>
+          )}
         </div>
 
         {/* Блок загрузки водительских прав */}
@@ -335,9 +392,9 @@ const DocumentsForm: React.FC = () => {
             </label>
           </div>
           {/* Блок ошибки */}
-          {(isError || errorMsg) && (
+          {pravaError && (
             <div className='text-red-500 text-center text-[13px] mt-2 mb-[20px]'>
-              Ошибка сканирования или загрузки документа
+              {pravaError}
             </div>
           )}
         </div>
@@ -425,9 +482,9 @@ const DocumentsForm: React.FC = () => {
             </label>
           </div>
           {/* Блок ошибки */}
-          {(isError || errorMsg) && (
+          {vehicleError && (
             <div className='text-red-500 text-center text-[13px] mt-2 mb-[20px]'>
-              Ошибка сканирования или загрузки документа
+              {vehicleError}
             </div>
           )}
         </div>
@@ -482,9 +539,12 @@ const DocumentsForm: React.FC = () => {
           <div className='fixed z-[10000] top-0 left-0 w-full h-full flex items-center justify-center bg-[rgba(0,0,0,0.5)]'>
             <div className='w-[50%] h-[40%] bg-white flex flex-col items-center justify-center rounded'>
               <img src={loader} alt='' />
-              <p className='text-center text-[16px]'>
+              <p className='text-center text-[16px] mb-2'>
                 Идет сканирование документов
               </p>
+              <div className='text-center text-[24px] font-bold text-blue-600'>
+                {timer} сек
+              </div>
             </div>
           </div>
         )}

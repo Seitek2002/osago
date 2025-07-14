@@ -202,11 +202,23 @@ const DataForms: React.FC = () => {
               className='form-input mt-[12px] w-full bg-[#F7F8FA] rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 border'
               style={getInputStyle(userFormData.phoneNumber)}
               value={userFormData.phoneNumber}
+              onFocus={() => {
+                setUserFormData((prev) => {
+                  if (!prev.phoneNumber.startsWith('+996')) {
+                    return { ...prev, phoneNumber: '+996' + prev.phoneNumber.replace(/^\+*/, '').replace(/^996/, '') };
+                  }
+                  return prev;
+                });
+              }}
               onChange={(e) =>
-                setUserFormData((prev) => ({
-                  ...prev,
-                  phoneNumber: e.target.value,
-                }))
+                setUserFormData((prev) => {
+                  let val = e.target.value;
+                  // Не даём удалить +996
+                  if (!val.startsWith('+996')) {
+                    val = '+996' + val.replace(/^\+*/, '').replace(/^996/, '');
+                  }
+                  return { ...prev, phoneNumber: val };
+                })
               }
             />
           </div>
@@ -216,8 +228,10 @@ const DataForms: React.FC = () => {
             <label className='text-suptitle mb-[12px] block' htmlFor='address'>
               Адрес проживания
             </label>
-            <input
-              className='form-input w-full bg-[#F7F8FA] rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 border'
+            <textarea
+              className={`form-input w-full bg-[#F7F8FA] rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 border ${
+                isEmpty(userFormData.address) ? 'h-[42px]' : 'h-auto'
+              }`}
               style={getInputStyle(userFormData.address)}
               id='address'
               placeholder='Введите адрес'
