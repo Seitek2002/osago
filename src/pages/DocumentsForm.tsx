@@ -203,9 +203,9 @@ const DocumentsForm: React.FC = () => {
     localStorage.setItem(
       'ocrData',
       JSON.stringify({
-        passport: passportRes,
-        vehicle_cert: vehicleRes,
-        driverLicense: driverRes,
+        passport: passportRes.data,
+        vehicle_cert: vehicleRes.data,
+        driverLicense: driverRes.data,
       })
     );
 

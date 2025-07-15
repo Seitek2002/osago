@@ -78,22 +78,34 @@ export interface IFormData {
   referralCode?: number;
 }
 
-const localData = JSON.parse(localStorage.getItem('ocrData') || '{}');
-
-const initialFormState: IFormData = {
-  phoneNumber: '',
-  passport: localData.passport?.data ?? {},
-  vehicle_cert: localData.vehicle_cert?.data ?? {},
-  purpose: { name: 'Личная', id: 2 },
-  address: localData.vehicle_cert?.data?.ownerAddress ?? '',
-  unlimitedDrivers: true,
-  referralCode: undefined,
-  driverLicense: localData.driverLicense?.data ?? {},
-};
-
 const DataForms: React.FC = () => {
+  const localData = JSON.parse(localStorage.getItem('ocrData') || '{}');
+
+  const initialFormState: IFormData = {
+    phoneNumber: localData.phoneNumber ?? '',
+    passport: localData.passport ?? {},
+    vehicle_cert: localData.vehicle_cert ?? {},
+    purpose: { name: 'Личная', id: 2 },
+    address: localData.address ?? '',
+    unlimitedDrivers: true,
+    referralCode: undefined,
+    driverLicense: localData.driverLicense ?? {},
+  };
+
   const navigate = useNavigate();
   const [userFormData, setUserFormData] = useState<IFormData>(initialFormState);
+
+  const isEmpty = (val?: string | null) => !val || val.trim() === '';
+
+  const isLicenseValid = !Object.values({
+    surname: userFormData?.driverLicense?.surname,
+    name: userFormData?.driverLicense?.name,
+    birthDate: userFormData?.driverLicense?.birthDate,
+    licenceNumber: userFormData?.driverLicense?.licenceNumber,
+    personalNumber: userFormData?.driverLicense?.personalNumber,
+    issueDate: userFormData?.driverLicense?.issueDate,
+    expiryDate: userFormData?.driverLicense?.expiryDate,
+  }).some(isEmpty);
 
   // Валидация паспорта по требованиям пользователя (только required из JSON)
   const isPassportValid =
@@ -126,7 +138,8 @@ const DataForms: React.FC = () => {
     !!userFormData?.purpose.id &&
     userFormData?.unlimitedDrivers === true &&
     isPassportValid &&
-    isVehicleCertValid;
+    isVehicleCertValid &&
+    isLicenseValid;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -135,6 +148,7 @@ const DataForms: React.FC = () => {
     const data = {
       passport: { ...userFormData.passport },
       vehicleRegistrationCertificate: {
+        ...userFormData.vehicle_cert,
         number: userFormData.vehicle_cert.number,
         vin: userFormData.vehicle_cert.vin,
         ownerFullName: userFormData.vehicle_cert.ownerFullName,
@@ -149,7 +163,6 @@ const DataForms: React.FC = () => {
         carBodyChassisNumber: userFormData.vehicle_cert.carBodyChassisNumber,
         carBodyType: userFormData.vehicle_cert.carBodyType,
         vehicleCategory: userFormData.vehicle_cert.vehicleCategory,
-        fuelType: userFormData.vehicle_cert.fuelType || null,
         engineCapacity: userFormData.vehicle_cert.engineCapacity,
         enginePower: userFormData.vehicle_cert.enginePower,
         unladenMass: userFormData.vehicle_cert.unladenMass,
@@ -171,11 +184,10 @@ const DataForms: React.FC = () => {
       technicalInspection: false,
     };
 
+    localStorage.setItem('ocrData', JSON.stringify(userFormData));
     localStorage.setItem('calculateData', JSON.stringify(data));
     navigate('/calculator');
   };
-
-  const isEmpty = (val?: string | null) => !val || val.trim() === '';
 
   const getInputStyle = (value?: string | null) => ({
     borderColor: isEmpty(value) ? '#ef4444' : '#d1d5db',
@@ -205,7 +217,14 @@ const DataForms: React.FC = () => {
               onFocus={() => {
                 setUserFormData((prev) => {
                   if (!prev.phoneNumber.startsWith('+996')) {
-                    return { ...prev, phoneNumber: '+996' + prev.phoneNumber.replace(/^\+*/, '').replace(/^996/, '') };
+                    return {
+                      ...prev,
+                      phoneNumber:
+                        '+996' +
+                        prev.phoneNumber
+                          .replace(/^\+*/, '')
+                          .replace(/^996/, ''),
+                    };
                   }
                   return prev;
                 });

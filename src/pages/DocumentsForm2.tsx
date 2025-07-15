@@ -169,11 +169,10 @@ const DocumentsForm2: React.FC = () => {
     }
 
     localStorage.setItem('ocrData', '{}')
-    localStorage.setItem('formData2', '{}')
 
     localStorage.setItem('ocrData', JSON.stringify({
-      passport: passportRes,
-      vehicle_cert: vehicleRes
+      passport: passportRes.data,
+      vehicle_cert: vehicleRes.data
     }));
     navigate('/data-forms-2');
   };

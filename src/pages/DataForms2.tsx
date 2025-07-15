@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PurposeDropdown from '../components/PurposeDropdown';
 import PassportDropdown from '../components/PassportDropdown';
 import VehicleSertDropdown from '../components/VehicleSertDropdown';
@@ -56,37 +56,21 @@ export interface IFormData {
   referralCode?: number;
 }
 
-const localData = JSON.parse(localStorage.getItem('ocrData') || '{}');
-
-// const FORM_STORAGE_KEY = 'formData2';
-
-// const getInitialFormState = () => {
-//   const saved = JSON.parse(localStorage.getItem(FORM_STORAGE_KEY) || '{}');
-//   if (saved?.name) {
-//     try {
-//       return JSON.parse(saved);
-//     } catch {
-//       return initialFormState;
-//     }
-//   }
-//   return initialFormState;
-// };
-
-const initialFormState: IFormData = {
-  phoneNumber: '',
-  passport: localData.passport?.data ?? {},
-  vehicle_cert: localData.vehicle_cert?.data ?? {},
-  purpose: { name: 'Личная', id: 2 },
-  address: localData.vehicle_cert?.data?.ownerAddress ?? '',
-  unlimitedDrivers: true,
-  referralCode: undefined,
-};
-
 const DataForms2: React.FC = () => {
+  const localData = JSON.parse(localStorage.getItem('ocrData') || '{}');
+
+  const initialFormState: IFormData = {
+    phoneNumber: localData.phoneNumber ?? '',
+    passport: localData.passport ?? {},
+    vehicle_cert: localData.vehicle_cert ?? {},
+    purpose: { name: 'Личная', id: 2 },
+    address: localData.address ?? '',
+    unlimitedDrivers: true,
+    referralCode: undefined,
+  };
+
   const navigate = useNavigate();
-  const [userFormData, setUserFormData] = useState<IFormData>(
-    initialFormState
-  );
+  const [userFormData, setUserFormData] = useState<IFormData>(initialFormState);
 
   // Валидация паспорта по требованиям пользователя (только required из JSON)
   const isPassportValid =
@@ -123,6 +107,7 @@ const DataForms2: React.FC = () => {
     const data = {
       passport: { ...userFormData.passport },
       vehicleRegistrationCertificate: {
+        ...userFormData.vehicle_cert,
         number: userFormData.vehicle_cert.number,
         vin: userFormData.vehicle_cert.vin,
         ownerFullName: userFormData.vehicle_cert.ownerFullName,
@@ -137,7 +122,6 @@ const DataForms2: React.FC = () => {
         carBodyChassisNumber: userFormData.vehicle_cert.carBodyChassisNumber,
         carBodyType: userFormData.vehicle_cert.carBodyType,
         vehicleCategory: userFormData.vehicle_cert.vehicleCategory,
-        fuelType: userFormData.vehicle_cert.fuelType || null,
         engineCapacity: userFormData.vehicle_cert.engineCapacity,
         enginePower: userFormData.vehicle_cert.enginePower,
         unladenMass: userFormData.vehicle_cert.unladenMass,
@@ -153,8 +137,8 @@ const DataForms2: React.FC = () => {
     };
 
     localStorage.setItem('calculateData', JSON.stringify(data));
+    localStorage.setItem('ocrData', JSON.stringify(userFormData));
     navigate('/calculator-2');
-    console.log(data);
   };
 
   const isEmpty = (val?: string | null) => !val || val.trim() === '';
@@ -162,10 +146,6 @@ const DataForms2: React.FC = () => {
   const getInputStyle = (value?: string | null) => ({
     borderColor: isEmpty(value) ? '#ef4444' : '#d1d5db',
   });
-
-  useEffect(() => {
-    localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(userFormData));
-  }, [userFormData]);
 
   return (
     <section className='form-section pt-14 pb-[100px]'>
@@ -191,7 +171,14 @@ const DataForms2: React.FC = () => {
               onFocus={() => {
                 setUserFormData((prev) => {
                   if (!prev.phoneNumber.startsWith('+996')) {
-                    return { ...prev, phoneNumber: '+996' + prev.phoneNumber.replace(/^\+*/, '').replace(/^996/, '') };
+                    return {
+                      ...prev,
+                      phoneNumber:
+                        '+996' +
+                        prev.phoneNumber
+                          .replace(/^\+*/, '')
+                          .replace(/^996/, ''),
+                    };
                   }
                   return prev;
                 });
