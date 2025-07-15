@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import PurposeDropdown from '../components/PurposeDropdown';
-import CountryDropdown from '../components/CountryDropdown';
 import PassportDropdown from '../components/PassportDropdown';
 import VehicleSertDropdown from '../components/VehicleSertDropdown';
-import type { ICountry } from '../store/countriesApi';
 
 export interface IPassport {
   surname?: string;
