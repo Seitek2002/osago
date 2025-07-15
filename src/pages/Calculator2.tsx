@@ -39,7 +39,7 @@ function getFutureDate(period: string): string {
 }
 
 export default function Calculator2() {
-  const [calculate] = useCalculateMutation();
+  const [calculate, { isLoading: isCalculating, isError: isCalcError }] = useCalculateMutation();
   const [createPolicy, { isLoading }] = useCreatePolicyMutation();
   const [coef, setCoef] = useState('');
   const [formData, setFormData] = useState<IInsuranceData>(
@@ -278,7 +278,13 @@ export default function Calculator2() {
         <div className='bg-white mt-[50px]'>
           <div className='flex items-center justify-between border-t-[2px] py-[5px]'>
             <h3>Стоимость:</h3>
-            <b className='text-[22px]'>{amount} сом</b>
+            <b className='text-[22px]'>
+              {isCalculating
+                ? 'Идет рассчет'
+                : isCalcError
+                ? 'Ошибка при расчете'
+                : `${amount} сом`}
+            </b>
           </div>
           <footer className='footer w-full mt-[40px]'>
             <div className='footer__content w-full'>

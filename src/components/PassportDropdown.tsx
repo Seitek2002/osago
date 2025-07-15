@@ -145,12 +145,10 @@ const PassportDropdown: FC<IProps> = ({
                       required={field.required}
                       className={`litle-input bg-white rounded-[8px] py-2 px-3 text-[16px] text-[#201F1F] placeholder:text-[#ADB0BA] outline-none transition-colors border focus:ring-1 focus:ring-indigo-500 appearance-none bg-[url('/arrow.svg')] bg-no-repeat bg-[position:right_0.7rem_top_50%] bg-[length:0.65rem_auto]`}
                       style={getInputStyle(
-                        typeof userFormData.passport[
+                        userFormData.passport[
                           field.name as keyof typeof userFormData.passport
-                        ] === 'string'
-                          ? userFormData.passport[
-                              field.name as keyof typeof userFormData.passport
-                            ]
+                        ] !== undefined
+                          ? String(userFormData.passport[field.name as keyof typeof userFormData.passport])
                           : ''
                       )}
                       value={
@@ -188,12 +186,16 @@ const PassportDropdown: FC<IProps> = ({
                       style={getInputStyle(
                         userFormData.passport[
                           field.name as keyof typeof userFormData.passport
-                        ]
+                        ] !== undefined
+                          ? String(userFormData.passport[field.name as keyof typeof userFormData.passport])
+                          : ''
                       )}
                       value={
                         userFormData.passport[
                           field.name as keyof typeof userFormData.passport
-                        ] || ''
+                        ] !== undefined
+                          ? String(userFormData.passport[field.name as keyof typeof userFormData.passport])
+                          : ''
                       }
                       onChange={(e) =>
                         setUserFormData((prev: IFormData) => ({
