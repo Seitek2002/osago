@@ -39,6 +39,7 @@ export interface IPassport {
   birthPlace?: string;
   authority?: string;
   ethnicity?: string;
+  citizenshipCountryId: number;
 }
 
 export interface IVehicleCert {
@@ -65,6 +66,8 @@ export interface IVehicleCert {
   brandName?: string | null;
   carModelName?: string | null;
   fuelType?: string | null;
+  registrationCountryId: number;
+  registrationCountry: string;
 }
 
 export interface IFormData {
@@ -146,7 +149,10 @@ const DataForms: React.FC = () => {
     const id = userFormData?.vehicle_cert?.vehicleCategory;
 
     const data = {
-      passport: { ...userFormData.passport },
+      passport: {
+        ...userFormData.passport,
+        citizenshipCountry: userFormData.passport.citizenshipCountryId,
+      },
       vehicleRegistrationCertificate: {
         ...userFormData.vehicle_cert,
         number: userFormData.vehicle_cert.number,
@@ -169,6 +175,7 @@ const DataForms: React.FC = () => {
         maxPermissibleMass: userFormData.vehicle_cert.maxPermissibleMass,
         authority: userFormData.vehicle_cert.authority,
         registrationDate: userFormData.vehicle_cert.registrationDate,
+        registrationCountry: userFormData.vehicle_cert.registrationCountryId,
       },
       driverLicense: {
         ...userFormData.driverLicense,

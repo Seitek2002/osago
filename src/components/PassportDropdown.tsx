@@ -1,5 +1,6 @@
 import { useMemo, useState, type FC } from 'react';
 import type { IFormData } from '../pages/DataForms';
+import CountryDropdown from './CountryDropdown';
 
 import warning from '../assets/warning.svg';
 import checked from '../assets/checked.svg';
@@ -209,6 +210,23 @@ const PassportDropdown: FC<IProps> = ({
               </div>
             );
           })}
+
+          {/* Страна гражданства */}
+          <div className="dropdown__details-card bg-white rounded-xl flex flex-col gap-4 mb-4">
+            <CountryDropdown
+              value={userFormData.passport.citizenshipCountryId || 0}
+              onChange={(country) =>
+                setUserFormData((prev) => ({
+                  ...prev,
+                  passport: {
+                    ...prev.passport,
+                    citizenshipCountryId: country.id,
+                  },
+                }))
+              }
+              label="Гражданство"
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 import PurposeDropdown from '../components/PurposeDropdown';
+import CountryDropdown from '../components/CountryDropdown';
 import PassportDropdown from '../components/PassportDropdown';
 import VehicleSertDropdown from '../components/VehicleSertDropdown';
-import { useNavigate } from 'react-router';
+import type { ICountry } from '../store/countriesApi';
 
 export interface IPassport {
   surname?: string;
@@ -18,6 +20,7 @@ export interface IPassport {
   birthPlace?: string;
   authority?: string;
   ethnicity?: string;
+  citizenshipCountryId: number;
 }
 
 export interface IVehicleCert {
@@ -44,6 +47,8 @@ export interface IVehicleCert {
   brandName?: string | null;
   carModelName?: string | null;
   fuelType?: string | null;
+  registrationCountryId: number;
+  registrationCountry: string;
 }
 
 export interface IFormData {
@@ -105,7 +110,9 @@ const DataForms2: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const data = {
-      passport: { ...userFormData.passport },
+      passport: { ...userFormData.passport,
+        citizenshipCountry: userFormData.passport.citizenshipCountryId,
+       },
       vehicleRegistrationCertificate: {
         ...userFormData.vehicle_cert,
         number: userFormData.vehicle_cert.number,
@@ -128,6 +135,7 @@ const DataForms2: React.FC = () => {
         maxPermissibleMass: userFormData.vehicle_cert.maxPermissibleMass,
         authority: userFormData.vehicle_cert.authority,
         registrationDate: userFormData.vehicle_cert.registrationDate,
+        registrationCountry: userFormData.vehicle_cert.registrationCountryId,
       },
       unlimitedDrivers: true,
       purpose: userFormData.purpose.id,
@@ -223,6 +231,7 @@ const DataForms2: React.FC = () => {
             userFormData={userFormData}
             setUserFormData={setUserFormData}
           />
+
 
           <h3 className='text-suptitle'>
             Проверьте ваши данные{' '}

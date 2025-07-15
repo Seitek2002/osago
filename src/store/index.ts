@@ -4,6 +4,7 @@ import { ocrApi } from './ocrApi';
 import { purposeApi } from './purposeApi';
 import { carApi } from './carApi';
 import { calculateApi } from './calculateApi';
+import { countriesApi } from './countriesApi';
 
 const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ const store = configureStore({
     [ocrApi.reducerPath]: ocrApi.reducer,
     [purposeApi.reducerPath]: purposeApi.reducer,
     [carApi.reducerPath]: carApi.reducer,
-    [calculateApi.reducerPath]: calculateApi.reducer
+    [calculateApi.reducerPath]: calculateApi.reducer,
+    [countriesApi.reducerPath]: countriesApi.reducer
     // [authApi.reducerPath]: authApi.reducer,
     // [buhgalteriaApi.reducerPath]: buhgalteriaApi.reducer,
     // [customerApi.reducerPath]: customerApi.reducer,
@@ -26,7 +28,8 @@ const store = configureStore({
       ocrApi.middleware,
       purposeApi.middleware,
       carApi.middleware,
-      calculateApi.middleware
+      calculateApi.middleware,
+      countriesApi.middleware
       // authApi.middleware,
       // buhgalteriaApi.middleware,
       // customerApi.middleware,

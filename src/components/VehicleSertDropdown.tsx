@@ -1,5 +1,6 @@
 import { useMemo, useState, type FC } from 'react';
 import type { IFormData } from '../pages/DataForms';
+import CountryDropdown from './CountryDropdown';
 import warning from '../assets/warning.svg';
 import checked from '../assets/checked.svg';
 import dropdownArrow from '../assets/dropdown-arrow.svg';
@@ -255,6 +256,23 @@ const VehicleSertDropdown: FC<IProps> = ({
               </div>
             </div>
           ))}
+
+          {/* Страна регистрации ТС */}
+          <div className="dropdown__details-card bg-white rounded-xl flex flex-col gap-4 mb-4">
+            <CountryDropdown
+              value={userFormData.vehicle_cert.registrationCountryId || 0}
+              onChange={(country) =>
+                setUserFormData((prev) => ({
+                  ...prev,
+                  vehicle_cert: {
+                    ...prev.vehicle_cert,
+                    registrationCountryId: country.id,
+                  },
+                }))
+              }
+              label="Страна регистрации ТС"
+            />
+          </div>
           {/* Расположение руля */}
           <div className='dropdown__details-card bg-white rounded-xl flex flex-col gap-4 mb-4'>
             <SteeringLocation
