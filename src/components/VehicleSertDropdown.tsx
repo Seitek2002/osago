@@ -99,10 +99,9 @@ const VehicleSertDropdown: FC<IProps> = ({
         hidden: true,
       },
     ];
-    console.log(userFormData.driverLicense?.category?.category === 'C');
 
     // Для "C" — другое поле
-    if (userFormData.driverLicense?.category?.category === 'C') {
+    if (userFormData.vehicle_cert.vehicleCategory === 'C') {
       return [
         ...baseFields,
         { label: 'Максимально разрешенная масса', name: 'maxPermissibleMass', required: true, type: 'text' }
@@ -133,10 +132,6 @@ const VehicleSertDropdown: FC<IProps> = ({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userFormData]);
-
-  // useEffect(() => {
-  //   console.log(userFormData.driverLicense?.category);
-  // }, [userFormData])
 
   return (
     <div className='w-full relative border border-[#E5E7EB] rounded-[10px] overflow-hidden transition-colors mb-4'>
