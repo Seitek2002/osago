@@ -10,7 +10,7 @@ function getFutureDate(period: string): string {
 
   switch (period) {
     case '15 дней':
-      date.setDate(date.getDate() + 15);
+      date.setDate(date.getDate() + 14);
       break;
     case '1 месяц':
       date.setMonth(date.getMonth() + 1);
