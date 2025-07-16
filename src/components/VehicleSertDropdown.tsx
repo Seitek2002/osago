@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type FC } from 'react';
+import { useMemo, useState, type FC } from 'react';
 import type { IFormData } from '../pages/DataForms';
 import CountryDropdown from './CountryDropdown';
 import warning from '../assets/warning.svg';
