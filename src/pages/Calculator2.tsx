@@ -39,7 +39,8 @@ function getFutureDate(period: string): string {
 }
 
 export default function Calculator2() {
-  const [calculate, { isLoading: isCalculating, isError: isCalcError }] = useCalculateMutation();
+  const [calculate, { isLoading: isCalculating, isError: isCalcError }] =
+    useCalculateMutation();
   const [createPolicy, { isLoading }] = useCreatePolicyMutation();
   const [coef, setCoef] = useState('');
   const [formData, setFormData] = useState<IInsuranceData>(
@@ -48,7 +49,8 @@ export default function Calculator2() {
   const [diagnosticCard, setDiagnosticCard] = useState('false');
   const [previousAgreement, setPreviousAgreement] = useState('0');
   const [amount, setAmount] = useState('0');
-  const [insuranceDuration, setInsuranceDuration] = useState<string>('12 месяцев');
+  const [insuranceDuration, setInsuranceDuration] =
+    useState<string>('12 месяцев');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const isEmpty = (val?: string | null) => !val || val.trim() === '';
@@ -76,6 +78,13 @@ export default function Calculator2() {
     getData(formData);
   }, [formData]);
 
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      endDate: getFutureDate('12 месяцев'),
+    }));
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
@@ -102,7 +111,7 @@ export default function Calculator2() {
       } else {
         setErrorMessage(null);
       }
-      window.open(res.paymentUrl, "_blank", "noopener,noreferrer");
+      window.open(res.paymentUrl, '_blank', 'noopener,noreferrer');
     } catch (err) {
       // Если сервер вернул ошибку с result === 206
       const errorData = (err as any)?.data;
@@ -296,7 +305,7 @@ export default function Calculator2() {
                 {isLoading ? 'Идет рассчет...' : 'Оплатить'}
               </button>
               {errorMessage && (
-                <div className="text-red-600 text-sm mt-2 text-center whitespace-pre-line">
+                <div className='text-red-600 text-sm mt-2 text-center whitespace-pre-line'>
                   {errorMessage}
                 </div>
               )}

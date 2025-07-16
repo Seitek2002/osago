@@ -184,9 +184,9 @@ const DataForms: React.FC = () => {
           issuingDate: userFormData?.driverLicense?.categories?.[id ?? ''],
         },
       },
-      unlimitedDrivers: true,
+      unlimitedDrivers: false,
       purpose: userFormData.purpose.id,
-      endDate: '2026-04-01',
+      endDate: '',
       phoneNumber: userFormData.phoneNumber,
       technicalInspection: false,
     };

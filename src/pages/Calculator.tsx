@@ -39,7 +39,8 @@ function getFutureDate(period: string): string {
 }
 
 export default function Calculator() {
-  const [calculate, { isLoading: isCalculating, isError: isCalcError }] = useCalculateMutation();
+  const [calculate, { isLoading: isCalculating, isError: isCalcError }] =
+    useCalculateMutation();
   const [createPolicy, { isLoading }] = useCreatePolicyMutation();
   const [coef, setCoef] = useState('');
   const [formData, setFormData] = useState<IInsuranceData>(
@@ -75,6 +76,13 @@ export default function Calculator() {
   useEffect(() => {
     getData(formData);
   }, [formData]);
+
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      endDate: getFutureDate('12 месяцев'),
+    }));
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
