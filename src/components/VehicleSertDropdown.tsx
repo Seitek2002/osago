@@ -96,6 +96,7 @@ const VehicleSertDropdown: FC<IProps> = ({
         name: 'carBodyType',
         required: false,
         type: 'text',
+        hidden: true,
       },
     ];
     console.log(userFormData.driverLicense?.category?.category === 'C');
