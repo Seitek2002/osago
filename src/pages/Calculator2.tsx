@@ -10,7 +10,7 @@ function getFutureDate(period: string): string {
 
   switch (period) {
     case '15 дней':
-      date.setDate(date.getDate() + 14);
+      date.setDate(date.getDate() + 15);
       break;
     case '1 месяц':
       date.setMonth(date.getMonth() + 1);
@@ -25,11 +25,14 @@ function getFutureDate(period: string): string {
       date.setMonth(date.getMonth() + 9);
       break;
     case '12 месяцев':
-      date.setDate(date.getDate() + 364);
+      date.setDate(date.getDate() + 365);
       break;
     default:
       throw new Error('Неподдерживаемый период: ' + period);
   }
+
+  // Отнять один день от результата
+  date.setDate(date.getDate() - 1);
 
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
