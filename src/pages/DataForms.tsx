@@ -146,8 +146,6 @@ const DataForms: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const id = userFormData?.vehicle_cert?.vehicleCategory;
-
     const data = {
       passport: {
         ...userFormData.passport,
@@ -180,8 +178,8 @@ const DataForms: React.FC = () => {
       driverLicense: {
         ...userFormData.driverLicense,
         category: {
-          category: id,
-          issuingDate: userFormData?.driverLicense?.categories?.[id ?? ''],
+          category: userFormData.driverLicense?.category?.category,
+          issuingDate: userFormData.driverLicense?.category?.issuingDate,
         },
       },
       unlimitedDrivers: false,

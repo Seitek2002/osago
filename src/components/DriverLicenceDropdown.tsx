@@ -1,4 +1,4 @@
-import React, { useState, type FC } from 'react';
+import React, { useEffect, useState, type FC } from 'react';
 import type { IFormData, IDriverLicense } from '../pages/DataForms';
 import warning from '../assets/warning.svg';
 import checked from '../assets/checked.svg';
@@ -74,6 +74,10 @@ const DriverLicenseDropdown: FC<DriverLicenseDropdownProps> = ({
     { label: 'Дата выдачи', name: 'issueDate', required: true, type: 'date' },
     { label: 'Дата истечения', name: 'expiryDate', required: true, type: 'date' },
   ];
+
+  useEffect(() => {
+    console.log(userFormData.driverLicense?.category);
+  }, [userFormData.driverLicense?.category])
 
   return (
     <div className='w-full relative border border-[#E5E7EB] rounded-[10px] overflow-hidden transition-colors mb-4'>

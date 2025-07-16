@@ -52,7 +52,7 @@ export default function Calculator() {
   const [diagnosticCard, setDiagnosticCard] = useState('false');
   const [previousAgreement, setPreviousAgreement] = useState('0');
   const [amount, setAmount] = useState('0');
-  const [insuranceDuration, setInsuranceDuration] = useState<string>('15 дней');
+  const [insuranceDuration, setInsuranceDuration] = useState<string>('12 месяцев');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const isEmpty = (val?: string | null) => !val || val.trim() === '';
