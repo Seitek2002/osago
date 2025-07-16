@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 import PurposeDropdown from '../components/PurposeDropdown';
 import PassportDropdown from '../components/PassportDropdown';
 import VehicleSertDropdown from '../components/VehicleSertDropdown';
-import { useNavigate } from 'react-router';
 import DriverLicenceDropdown from '../components/DriverLicenceDropdown';
 
 export interface IDriverLicense {
@@ -289,7 +289,7 @@ const DataForms: React.FC = () => {
             isPassportValid={isPassportValid}
           />
 
-          {/* Блок водительских прав (необязательный) */}
+          {/* Блок водительских прав */}
           <DriverLicenceDropdown
             userFormData={userFormData}
             setUserFormData={setUserFormData}

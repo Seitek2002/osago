@@ -1,4 +1,4 @@
-import { useMemo, useState, type FC } from 'react';
+import { useEffect, useMemo, useState, type FC } from 'react';
 import type { IFormData } from '../pages/DataForms';
 import CountryDropdown from './CountryDropdown';
 import warning from '../assets/warning.svg';
@@ -8,6 +8,7 @@ import EngineType from './EngineType';
 import SteeringLocation from './SteeringLocation';
 import BrandSelect from './BrandSelect';
 import CarModel from '../pages/CarModel';
+import CategorySelect from './CategorySelect';
 
 interface IProps {
   userFormData: IFormData;
@@ -28,71 +29,87 @@ const VehicleSertDropdown: FC<IProps> = ({
   });
 
   // Конфиг для простых текстовых полей ТС
-  const vehicleFields = [
-    { label: 'Номер', name: 'number', required: true, type: 'text' },
-    { label: 'VIN', name: 'vin', required: true, type: 'text' },
-    {
-      label: 'ФИО владельца',
-      name: 'ownerFullName',
-      required: true,
-      type: 'text',
-    },
-    {
-      label: 'ИНН владельца',
-      name: 'personalNumber',
-      required: true,
-      type: 'text',
-    },
-    {
-      label: 'Адрес владельца',
-      name: 'ownerAddress',
-      required: false,
-      type: 'text',
-      isTextArea: true,
-    },
-    {
-      label: 'Год выпуска',
-      name: 'yearOfManufacture',
-      required: true,
-      type: 'text',
-    },
-    {
-      label: 'Цвет',
-      name: 'color',
-      required: false,
-      type: 'text',
-      hidden: true,
-    },
-    {
-      label: 'Номер кузова/шасси',
-      name: 'carBodyChassisNumber',
-      required: false,
-      type: 'text',
-    },
-    { label: 'Тип кузова', name: 'carBodyType', required: false, type: 'text' },
-    {
-      label: 'Масса без нагрузки',
-      name: 'unladenMass',
-      required: false,
-      type: 'text',
-      hidden: true,
-    },
-    {
-      label: 'Максимальная разрешённая масса',
-      name: 'maxPermissibleMass',
-      required: false,
-      type: 'text',
-      isNumber: true,
-      hidden: true,
-    },
-    { label: 'Орган выдачи', name: 'authority', required: false, type: 'text', hidden: true },
-    {
-      label: 'Дата регистрации',
-      name: 'registrationDate',
-      required: true,
-      type: 'date',
-    },
-  ];
+  const vehicleFields = useMemo(() => {
+    const baseFields = [
+      { label: 'Номер', name: 'number', required: true, type: 'text' },
+      { label: 'VIN', name: 'vin', required: true, type: 'text' },
+      {
+        label: 'ФИО владельца',
+        name: 'ownerFullName',
+        required: true,
+        type: 'text',
+      },
+      {
+        label: 'ИНН владельца',
+        name: 'personalNumber',
+        required: true,
+        type: 'text',
+      },
+      {
+        label: 'Адрес владельца',
+        name: 'ownerAddress',
+        required: false,
+        type: 'text',
+        isTextArea: true,
+      },
+      {
+        label: 'Год выпуска',
+        name: 'yearOfManufacture',
+        required: true,
+        type: 'text',
+      },
+      {
+        label: 'Цвет',
+        name: 'color',
+        required: false,
+        type: 'text',
+        hidden: true,
+      },
+      {
+        label: 'Номер кузова/шасси',
+        name: 'carBodyChassisNumber',
+        required: false,
+        type: 'text',
+      },
+      {
+        label: 'Масса без нагрузки',
+        name: 'unladenMass',
+        required: false,
+        type: 'text',
+        hidden: true,
+      },
+      {
+        label: 'Орган выдачи',
+        name: 'authority',
+        required: false,
+        type: 'text',
+        hidden: true,
+      },
+      {
+        label: 'Дата регистрации',
+        name: 'registrationDate',
+        required: true,
+        type: 'date',
+      },
+      {
+        label: 'Тип кузова',
+        name: 'carBodyType',
+        required: false,
+        type: 'text',
+      },
+    ];
+    console.log(userFormData.driverLicense?.category?.category === 'C');
+
+    // Для "C" — другое поле
+    if (userFormData.driverLicense?.category?.category === 'C') {
+      return [
+        ...baseFields,
+        { label: 'Максимально разрешенная масса', name: 'maxPermissibleMass', required: true, type: 'text' }
+      ];
+    }
+    // Для остальных — только базовые поля
+    return baseFields;
+  }, [userFormData]);
 
   const sortedVehicleFields = useMemo(() => {
     return vehicleFields.slice().sort((a, b) => {
@@ -114,7 +131,11 @@ const VehicleSertDropdown: FC<IProps> = ({
       return aEmpty ? -1 : 1;
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [userFormData]);
+
+  // useEffect(() => {
+  //   console.log(userFormData.driverLicense?.category);
+  // }, [userFormData])
 
   return (
     <div className='w-full relative border border-[#E5E7EB] rounded-[10px] overflow-hidden transition-colors mb-4'>
@@ -245,9 +266,7 @@ const VehicleSertDropdown: FC<IProps> = ({
                         ...prev,
                         vehicle_cert: {
                           ...prev.vehicle_cert,
-                          [field?.name]: field.isNumber
-                            ? Number(e.target.value)
-                            : e.target.value,
+                          [field?.name]: e.target.value,
                         },
                       }))
                     }
@@ -257,8 +276,31 @@ const VehicleSertDropdown: FC<IProps> = ({
             </div>
           ))}
 
+          {/* Категория ТС */}
+          <div className='dropdown__details-card bg-white rounded-xl flex flex-col gap-4 mb-4'>
+            <CategorySelect
+              value={userFormData.vehicle_cert.vehicleCategory || ''}
+              onChange={(val) => {
+                setUserFormData((prev: IFormData) => ({
+                  ...prev,
+                  vehicle_cert: {
+                    ...prev.vehicle_cert,
+                    vehicleCategory: val.name,
+                  },
+                }));
+                setUserFormData((prev: IFormData) => ({
+                  ...prev,
+                  vehicle_cert: {
+                    ...prev.vehicle_cert,
+                    carBodyType: val.text,
+                  },
+                }));
+              }}
+              label='Категория ТС'
+            />
+          </div>
           {/* Страна регистрации ТС */}
-          <div className="dropdown__details-card bg-white rounded-xl flex flex-col gap-4 mb-4">
+          <div className='dropdown__details-card bg-white rounded-xl flex flex-col gap-4 mb-4'>
             <CountryDropdown
               value={userFormData.vehicle_cert.registrationCountryId || 0}
               onChange={(country) =>
@@ -270,7 +312,7 @@ const VehicleSertDropdown: FC<IProps> = ({
                   },
                 }))
               }
-              label="Страна регистрации ТС"
+              label='Страна регистрации ТС'
             />
           </div>
           {/* Расположение руля */}
@@ -339,31 +381,6 @@ const VehicleSertDropdown: FC<IProps> = ({
               </div>
             </div>
           )}
-          {userFormData.vehicle_cert.engineType === ''}
-          {/* Категория ТС */}
-          <div className='dropdown__details-card bg-white rounded-xl flex flex-col gap-4 mb-4'>
-            <div className='dropdown__detail flex flex-col gap-1'>
-              <span className='litle-title text-[#6B7280] text-[14px] font-medium mb-1'>
-                Категория ТС
-              </span>
-              <input
-                type='text'
-                readOnly
-                className='litle-input bg-white rounded-[8px] py-2 px-3 text-[16px] text-[#201F1F] placeholder:text-[#ADB0BA] outline-none transition-colors border focus:ring-1 focus:ring-indigo-500'
-                style={getInputStyle(userFormData.vehicle_cert.vehicleCategory)}
-                value={userFormData.vehicle_cert.vehicleCategory || ''}
-                onChange={(e) =>
-                  setUserFormData((prev: IFormData) => ({
-                    ...prev,
-                    vehicle_cert: {
-                      ...prev.vehicle_cert,
-                      vehicleCategory: e.target.value,
-                    },
-                  }))
-                }
-              />
-            </div>
-          </div>
           {/* Марка */}
           <div className='dropdown__details-card bg-white rounded-xl flex flex-col gap-4 mb-4'>
             <BrandSelect

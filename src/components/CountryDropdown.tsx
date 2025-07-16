@@ -15,6 +15,7 @@ const CountryDropdown: FC<IProps> = ({ value, onChange, label = 'Страна' }
   const { data: countries } = useGetCountriesQuery();
   const [isOpen, setIsOpen] = useState(false);
   const [touched, setTouched] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
   const selectedCountry = countries?.find((c) => c.id === value) || { id: 0, name: 'Выберите страну' };
 
@@ -69,7 +70,23 @@ const CountryDropdown: FC<IProps> = ({ value, onChange, label = 'Страна' }
           } w-full bg-white border border-[#E5E7EB] shadow-lg p-2`}
         >
           <ul className="space-y-2">
-            {countries?.map((country) => (
+            <li>
+              <input
+                type='text'
+                placeholder='Поиск бренда'
+                className='w-full border rounded-[10px] py-3 px-[14px] text-[16px] text-[#201F1F] outline-none transition-colors'
+                onChange={(e) => setInputValue(e.target.value)}
+                value={inputValue}
+              />
+            </li>
+            {countries?.filter((item) => {
+                if (inputValue.trim()) {
+                  return item.name.toLowerCase().includes(inputValue.trim());
+                } else {
+                  return item;
+                }
+              })
+              ?.map((country) => (
               <li
                 key={country.id}
                 className="px-4 py-2 cursor-pointer hover:bg-[#F5F5F5] text-[16px] text-[#201F1F] rounded-[8px] transition-colors"

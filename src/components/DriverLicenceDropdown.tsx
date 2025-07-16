@@ -3,6 +3,7 @@ import type { IFormData, IDriverLicense } from '../pages/DataForms';
 import warning from '../assets/warning.svg';
 import checked from '../assets/checked.svg';
 import dropdownArrow from '../assets/dropdown-arrow.svg';
+import CategoryDropdown from './CategoryDropdown';
 
 interface DriverLicenseDropdownProps {
   userFormData: IFormData;
@@ -43,6 +44,8 @@ const DriverLicenseDropdown: FC<DriverLicenseDropdownProps> = ({
     personalNumber: driverLicense.personalNumber,
     issueDate: driverLicense.issueDate,
     expiryDate: driverLicense.expiryDate,
+    category: driverLicense.category?.category,
+    categoryDate: driverLicense.category?.issuingDate,
   }).some(isEmpty);
 
   const updateDriverLicenseField = (
@@ -132,24 +135,52 @@ const DriverLicenseDropdown: FC<DriverLicenseDropdownProps> = ({
                 />
               </div>
             ))}
-          {userFormData?.vehicle_cert?.vehicleCategory && (
-            <div className='dropdown__details-card bg-white rounded-xl flex flex-col gap-2 mb-4'>
-              <label className='text-[14px] font-medium text-[#6B7280]'>
-                Категории
-              </label>
-              <input
-                readOnly
-                className='litle-input bg-white rounded-[8px] py-2 px-3 text-[14px] outline-none border focus:ring-1 focus:ring-indigo-500'
-                style={{ borderColor: '#d1d5db' }}
-                value={
-                  userFormData.vehicle_cert.vehicleCategory +
-                  driverLicense?.categories?.[
-                    userFormData.vehicle_cert.vehicleCategory
-                  ]
-                }
-              />
-            </div>
-          )}
+          {/* Категория водительских прав (выбор) */}
+          <div className='dropdown__details-card bg-white rounded-xl flex flex-col gap-2 mb-4'>
+            <CategoryDropdown
+              value={driverLicense?.category?.category || ''}
+              userFormData={userFormData}
+              onChange={(option) => {
+                setUserFormData((prev) => ({
+                  ...prev,
+                  driverLicense: {
+                    ...prev.driverLicense,
+                    category: {
+                      category: option.code,
+                      issuingDate: option.date || '',
+                    },
+                  },
+                }));
+              }}
+              options={
+                driverLicense?.categories
+                  ? Object.entries(driverLicense?.categories).map(([code, date]) => ({
+                      code,
+                      label: code,
+                      date,
+                    }))
+                  : []
+              }
+              label="Категория водительских прав"
+              setUserFormData={setUserFormData}
+            />
+            {/* Список всех категорий с датами */}
+            {/* <div className='flex flex-col gap-1 mt-2'>
+              {driverLicense?.categories &&
+                Object.entries(driverLicense?.categories).map(([cat, date]) => (
+                  <div key={cat} className='flex items-center gap-2'>
+                    <span className='font-semibold'>{cat}</span>
+                    <span className='ml-2 text-xs text-gray-500'>
+                      {date}
+                    </span>
+                  </div>
+                ))}
+              {!driverLicense?.categories ||
+                Object.keys(driverLicense?.categories).length === 0 ? (
+                <span className='text-[#ADB0BA]'>Нет данных о категориях</span>
+              ) : null}
+            </div> */}
+          </div>
         </div>
       )}
     </div>
