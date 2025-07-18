@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import PurposeDropdown from '../components/PurposeDropdown';
 import PassportDropdown from '../components/PassportDropdown';
 import VehicleSertDropdown from '../components/VehicleSertDropdown';
@@ -60,6 +60,8 @@ export interface IFormData {
 }
 
 const DataForms2: React.FC = () => {
+  const params = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const localData = JSON.parse(localStorage.getItem('ocrData') || '{}');
 
   const initialFormState: IFormData = {
@@ -72,7 +74,6 @@ const DataForms2: React.FC = () => {
     referralCode: undefined,
   };
 
-  const navigate = useNavigate();
   const [userFormData, setUserFormData] = useState<IFormData>(initialFormState);
 
   // Валидация паспорта по требованиям пользователя (только required из JSON)
@@ -107,7 +108,7 @@ const DataForms2: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const data = {
+    const data: any = {
       passport: { ...userFormData.passport,
         citizenshipCountry: userFormData.passport.citizenshipCountryId,
        },
@@ -141,10 +142,17 @@ const DataForms2: React.FC = () => {
       phoneNumber: userFormData.phoneNumber,
       technicalInspection: false,
     };
+    if (params.id) {
+      data.referralCode = params.id;
+    }
 
     localStorage.setItem('calculateData', JSON.stringify(data));
     localStorage.setItem('ocrData', JSON.stringify(userFormData));
-    navigate('/calculator-2');
+    if (params.id) {
+      navigate(`/calculator2/${params.id}`);
+    } else {
+      navigate('/calculator2');
+    }
   };
 
   const isEmpty = (val?: string | null) => !val || val.trim() === '';

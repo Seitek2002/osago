@@ -43,6 +43,14 @@ export const routerConfig: RouteObject[] = [
     ),
   },
   {
+    path: '/documents-form/:id',
+    element: (
+      <ServiceLayout>
+        <DocumentsForm />
+      </ServiceLayout>
+    ),
+  },
+  {
     path: '/documents-form-2',
     element: (
       <ServiceLayout>
@@ -75,6 +83,22 @@ export const routerConfig: RouteObject[] = [
     ),
   },
   {
+    path: '/data-forms/:id',
+    element: (
+      <ServiceLayout>
+        <DataForms />
+      </ServiceLayout>
+    ),
+  },
+  {
+    path: '/data-forms-2/:id',
+    element: (
+      <ServiceLayout>
+        <DataForms2 />
+      </ServiceLayout>
+    ),
+  },
+  {
     path: '/calculator',
     element: (
       <ServiceLayout>
@@ -83,7 +107,23 @@ export const routerConfig: RouteObject[] = [
     ),
   },
   {
+    path: '/calculator/:id',
+    element: (
+      <ServiceLayout>
+        <Calculator />
+      </ServiceLayout>
+    ),
+  },
+  {
     path: '/calculator-2',
+    element: (
+      <ServiceLayout>
+        <Calculator2 />
+      </ServiceLayout>
+    ),
+  },
+  {
+    path: '/calculator2/:id',
     element: (
       <ServiceLayout>
         <Calculator2 />

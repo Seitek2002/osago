@@ -9,6 +9,7 @@ import tp_back from '../assets/images/tp_back.png';
 import prava_front from '../assets/images/prava_front.png';
 import prava_back from '../assets/images/prava_back.png';
 import loader from '../assets/loader.svg';
+import ReferralIdInput from './ReferralIdInput';
 
 const RemoveIcon = ({ onClick }: { onClick: React.MouseEventHandler }) => (
   <svg
@@ -84,6 +85,7 @@ const UploadIcon = () => (
 const DocumentsForm: React.FC = () => {
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [selectedId, setSelectedId] = React.useState<string | undefined>(params.id);
   const [recognizeDocument, { isLoading }] =
     useRecognizeDocumentMutation();
 
@@ -157,11 +159,12 @@ const DocumentsForm: React.FC = () => {
         front: passportFront,
         back: passportBack,
       }).unwrap();
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const errorObj = err as any;
       setPassportError(
-        err?.data?.error ||
-        err?.error ||
-        (typeof err === 'string' ? err : 'Ошибка при загрузке или сканировании документов')
+        errorObj?.data?.error ||
+        errorObj?.error ||
+        (typeof errorObj === 'string' ? errorObj : 'Ошибка при загрузке или сканировании документов')
       );
       return;
     }
@@ -173,11 +176,12 @@ const DocumentsForm: React.FC = () => {
         front: tpFront,
         back: tpBack,
       }).unwrap();
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const errorObj = err as any;
       setVehicleError(
-        err?.data?.error ||
-        err?.error ||
-        (typeof err === 'string' ? err : 'Ошибка при загрузке или сканировании документов')
+        errorObj?.data?.error ||
+        errorObj?.error ||
+        (typeof errorObj === 'string' ? errorObj : 'Ошибка при загрузке или сканировании документов')
       );
       return;
     }
@@ -189,11 +193,12 @@ const DocumentsForm: React.FC = () => {
         front: pravaFront,
         back: pravaBack,
       }).unwrap();
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const errorObj = err as any;
       setPravaError(
-        err?.data?.error ||
-        err?.error ||
-        (typeof err === 'string' ? err : 'Ошибка при загрузке или сканировании документов')
+        errorObj?.data?.error ||
+        errorObj?.error ||
+        (typeof errorObj === 'string' ? errorObj : 'Ошибка при загрузке или сканировании документов')
       );
       return;
     }
@@ -218,7 +223,11 @@ const DocumentsForm: React.FC = () => {
       return
     };
 
-    navigate('/data-forms');
+    if (selectedId) {
+      navigate(`/data-forms/${selectedId}`);
+    } else {
+      navigate('/data-forms');
+    }
   };
 
   return (
@@ -496,27 +505,7 @@ const DocumentsForm: React.FC = () => {
         </div>
 
         {/* Блок ввода реферального ID */}
-        <div className='form-group mb-6'>
-          <div
-            className='text-blue-500 py-2 rounded mb-2 underline text-[13px]'
-            role='button'
-          >
-            Указать ID участника (необязательно)
-          </div>
-          {params.id && (
-            <>
-              <label htmlFor='referal-id' className='text-[14px] block'>
-                ID участника команды (необязательно)
-              </label>
-              <input
-                type='text'
-                id='referal-id'
-                placeholder='Введите ID'
-                className='w-full mt-[12px] bg-[#F7F8FA] border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none'
-              />
-            </>
-          )}
-        </div>
+        <ReferralIdInput paramsId={params.id} onIdChange={setSelectedId} />
         {/* Чекбокс согласия */}
         <div className='passport__bottom flex flex-col gap-[20px] mt-[60px]'>
           <label className='flex items-center gap-[14px] text-[13px]'>
