@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import PurposeDropdown from '../components/PurposeDropdown';
 import PassportDropdown from '../components/PassportDropdown';
 import VehicleSertDropdown from '../components/VehicleSertDropdown';
@@ -82,6 +82,8 @@ export interface IFormData {
 }
 
 const DataForms: React.FC = () => {
+  const params = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const localData = JSON.parse(localStorage.getItem('ocrData') || '{}');
 
   const initialFormState: IFormData = {
@@ -95,7 +97,6 @@ const DataForms: React.FC = () => {
     driverLicense: localData.driverLicense ?? {},
   };
 
-  const navigate = useNavigate();
   const [userFormData, setUserFormData] = useState<IFormData>(initialFormState);
 
   const isEmpty = (val?: string | null) => !val || val.trim() === '';
@@ -191,7 +192,11 @@ const DataForms: React.FC = () => {
 
     localStorage.setItem('ocrData', JSON.stringify(userFormData));
     localStorage.setItem('calculateData', JSON.stringify(data));
-    navigate('/calculator');
+    if (params.id) {
+      navigate(`/calculator/${params.id}`);
+    } else {
+      navigate('/calculator');
+    }
   };
 
   const getInputStyle = (value?: string | null) => ({
