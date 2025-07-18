@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Container from "../components/Container";
 import AboutStats from "../components/AboutStats";
 import Question from "../components/Question";
-import Reviews from "../components/reviews";
+import Reviews from "../components/Reviews";
 import { Link } from "react-router";
 import referral from "../assets/images/logo.png";
 import dollar from "../assets/dollar-logo.svg";
@@ -165,9 +165,9 @@ const Home = () => {
           </div>
         </div>
       </Container>
-      <AboutStats />
-      <Question />
-      <Reviews />
+    <AboutStats />
+    <Question />
+    <Reviews />
       <footer className="footer bg-[#2C2C2C] text-[#fff] py-8 text-sm leading-relaxed">
         <Container>
           <div className="footer__content space-y-2 text-center">
