@@ -147,7 +147,7 @@ const DataForms: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const data = {
+    const data: any = {
       passport: {
         ...userFormData.passport,
         citizenshipCountry: userFormData.passport.citizenshipCountryId,
@@ -189,6 +189,9 @@ const DataForms: React.FC = () => {
       phoneNumber: userFormData.phoneNumber,
       technicalInspection: false,
     };
+    if (params.id) {
+      data.referralCode = params.id;
+    }
 
     localStorage.setItem('ocrData', JSON.stringify(userFormData));
     localStorage.setItem('calculateData', JSON.stringify(data));
