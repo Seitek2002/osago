@@ -1,107 +1,256 @@
-import { useTranslation } from 'react-i18next';
-import Header from '../components/Header';
-import Container from '../components/Container';
-import { Link } from 'react-router';
-import imgShield from '../assets/images/home-img.png';
+import { useTranslation } from "react-i18next";
+import Header from "../components/Header";
+import Container from "../components/Container";
+import AboutStats from "../components/AboutStats";
+import Question from "../components/Question";
+import Reviews from "../components/reviews";
+import { Link } from "react-router";
+import referral from "../assets/images/logo.png";
+import dollar from "../assets/dollar-logo.svg";
+import add from "../assets/add-icon.svg";
+import hrs from "../assets/images/earnings-hrs.png";
+import reg from "../assets/images/earnings-reg.png";
 
 const Home = () => {
   const { t } = useTranslation();
 
   return (
-    <section className='home min-h-screen text-white bg-gradient-to-b from-[#005CAA]/100 to-[#000C16]/100 box-border'>
-      <Header title={t('home.title')} />
+    <section className="home min-h-screen text-white bg-gradient-to-b from-[#c9dcf1]/30 to-[#fff]/10 box-border">
+      <Header title={t("home.title")} />
       <Container>
-        <div className='home__content'>
-          <div className='home__top flex justify-center pt-[35px]'>
-            <img className='w-[105px]' src={imgShield} alt='shield' />
+        <div className="home__content text-center">
+          <div className="home__top pt-[140px]">
+            <div className="home__title text-center">
+              <span className="text-[40px] font-semibold text-[#0072DE]">
+                {t("home.title.span")}
+              </span>{" "}
+              <span className="text-[40px] font-semibold text-[#000]">
+                {t("home.title.title")}
+              </span>
+            </div>
+            <p className="text-[#000] mt-[30px]">Вознаграждение 15% от ОСАГО</p>
           </div>
-          <div className='home__btns mt-[100px]'>
-            <Link to='/choose-form' className='button block py-[14px] bg-[#005CAA] rounded-[6px] text-[#fff] text-[16px] mb-[16px] text-center'>
-              <span className='text-[20px]'>{t('title')}</span>
+          <div className="home__btns mt-[30px]">
+            <Link
+              to="/choose-form"
+              className="button py-[14px] bg-[#0072DE] rounded-[6px] text-[#fff] text-[16px] mb-[16px] flex text-center items-center justify-center gap-4"
+            >
+              <img src={dollar} alt="" />
+              <span className="text-[20px]">Начать зарабатывать</span>
+              <br />
+            </Link>
+          </div>
+          <div className="home__earnings">
+            <span className="font-semibold text-[32px] text-[#000]">
+              Начни зарабатывать уже сейчас
+            </span>
+            <div className="earnings__content md:flex gap-[40px] md:justify-center">
+              <div className="bg-[#fff] rounded-3xl p-[5px] border border-indigo-500 mt-[30px] md:flex  md:items-center md:flex-col md:py-[20px] md:px-[40px]">
+                <img src={hrs} className="mb-[12px] m-auto" />
+                <span className="text-[#000]">
+                  Помоги другим оформить ОСАГО <br /> и заработай до 100 000 сом
+                </span>
+                <p className="text-[#1AA37F] mt-[12px]">
+                  Вознаграждение 15% от ОСАГО
+                </p>
+              </div>
+              <div className="bg-[#fff] rounded-3xl p-[10px] border border-indigo-500 mt-[30px] md:flex md:items-center md:flex-col md:p-[20px] md:px-[40px]">
+                <img src={reg} className="mb-[12px] m-auto" />
+                <span className="text-[#000]">
+                  Научи регистрировать друзей <br /> и зарабатывай пассивно
+                  от их продаж
+                </span>
+                <p className="text-[#1AA37F] mt-[12px]">
+                  Вознаграждение 5% от ОСАГО друзей
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Container>
+      <div className="home__referral bg-[#E3EFFF] py-[40px] flex justify-center items-center mt-[60px] mb-[60px]">
+        <div className="md:flex gap-[60px]">
+          <img src={referral} alt="" />
+          <div className="">
+            <p className="text-[#000] text-[24px]">
+              Все легально! Стань агентом <br /> по продаже ОСАГО за 2 минуты
+            </p>
+            <p className="text-[#000] mt-4 mb-4">
+              ОсОО «Агент КейДжи» является официальным партнёром <br />
+              ЗАО «Бакай Иншуренс»
+            </p>
+            <Link
+              to="/referral"
+              className="button py-[18px] bg-[#1AA37F] rounded-[12px] text-[#fff] text-[16px] flex text-center items-center justify-center gap-4 w-[345px]"
+            >
+              <img src={add} alt="/" />
+              <span className="text-[20px]">Пригласить друга в команду</span>
               <br />
             </Link>
           </div>
         </div>
+      </div>
+      <Container>
+        <h2 className="text-center text-[32px] font-semibold text-[#000] mb-[30px]">
+          Для чего нужен ОСАГО?
+        </h2>
+        <div className="grid md:grid-cols-3 gap-6 mb-[60px]">
+          <div className="bg-white rounded-[12px] p-[20px] border border-[#CCE3FF]">
+            <h3 className="text-[#000] font-semibold text-[18px] mb-2">
+              Что такое ОСАГО?
+            </h3>
+            <p className="text-[#000] text-[15px] leading-[22px]">
+              ОСАГО — это обязательная страховка для всех водителей. В случае
+              ДТП страховая компания покрывает расходы на ремонт чужого
+              автомобиля и лечение пострадавших.
+            </p>
+          </div>
+          <div className="bg-white rounded-[12px] p-[20px] border border-[#CCE3FF]">
+            <h3 className="text-[#000] font-semibold text-[18px] mb-2">
+              Не переживайте о расходах
+            </h3>
+            <p className="text-[#000] text-[15px] leading-[22px]">
+              Если вы стали виновником аварии, страховая возьмёт на себя оплату
+              ремонта чужого транспорта и компенсацию за причинённый вред
+              здоровью.
+            </p>
+          </div>
+          <div className="bg-white rounded-[12px] p-[20px] border border-[#CCE3FF]">
+            <h3 className="text-[#000] font-semibold text-[18px] mb-2">
+              Штрафы за отсутствие ОСАГО
+            </h3>
+            <p className="text-[#000] text-[15px] leading-[22px]">
+              Отсутствие полиса ОСАГО влечёт за собой штраф в размере 3000
+              сомов. Не рискуйте — оформите ОСАГО и защитите себя от лишних
+              затрат.
+            </p>
+          </div>
+        </div>
+        <div className="grid md:grid-cols-2 gap-6 mb-[60px]">
+          <div className="bg-white rounded-[20px] p-[30px] border border-[#CCE3FF]">
+            <h3 className="text-[#000] text-[22px] font-semibold mb-6">
+              Как начать зарабатывать?
+            </h3>
+            <ol className="list-decimal list-inside space-y-2 text-[#000] text-[16px]">
+              <li>Регистрируешься на OA.KG</li>
+              <li>Получаешь личную ссылку на ОСАГО</li>
+              <li>Делишься ссылкой и помогаешь оформить ОСАГО</li>
+              <li>Получаешь 15% с каждой продажи</li>
+            </ol>
+            <Link
+              to="/choose-form"
+              className="mt-6 inline-flex items-center justify-center gap-2 bg-[#0072DE] text-white text-[16px] rounded-[10px] py-[12px] px-[24px] w-full"
+            >
+              <img src={dollar} alt="" />
+              Начать зарабатывать
+            </Link>
+          </div>
+          <div className="bg-white rounded-[20px] p-[30px] border border-[#B7E8D6]">
+            <h3 className="text-[#000] text-[22px] font-semibold mb-6">
+              Как пассивно зарабатывать?
+            </h3>
+            <ol className="list-decimal list-inside space-y-2 text-[#000] text-[16px]">
+              <li>Регистрируешься на OA.KG</li>
+              <li>Получаешь личную ссылку на OA.KG</li>
+              <li>Делишься ссылкой и приглашаешь друзей в свою команду</li>
+              <li>Получаешь 5% с каждой продажи твоей команды</li>
+            </ol>
+            <Link
+              to="/referral"
+              className="mt-6 inline-flex items-center justify-center gap-2 bg-[#1AA37F] text-white text-[16px] rounded-[10px] py-[12px] px-[24px] w-full"
+            >
+              <img src={add} alt="" />
+              Пригласить друга в команду
+            </Link>
+          </div>
+        </div>
       </Container>
-
-      <footer className='footer bg-[#2C2C2C] text-[#fff] py-8 text-sm leading-relaxed'>
+      <AboutStats />
+      <Question />
+      <Reviews />
+      <footer className="footer bg-[#2C2C2C] text-[#fff] py-8 text-sm leading-relaxed">
         <Container>
-          <div className='footer__content space-y-2 text-center'>
-            <p className='footer__text'>{t('footer.GSO')}</p>
+          <div className="footer__content space-y-2 text-center">
+            <p className="footer__text">{t("footer.GSO")}</p>
             <p>
-              {t('footer.phoneNumber')}:
-              <a href='tel:+996777394080' className='footer__link text-[#00A6FF] hover:underline'>
+              {t("footer.phoneNumber")}:
+              <a
+                href="tel:+996777394080"
+                className="footer__link text-[#00A6FF] hover:underline"
+              >
                 +996 777 39 40 80
               </a>
             </p>
             <p>
-              {t('footer.email')}:
+              {t("footer.email")}:
               <a
-                href='mailto:office@insurancebakai.kg'
-                className='footer__link text-[#00A6FF] hover:underline'
+                href="mailto:office@insurancebakai.kg"
+                className="footer__link text-[#00A6FF] hover:underline"
               >
                 office@insurancebakai.kg
               </a>
             </p>
-            <p>{t('footer.address')}</p>
-            <p>{t('footer.agentAddress')}</p>
-            <p>{t('footer.agentInn')}</p>
-            <p>{t('footer.OAO')}</p>
-            <p>{t('footer.naming')}</p>
-            <div className='footer__socials flex justify-center space-x-4 mt-4'>
+            <p>{t("footer.address")}</p>
+            <p>{t("footer.agentAddress")}</p>
+            <p>{t("footer.agentInn")}</p>
+            <p>{t("footer.OAO")}</p>
+            <p>{t("footer.naming")}</p>
+            <div className="footer__socials flex justify-center space-x-4 mt-4">
               <a
-                href='https://wa.me/996777394080'
-                target='_blank'
-                className='footer__social-link inline-block transition-transform transform hover:scale-110'
-                aria-label='WhatsApp'
+                href="https://wa.me/996777394080"
+                target="_blank"
+                className="footer__social-link inline-block transition-transform transform hover:scale-110"
+                aria-label="WhatsApp"
               >
                 <svg
-                  className='w-[35px]'
-                  xmlns='http://www.w3.org/2000/svg'
-                  aria-label='WhatsApp'
-                  role='img'
-                  viewBox='0 0 512 512'
+                  className="w-[35px]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-label="WhatsApp"
+                  role="img"
+                  viewBox="0 0 512 512"
                 >
-                  <rect width='512' height='512' rx='15%' fill='#25d366' />
+                  <rect width="512" height="512" rx="15%" fill="#25d366" />
                   <path
-                    fill='#25d366'
-                    stroke='#ffffff'
-                    strokeWidth='26'
-                    d='M123 393l14-65a138 138 0 1150 47z'
+                    fill="#25d366"
+                    stroke="#ffffff"
+                    strokeWidth="26"
+                    d="M123 393l14-65a138 138 0 1150 47z"
                   />
                   <path
-                    fill='#ffffff'
-                    d='M308 273c-3-2-6-3-9 1l-12 16c-3 2-5 3-9 1-15-8-36-17-54-47-1-4 1-6 3-8l9-14c2-2 1-4 0-6l-12-29c-3-8-6-7-9-7h-8c-2 0-6 1-10 5-22 22-13 53 3 73 3 4 23 40 66 59 32 14 39 12 48 10 11-1 22-10 27-19 1-3 6-16 2-18'
+                    fill="#ffffff"
+                    d="M308 273c-3-2-6-3-9 1l-12 16c-3 2-5 3-9 1-15-8-36-17-54-47-1-4 1-6 3-8l9-14c2-2 1-4 0-6l-12-29c-3-8-6-7-9-7h-8c-2 0-6 1-10 5-22 22-13 53 3 73 3 4 23 40 66 59 32 14 39 12 48 10 11-1 22-10 27-19 1-3 6-16 2-18"
                   />
                 </svg>
               </a>
               <a
-                href='https://t.me/yourTelegramUsername'
-                target='_blank'
-                className='footer__social-link inline-block transition-transform transform hover:scale-110'
-                aria-label='Telegram'
+                href="https://t.me/yourTelegramUsername"
+                target="_blank"
+                className="footer__social-link inline-block transition-transform transform hover:scale-110"
+                aria-label="Telegram"
               >
                 <svg
-                  className='w-[35px]'
-                  xmlns='http://www.w3.org/2000/svg'
-                  aria-label='Telegram'
-                  role='img'
-                  viewBox='0 0 512 512'
+                  className="w-[35px]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-label="Telegram"
+                  role="img"
+                  viewBox="0 0 512 512"
                 >
-                  <rect width='512' height='512' rx='15%' fill='#37aee2' />
+                  <rect width="512" height="512" rx="15%" fill="#37aee2" />
                   <path
-                    fill='#c8daea'
-                    d='M199 404c-11 0-10-4-13-14l-32-105 245-144'
+                    fill="#c8daea"
+                    d="M199 404c-11 0-10-4-13-14l-32-105 245-144"
                   />
-                  <path fill='#a9c9dd' d='M199 404c7 0 11-4 16-8l45-43-56-34' />
+                  <path fill="#a9c9dd" d="M199 404c7 0 11-4 16-8l45-43-56-34" />
                   <path
-                    fill='#f6fbfe'
-                    d='M204 319l135 99c14 9 26 4 30-14l55-258c5-22-9-32-24-25L79 245c-21 8-21 21-4 26l83 26 190-121c9-5 17-3 11 4'
+                    fill="#f6fbfe"
+                    d="M204 319l135 99c14 9 26 4 30-14l55-258c5-22-9-32-24-25L79 245c-21 8-21 21-4 26l83 26 190-121c9-5 17-3 11 4"
                   />
                 </svg>
               </a>
             </div>
-            <p className='footer__copyright mt-4 text-xs text-[#AFAFAF]'>{t('footer.roots')}</p>
+            <p className="footer__copyright mt-4 text-xs text-[#AFAFAF]">
+              {t("footer.roots")}
+            </p>
           </div>
         </Container>
       </footer>
