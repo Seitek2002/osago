@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, useNavigate  } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { useRecognizeDocumentMutation } from '../store/ocrApi';
 
 import passportFrontSide from '../assets/images/passport-front-side.png';
@@ -82,8 +82,7 @@ const UploadIcon = () => (
 const DocumentsForm2: React.FC = () => {
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [recognizeDocument, { isLoading }] =
-    useRecognizeDocumentMutation();
+  const [recognizeDocument, { isLoading }] = useRecognizeDocumentMutation();
 
   const [passportFront, setPassportFront] = React.useState<File | null>(null);
   const [passportBack, setPassportBack] = React.useState<File | null>(null);
@@ -146,8 +145,10 @@ const DocumentsForm2: React.FC = () => {
     } catch (err: any) {
       setPassportError(
         err?.data?.error ||
-        err?.error ||
-        (typeof err === 'string' ? err : 'Ошибка при загрузке или сканировании документов')
+          err?.error ||
+          (typeof err === 'string'
+            ? err
+            : 'Ошибка при загрузке или сканировании документов')
       );
       return;
     }
@@ -162,18 +163,25 @@ const DocumentsForm2: React.FC = () => {
     } catch (err: any) {
       setVehicleError(
         err?.data?.error ||
-        err?.error ||
-        (typeof err === 'string' ? err : 'Ошибка при загрузке или сканировании документов')
+          err?.error ||
+          (typeof err === 'string'
+            ? err
+            : 'Ошибка при загрузке или сканировании документов')
       );
       return;
     }
 
-    localStorage.setItem('ocrData', '{}')
+    localStorage.setItem('ocrData', '{}');
 
-    localStorage.setItem('ocrData', JSON.stringify({
+    const data: any = {
       passport: passportRes.data,
-      vehicle_cert: vehicleRes.data
-    }));
+      vehicle_cert: vehicleRes.data,
+    };
+    if (params.id) {
+      data.referralCode = params.id;
+    }
+
+    localStorage.setItem('ocrData', JSON.stringify(data));
     navigate('/data-forms-2');
   };
 
