@@ -72,7 +72,7 @@ export default function Calculator() {
       }
     } catch (err: any) {
       console.log(err);
-      setErrorMessage(err.data.keep24 || 'Ошибка');
+      setErrorMessage(err.data.keep24);
     }
   };
 
