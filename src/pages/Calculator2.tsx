@@ -73,7 +73,7 @@ export default function Calculator2() {
       }
     } catch (err: any) {
       console.log(err);
-      setErrorMessage(err.data.keep24 || 'Ошибка');
+      setErrorMessage(err.data.keep24);
     }
   };
 
@@ -128,7 +128,7 @@ export default function Calculator2() {
         setErrorMessage(errorData.message);
       } else {
         console.log(errorData.keep24.message);
-        setErrorMessage(errorData.keep24.message || 'Ошибка');
+        setErrorMessage(errorData.keep24.message);
       }
     }
   };
@@ -233,7 +233,7 @@ export default function Calculator2() {
             Заключали ли Вы раньше договор ОСАГО?{' '}
             <span className='text-[#FC3400]'>*</span>
           </h3>
-          <div className='radio-group grid grid-cols-2 gap-5 hidden'>
+          <div className='radio-group  grid-cols-2 gap-5 hidden'> {/* grid */}
             <label className='flex items-center bg-[#F7F8FA] border border-gray-300 rounded-md shadow-sm p-[12px]'>
               <input
                 type='radio'

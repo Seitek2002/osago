@@ -515,7 +515,15 @@ const DocumentsForm: React.FC = () => {
               checked={personalDataChecked}
               onChange={(e) => setPersonalDataChecked(e.target.checked)}
             />
-            Согласие на обработку персональных данных
+            Согласие на{' '}
+            <a
+              href="/ПУБЛИЧНАЯ ОФЕРТА для субагентов.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-blue-600"
+            >
+              обработку персональных данных
+            </a>
           </label>
         </div>
         {/* Кнопка "Далее" */}
