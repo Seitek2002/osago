@@ -149,9 +149,9 @@ const DataForms2: React.FC = () => {
     localStorage.setItem('calculateData', JSON.stringify(data));
     localStorage.setItem('ocrData', JSON.stringify(userFormData));
     if (params.id) {
-      navigate(`/calculator2/${params.id}`);
+      navigate(`/calculator-2/${params.id}`);
     } else {
-      navigate('/calculator2');
+      navigate('/calculator-2');
     }
   };
 
