@@ -33,9 +33,9 @@ export default function AboutStats() {
           {advantages.map((item, index) => (
             <div
               key={index}
-              className="bg-white border border-[#b1c6df] rounded-[16px] p-4 text-center md:flex md:items-center md:gap-4"
+              className=" border border-[#b1c6df] rounded-[16px] p-4 md:flex md:items-center md:gap-4 text-center md:text-left"
             >
-              <img src={item.icon} alt={item.title} className="w-10 h-10 m-auto" />
+              <img src={item.icon} alt={item.title} className="w-10 h-10 m-auto md:m-0" />
               <div>
                 <p className="font-semibold mb-1 text-[#000]">{item.title}</p>
                 <p className="text-[15px] text-[#4a4a4a] leading-[1.4]">{item.desc}</p>

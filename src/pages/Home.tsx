@@ -1,9 +1,11 @@
 import { useTranslation } from "react-i18next";
-import Header from "../components/Header";
+import MainHeader from "../components/MainHeader";
 import Container from "../components/Container";
 import AboutStats from "../components/AboutStats";
 import Question from "../components/Question";
 import Reviews from "../components/Reviews";
+import MobileApp from "../components/MobileApp";
+import Mainfooter from "../components/MainFooter";
 import { Link } from "react-router";
 import referral from "../assets/images/logo.png";
 import dollar from "../assets/dollar-logo.svg";
@@ -16,7 +18,7 @@ const Home = () => {
 
   return (
     <section className="home min-h-screen text-white bg-gradient-to-b from-[#c9dcf1]/30 to-[#fff]/10 box-border">
-      <Header title={t("home.title")} />
+      <MainHeader title={t("home.title")} />
       <Container>
         <div className="home__content text-center">
           <div className="home__top pt-[140px]">
@@ -165,10 +167,12 @@ const Home = () => {
           </div>
         </div>
       </Container>
-    <AboutStats />
-    <Question />
-    <Reviews />
-      <footer className="footer bg-[#2C2C2C] text-[#fff] py-8 text-sm leading-relaxed">
+      <AboutStats />
+      <Reviews />
+      <Question />
+      <MobileApp />
+      <Mainfooter />
+      {/* <footer className="footer bg-[#2C2C2C] text-[#fff] py-8 text-sm leading-relaxed">
         <Container>
           <div className="footer__content space-y-2 text-center">
             <p className="footer__text">{t("footer.GSO")}</p>
@@ -253,7 +257,7 @@ const Home = () => {
             </p>
           </div>
         </Container>
-      </footer>
+      </footer> */}
     </section>
   );
 };
