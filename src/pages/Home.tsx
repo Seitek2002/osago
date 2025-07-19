@@ -6,6 +6,7 @@ import Question from "../components/Question";
 import Reviews from "../components/Reviews";
 import MobileApp from "../components/MobileApp";
 import Mainfooter from "../components/MainFooter";
+import Referral from "../components/Referral";
 import { Link } from "react-router";
 import referral from "../assets/images/logo.png";
 import dollar from "../assets/dollar-logo.svg";
@@ -71,102 +72,30 @@ const Home = () => {
         </div>
       </Container>
       <div className="home__referral bg-[#E3EFFF] py-[40px] flex justify-center items-center mt-[60px] mb-[60px]">
-        <div className="md:flex gap-[60px]">
-          <img src={referral} alt="" />
-          <div className="">
-            <p className="text-[#000] text-[24px]">
-              Все легально! Стань агентом <br /> по продаже ОСАГО за 2 минуты
-            </p>
-            <p className="text-[#000] mt-4 mb-4">
-              ОсОО «Агент КейДжи» является официальным партнёром <br />
-              ЗАО «Бакай Иншуренс»
-            </p>
-            <Link
-              to="/referral"
-              className="button py-[18px] bg-[#1AA37F] rounded-[12px] text-[#fff] text-[16px] flex text-center items-center justify-center gap-4 w-[345px]"
-            >
-              <img src={add} alt="/" />
-              <span className="text-[20px]">Пригласить друга в команду</span>
-              <br />
-            </Link>
+        <Container>
+          <div className="md:flex gap-[60px] ">
+            <img src={referral} alt="" />
+            <div className="">
+              <p className="text-[#000] text-[24px]">
+                Все легально! Стань агентом <br /> по продаже ОСАГО за 2 минуты
+              </p>
+              <p className="text-[#000] mt-4 mb-4">
+                ОсОО «Агент КейДжи» является официальным партнёром <br />
+                ЗАО «Бакай Иншуренс»
+              </p>
+              <Link
+                to="/referral"
+                className="button py-[18px] bg-[#1AA37F] rounded-[12px] text-[#fff] flex text-center items-center justify-center w-[300px]"
+              >
+                <img src={add} alt="/" />
+                <span className="text-[20px]">Пригласить друга в команду</span>
+                <br />
+              </Link>
+            </div>
           </div>
-        </div>
+        </Container>
       </div>
-      <Container>
-        <h2 className="text-center text-[32px] font-semibold text-[#000] mb-[30px]">
-          Для чего нужен ОСАГО?
-        </h2>
-        <div className="grid md:grid-cols-3 gap-6 mb-[60px]">
-          <div className="bg-white rounded-[12px] p-[20px] border border-[#CCE3FF]">
-            <h3 className="text-[#000] font-semibold text-[18px] mb-2">
-              Что такое ОСАГО?
-            </h3>
-            <p className="text-[#000] text-[15px] leading-[22px]">
-              ОСАГО — это обязательная страховка для всех водителей. В случае
-              ДТП страховая компания покрывает расходы на ремонт чужого
-              автомобиля и лечение пострадавших.
-            </p>
-          </div>
-          <div className="bg-white rounded-[12px] p-[20px] border border-[#CCE3FF]">
-            <h3 className="text-[#000] font-semibold text-[18px] mb-2">
-              Не переживайте о расходах
-            </h3>
-            <p className="text-[#000] text-[15px] leading-[22px]">
-              Если вы стали виновником аварии, страховая возьмёт на себя оплату
-              ремонта чужого транспорта и компенсацию за причинённый вред
-              здоровью.
-            </p>
-          </div>
-          <div className="bg-white rounded-[12px] p-[20px] border border-[#CCE3FF]">
-            <h3 className="text-[#000] font-semibold text-[18px] mb-2">
-              Штрафы за отсутствие ОСАГО
-            </h3>
-            <p className="text-[#000] text-[15px] leading-[22px]">
-              Отсутствие полиса ОСАГО влечёт за собой штраф в размере 3000
-              сомов. Не рискуйте — оформите ОСАГО и защитите себя от лишних
-              затрат.
-            </p>
-          </div>
-        </div>
-        <div className="grid md:grid-cols-2 gap-6 mb-[60px]">
-          <div className="bg-white rounded-[20px] p-[30px] border border-[#CCE3FF]">
-            <h3 className="text-[#000] text-[22px] font-semibold mb-6">
-              Как начать зарабатывать?
-            </h3>
-            <ol className="list-decimal list-inside space-y-2 text-[#000] text-[16px]">
-              <li>Регистрируешься на OA.KG</li>
-              <li>Получаешь личную ссылку на ОСАГО</li>
-              <li>Делишься ссылкой и помогаешь оформить ОСАГО</li>
-              <li>Получаешь 15% с каждой продажи</li>
-            </ol>
-            <Link
-              to="/choose-form"
-              className="mt-6 inline-flex items-center justify-center gap-2 bg-[#0072DE] text-white text-[16px] rounded-[10px] py-[12px] px-[24px] w-full"
-            >
-              <img src={dollar} alt="" />
-              Начать зарабатывать
-            </Link>
-          </div>
-          <div className="bg-white rounded-[20px] p-[30px] border border-[#B7E8D6]">
-            <h3 className="text-[#000] text-[22px] font-semibold mb-6">
-              Как пассивно зарабатывать?
-            </h3>
-            <ol className="list-decimal list-inside space-y-2 text-[#000] text-[16px]">
-              <li>Регистрируешься на OA.KG</li>
-              <li>Получаешь личную ссылку на OA.KG</li>
-              <li>Делишься ссылкой и приглашаешь друзей в свою команду</li>
-              <li>Получаешь 5% с каждой продажи твоей команды</li>
-            </ol>
-            <Link
-              to="/referral"
-              className="mt-6 inline-flex items-center justify-center gap-2 bg-[#1AA37F] text-white text-[16px] rounded-[10px] py-[12px] px-[24px] w-full"
-            >
-              <img src={add} alt="" />
-              Пригласить друга в команду
-            </Link>
-          </div>
-        </div>
-      </Container>
+      <Referral />
       <AboutStats />
       <Reviews />
       <MobileApp />

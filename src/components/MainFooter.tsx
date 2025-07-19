@@ -7,7 +7,7 @@ const MainFooter = () => {
   return (
     <footer className="py-[40px] text-[#000] text-[14px]">
       <Container>
-        <div className="md:bg-[#E3EFFF] rounded-[16px] p-6 flex flex-col-reverse gap-[40px] md:gap-[102px] md:flex-row bg-[#dbe4f1] ">
+        <div className="md:bg-[#E3EFFF] rounded-[16px] p-6 flex flex-col-reverse gap-[40px] md:gap-[102px] lg:flex-row bg-[#dbe4f1] ">
           <div className="space-y-2">
             <p>Телефон:+996777394080</p>
             <p>Электронная почта: office@insurancebakai.kg</p>
