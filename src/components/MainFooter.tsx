@@ -1,4 +1,3 @@
-import React from "react";
 import Container from "../components/Container";
 import googlePlay from "../assets/google-play.svg";
 import appStore from "../assets/app-store.svg";

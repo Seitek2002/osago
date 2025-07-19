@@ -5,12 +5,11 @@ import { useNavigate } from "react-router";
 import logo from "../assets/logo.svg";
 
 interface IProps {
-  title?: string;
   type?: string;
 }
 
-const Header: FC<IProps> = ({ title, type }) => {
-  const { i18n, t } = useTranslation();
+const Header: FC<IProps> = ({ type }) => {
+  const { i18n } = useTranslation();
   const navigate = useNavigate();
 
   const handleLangSwitch = () => {

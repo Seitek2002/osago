@@ -123,7 +123,7 @@ export const routerConfig: RouteObject[] = [
     ),
   },
   {
-    path: '/calculator2/:id',
+    path: '/calculator-2/:id',
     element: (
       <ServiceLayout>
         <Calculator2 />

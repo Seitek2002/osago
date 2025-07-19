@@ -19,7 +19,7 @@ const Home = () => {
 
   return (
     <section className="home min-h-screen text-white bg-gradient-to-b from-[#c9dcf1]/30 to-[#fff]/10 box-border">
-      <MainHeader title={t("home.title")} />
+      <MainHeader />
       <Container>
         <div className="home__content text-center">
           <div className="home__top pt-[140px]">
@@ -45,26 +45,26 @@ const Home = () => {
           </div>
           <div className="home__earnings">
             <span className="font-semibold text-[32px] text-[#000]">
-              Начни зарабатывать уже сейчас
+              Начни зарабатывать уже сейчас
             </span>
             <div className="earnings__content md:flex gap-[40px] md:justify-center">
               <div className="bg-[#fff] rounded-3xl p-[5px] border border-indigo-500 mt-[30px] md:flex  md:items-center md:flex-col md:py-[20px] md:px-[40px]">
                 <img src={hrs} className="mb-[12px] m-auto" />
                 <span className="text-[#000]">
-                  Помоги другим оформить ОСАГО <br /> и заработай до 100 000 сом
+                  Помоги другим оформить ОСАГО <br /> и заработай до 100 000 сом
                 </span>
                 <p className="text-[#1AA37F] mt-[12px]">
-                  Вознаграждение 15% от ОСАГО
+                  Вознаграждение 15% от ОСАГО
                 </p>
               </div>
               <div className="bg-[#fff] rounded-3xl p-[10px] border border-indigo-500 mt-[30px] md:flex md:items-center md:flex-col md:p-[20px] md:px-[40px]">
                 <img src={reg} className="mb-[12px] m-auto" />
                 <span className="text-[#000]">
-                  Научи регистрировать друзей <br /> и зарабатывай пассивно
-                  от их продаж
+                  Научи регистрировать друзей <br /> и зарабатывай пассивно
+                  от их продаж
                 </span>
                 <p className="text-[#1AA37F] mt-[12px]">
-                  Вознаграждение 5% от ОСАГО друзей
+                  Вознаграждение 5% от ОСАГО друзей
                 </p>
               </div>
             </div>
@@ -77,18 +77,18 @@ const Home = () => {
             <img src={referral} alt="" />
             <div className="">
               <p className="text-[#000] text-[24px]">
-                Все легально! Стань агентом <br /> по продаже ОСАГО за 2 минуты
+                Все легально! Стань агентом <br /> по продаже ОСАГО за 2 минуты
               </p>
               <p className="text-[#000] mt-4 mb-4">
                 ОсОО «Агент КейДжи» является официальным партнёром <br />
-                ЗАО «Бакай Иншуренс»
+                ЗАО «Бакай Иншуренс»
               </p>
               <Link
                 to="/referral"
                 className="button py-[18px] bg-[#1AA37F] rounded-[12px] text-[#fff] flex text-center items-center justify-center w-[300px]"
               >
                 <img src={add} alt="/" />
-                <span className="text-[20px]">Пригласить друга в команду</span>
+                <span className="text-[20px]">Пригласить друга в команду</span>
                 <br />
               </Link>
             </div>
