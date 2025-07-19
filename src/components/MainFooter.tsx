@@ -15,7 +15,7 @@ const MainFooter = () => {
               <img src={googlePlay} alt="Google Play" className="h-[40px] bg-[#fff] rounded-[8px]" />
               <img src={appStore} alt="App Store" className="h-[40px]" />
             </div>
-            <p className="text-[14px] text-[#000] pt-4">© 2025 Авторское право.Все права защищены.</p>
+            <p className="text-[14px] text-[#000] pt-4">© 2025 Авторское право. <br /> Все права защищены.</p>
           </div>
 
           <div className="space-y-2">
@@ -37,7 +37,7 @@ const MainFooter = () => {
             </p>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 w-1/2">
             <p>
               ЗАО «Бакай Иншуренс» обладает лицензией № 03, номер бланка № 0003 серии «ОС» от 5 февраля 2024 года, выданной Службой регулирования и надзора  за финансовым рынком при Министерстве экономики и коммерции Кыргызской Республики.
             </p>
