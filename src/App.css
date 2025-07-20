@@ -1,3 +1,18 @@
 .personal-checkbox:checked {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23005CAA' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
 }
+
+.referral-hint {
+  background: #cee6ff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: #3b4a5a;
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 140%;
+}

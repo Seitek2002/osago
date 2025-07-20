@@ -60,6 +60,7 @@ export interface IFormData {
 }
 
 const DataForms2: React.FC = () => {
+  const [confirmChecked, setConfirmChecked] = useState(false);
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
   const localData = JSON.parse(localStorage.getItem('ocrData') || '{}');
@@ -109,9 +110,10 @@ const DataForms2: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const data: any = {
-      passport: { ...userFormData.passport,
+      passport: {
+        ...userFormData.passport,
         citizenshipCountry: userFormData.passport.citizenshipCountryId,
-       },
+      },
       vehicleRegistrationCertificate: {
         ...userFormData.vehicle_cert,
         number: userFormData.vehicle_cert.number,
@@ -238,7 +240,6 @@ const DataForms2: React.FC = () => {
             setUserFormData={setUserFormData}
           />
 
-
           <h3 className='text-suptitle'>
             Проверьте ваши данные{' '}
             <span className='required text-red-500'>*</span>
@@ -259,11 +260,26 @@ const DataForms2: React.FC = () => {
           />
         </div>
 
+        <div className='form-group mt-8 mb-4'>
+          <label className='flex items-center gap-[14px]'>
+            <input
+              type='checkbox'
+              required
+              checked={confirmChecked}
+              onChange={e => setConfirmChecked(e.target.checked)}
+              className='appearance-none border-2 border-[#005CAA] w-5 h-5 rounded-[3px] personal-checkbox'
+            />
+            <span className='w-[90%] text-[14px]'>
+              Настоящим подтверждаю, что проверил указанные данные и подтверждаю
+              их достоверность для получения полиса ОСАГО
+            </span>
+          </label>
+        </div>
         <div className='mt-8'>
           <button
             className='flex justify-center w-full py-[14px] bg-[#005CAA] rounded-[6px] text-white text-[16px] disabled:opacity-50 disabled:cursor-not-allowed'
             type='submit'
-            disabled={!isFormValid}
+            disabled={!isFormValid || !confirmChecked}
           >
             Далее
           </button>
