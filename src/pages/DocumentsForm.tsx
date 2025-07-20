@@ -85,9 +85,10 @@ const UploadIcon = () => (
 const DocumentsForm: React.FC = () => {
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [selectedId, setSelectedId] = React.useState<string | undefined>(params.id);
-  const [recognizeDocument, { isLoading }] =
-    useRecognizeDocumentMutation();
+  const [selectedId, setSelectedId] = React.useState<string | undefined>(
+    params.id
+  );
+  const [recognizeDocument, { isLoading }] = useRecognizeDocumentMutation();
 
   const [passportFront, setPassportFront] = React.useState<File | null>(null);
   const [passportBack, setPassportBack] = React.useState<File | null>(null);
@@ -163,8 +164,10 @@ const DocumentsForm: React.FC = () => {
       const errorObj = err as any;
       setPassportError(
         errorObj?.data?.error ||
-        errorObj?.error ||
-        (typeof errorObj === 'string' ? errorObj : 'Ошибка при загрузке или сканировании документов')
+          errorObj?.error ||
+          (typeof errorObj === 'string'
+            ? errorObj
+            : 'Ошибка при загрузке или сканировании документов')
       );
       return;
     }
@@ -180,8 +183,10 @@ const DocumentsForm: React.FC = () => {
       const errorObj = err as any;
       setVehicleError(
         errorObj?.data?.error ||
-        errorObj?.error ||
-        (typeof errorObj === 'string' ? errorObj : 'Ошибка при загрузке или сканировании документов')
+          errorObj?.error ||
+          (typeof errorObj === 'string'
+            ? errorObj
+            : 'Ошибка при загрузке или сканировании документов')
       );
       return;
     }
@@ -197,13 +202,15 @@ const DocumentsForm: React.FC = () => {
       const errorObj = err as any;
       setPravaError(
         errorObj?.data?.error ||
-        errorObj?.error ||
-        (typeof errorObj === 'string' ? errorObj : 'Ошибка при загрузке или сканировании документов')
+          errorObj?.error ||
+          (typeof errorObj === 'string'
+            ? errorObj
+            : 'Ошибка при загрузке или сканировании документов')
       );
       return;
     }
 
-    localStorage.setItem('ocrData', '{}')
+    localStorage.setItem('ocrData', '{}');
 
     localStorage.setItem(
       'ocrData',
@@ -215,13 +222,13 @@ const DocumentsForm: React.FC = () => {
     );
 
     if (!driverRes.data?.categories) {
-      setPravaError('Не удалось отсканировать права')
-      return
-    };
+      setPravaError('Не удалось отсканировать права');
+      return;
+    }
     if (!vehicleRes.data?.vehicleCategory) {
-      setVehicleError('Не удалось отсканировать права')
-      return
-    };
+      setVehicleError('Не удалось отсканировать права');
+      return;
+    }
 
     if (selectedId) {
       navigate(`/data-forms/${selectedId}`);
@@ -507,7 +514,7 @@ const DocumentsForm: React.FC = () => {
         {/* Блок ввода реферального ID */}
         <ReferralIdInput paramsId={params.id} onIdChange={setSelectedId} />
         {/* Чекбокс согласия */}
-        <div className='passport__bottom flex flex-col gap-[20px] mt-[60px]'>
+        <div className='passport__bottom flex flex-col gap-[20px] mt-[20px]'>
           <label className='flex items-center gap-[14px] text-[13px]'>
             <input
               type='checkbox'
@@ -515,19 +522,21 @@ const DocumentsForm: React.FC = () => {
               checked={personalDataChecked}
               onChange={(e) => setPersonalDataChecked(e.target.checked)}
             />
-            Согласие на
-            <a
-              href="/ПУБЛИЧНАЯ ОФЕРТА для субагентов.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline text-blue-600"
-            >
-              обработку персональных данных
-            </a>
+            <span>
+              Согласие на
+              <a
+                href='/ПУБЛИЧНАЯ ОФЕРТА для субагентов.pdf'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='underline text-blue-600 ml-[6px]'
+              >
+                обработку персональных данных
+              </a>
+            </span>
           </label>
         </div>
         {/* Кнопка "Далее" */}
-        <div className='w-full mt-[40px]'>
+        <div className='w-full mt-[20px]'>
           <button
             type='button'
             disabled={!isValid || isLoading}

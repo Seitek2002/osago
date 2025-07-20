@@ -380,7 +380,7 @@ const DocumentsForm2: React.FC = () => {
         
         <ReferralIdInput paramsId={params.id} onIdChange={setSelectedId} />
         {/* Чекбокс согласия */}
-        <div className='passport__bottom flex flex-col gap-[20px] mt-[60px]'>
+        <div className='passport__bottom flex flex-col gap-[20px] mt-[20px]'>
           <label className='flex items-center gap-[14px] text-[13px]'>
             <input
               type='checkbox'
@@ -388,19 +388,21 @@ const DocumentsForm2: React.FC = () => {
               checked={personalDataChecked}
               onChange={(e) => setPersonalDataChecked(e.target.checked)}
             />
-            Согласие на
+            <span>
+              Согласие на
             <a
               href="/ПУБЛИЧНАЯ ОФЕРТА для субагентов.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline text-blue-600"
+              className="underline text-blue-600 ml-[6px]"
             >
               обработку персональных данных
             </a>
+            </span>
           </label>
         </div>
         {/* Кнопка "Далее" */}
-        <div className='w-full mt-[40px]'>
+        <div className='w-full mt-[20px]'>
           <button
             type='button'
             disabled={!isValid || isLoading}

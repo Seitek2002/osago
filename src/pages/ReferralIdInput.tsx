@@ -45,10 +45,10 @@ const ReferralIdInput: React.FC<Props> = ({ paramsId, onIdChange }) => {
   }, [id, onIdChange]);
 
   return (
-    <div className='form-group mb-6'>
+    <div className='form-group'>
       {!showInput && (
         <div
-          className='text-blue-500 py-2 rounded mb-2 underline text-[13px]'
+          className='text-blue-500 py-2 rounded underline text-[13px]'
           role='button'
           onClick={() => setShowInput(true)}
         >
