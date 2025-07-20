@@ -7,6 +7,7 @@ import passportBackSide from '../assets/images/passport-back-side.png';
 import tp_front from '../assets/images/tp_front.png';
 import tp_back from '../assets/images/tp_back.png';
 import loader from '../assets/loader.svg';
+import ReferralIdInput from './ReferralIdInput';
 
 const RemoveIcon = ({ onClick }: { onClick: React.MouseEventHandler }) => (
   <svg
@@ -83,6 +84,7 @@ const DocumentsForm2: React.FC = () => {
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [recognizeDocument, { isLoading }] = useRecognizeDocumentMutation();
+  const [selectedId, setSelectedId] = React.useState<string | undefined>(params.id);
 
   const [passportFront, setPassportFront] = React.useState<File | null>(null);
   const [passportBack, setPassportBack] = React.useState<File | null>(null);
@@ -370,27 +372,8 @@ const DocumentsForm2: React.FC = () => {
         </div>
 
         {/* Блок ввода реферального ID */}
-        <div className='form-group mb-6'>
-          <div
-            className='text-blue-500 py-2 rounded mb-2 underline text-[13px]'
-            role='button'
-          >
-            Указать ID участника (необязательно)
-          </div>
-          {params.id && (
-            <>
-              <label htmlFor='referal-id' className='text-[14px] block'>
-                ID участника команды (необязательно)
-              </label>
-              <input
-                type='text'
-                id='referal-id'
-                placeholder='Введите ID'
-                className='w-full mt-[12px] bg-[#F7F8FA] border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none'
-              />
-            </>
-          )}
-        </div>
+        
+        <ReferralIdInput paramsId={params.id} onIdChange={setSelectedId} />
         {/* Чекбокс согласия */}
         <div className='passport__bottom flex flex-col gap-[20px] mt-[60px]'>
           <label className='flex items-center gap-[14px] text-[13px]'>
@@ -400,7 +383,15 @@ const DocumentsForm2: React.FC = () => {
               checked={personalDataChecked}
               onChange={(e) => setPersonalDataChecked(e.target.checked)}
             />
-            Согласие на обработку персональных данных
+            Согласие на
+            <a
+              href="/ПУБЛИЧНАЯ ОФЕРТА для субагентов.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-blue-600"
+            >
+              обработку персональных данных
+            </a>
           </label>
         </div>
         {/* Кнопка "Далее" */}

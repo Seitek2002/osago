@@ -515,7 +515,7 @@ const DocumentsForm: React.FC = () => {
               checked={personalDataChecked}
               onChange={(e) => setPersonalDataChecked(e.target.checked)}
             />
-            Согласие на{' '}
+            Согласие на
             <a
               href="/ПУБЛИЧНАЯ ОФЕРТА для субагентов.pdf"
               target="_blank"
