@@ -49,7 +49,7 @@ const Header: FC<IProps> = ({ type }) => {
               className="bg-[#1AA37F] py-[8px] px-[14px] rounded-[8px]"
               onClick={() => navigate("/")}
             >
-              Зарабатывать
+              Начать зарабатывать
             </button>
           </div>
         </div>
