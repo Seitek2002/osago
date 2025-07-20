@@ -114,7 +114,7 @@ export default function Calculator() {
         setErrorMessage(null);
       }
       if (res && 'paymentUrl' in res && typeof res.paymentUrl === 'string') {
-        window.open(res.paymentUrl, '_blank', 'noopener,noreferrer');
+        window.open(res.paymentUrl);
       }
       console.log('createPolicy response:', res);
     } catch (err) {
