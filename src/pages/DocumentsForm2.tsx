@@ -184,7 +184,12 @@ const DocumentsForm2: React.FC = () => {
     }
 
     localStorage.setItem('ocrData', JSON.stringify(data));
-    navigate('/data-forms-2');
+
+    if (selectedId) {
+      navigate(`/data-forms-2/${selectedId}`);
+    } else {
+      navigate('/data-forms-2');
+    }
   };
 
   return (
