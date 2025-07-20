@@ -24,7 +24,7 @@ export default function Reviews() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const reviews = [...Array(6)].map((_, i) => ({
+  const reviews = [...Array(6)].map((_) => ({
     name: "Асан Максат",
     date: "Биик 1 июля 2025",
     text:
