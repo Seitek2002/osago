@@ -138,7 +138,7 @@ const DataForms2: React.FC = () => {
       },
       unlimitedDrivers: true,
       purpose: userFormData.purpose.id,
-      endDate: '2026-04-01',
+      endDate: '',
       phoneNumber: userFormData.phoneNumber,
       technicalInspection: false,
     };

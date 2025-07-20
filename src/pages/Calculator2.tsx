@@ -114,7 +114,7 @@ export default function Calculator2() {
       } else {
         setErrorMessage(null);
       }
-      window.open(res.paymentUrl, '_blank', 'noopener,noreferrer');
+      window.open(res.paymentUrl);
     } catch (err) {
       // Если сервер вернул ошибку с result === 206
       const errorData = (err as any)?.data;
