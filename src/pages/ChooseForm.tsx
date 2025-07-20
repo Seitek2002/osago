@@ -13,7 +13,7 @@ const ChooseForm: React.FC = () => {
   }, [id]);
 
   return (
-    <div className='min-h-screen flex flex-col items-center justify-center gap-[10px] px-4'>
+    <div className='min-h-[600px] flex flex-col items-center justify-center gap-[10px] px-4'>
       <h2 className='font-bold text-center text-[28px]'>
         Онлайн оформление ОСАГО
       </h2>
