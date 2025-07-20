@@ -114,7 +114,9 @@ export default function Calculator2() {
       } else {
         setErrorMessage(null);
       }
-      window.open(res.paymentUrl);
+      if (res && 'paymentUrl' in res && typeof res.paymentUrl === 'string') {
+        window.location.href = res.paymentUrl;
+      }
     } catch (err) {
       // Если сервер вернул ошибку с result === 206
       const errorData = (err as any)?.data;
