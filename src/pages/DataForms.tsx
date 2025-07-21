@@ -228,6 +228,7 @@ const DataForms: React.FC = () => {
               placeholder='+996 (502) 235-509'
               className='form-input mt-[12px] w-full bg-[#F7F8FA] rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 border'
               style={getInputStyle(userFormData.phoneNumber)}
+              defaultValue={'+996'}
               value={userFormData.phoneNumber}
               onFocus={() => {
                 setUserFormData((prev) => {
@@ -246,11 +247,11 @@ const DataForms: React.FC = () => {
               }}
               onChange={(e) =>
                 setUserFormData((prev) => {
-                  let val = e.target.value;
+                  const val = e.target.value;
                   // Не даём удалить +996
-                  if (!val.startsWith('+996')) {
-                    val = '+996' + val.replace(/^\+*/, '').replace(/^996/, '');
-                  }
+                  // if (!val.startsWith('+996')) {
+                  //   val = '+996' + val.replace(/^\+*/, '').replace(/^996/, '');
+                  // }
                   return { ...prev, phoneNumber: val };
                 })
               }
