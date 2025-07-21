@@ -98,6 +98,7 @@ const DataForms2: React.FC = () => {
     !!userFormData?.vehicle_cert?.steeringLocation &&
     !!userFormData?.vehicle_cert?.engineType &&
     !!userFormData?.vehicle_cert?.yearOfManufacture &&
+    !!userFormData?.vehicle_cert?.registrationDate &&
     !!userFormData?.vehicle_cert?.vehicleCategory;
 
   const isFormValid =
