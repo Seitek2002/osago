@@ -11,24 +11,24 @@ export default function AboutStats() {
   const { ref, inView } = useInView({ triggerOnce: true });
 
   return (
-    <section className="bg-[#EAF4FF] py-16 px-4" ref={ref}>
+    <section className="bg-[#EAF4FF] py-10 md:py-16 px-4" ref={ref}>
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-[24px] font-semibold mb-10 text-[#000]">OA.KG это:</h2>
-        <div className="flex flex-col md:flex-row justify-center gap-8 mb-14">
-          <div className="text-[#0072DE] text-[55px] font-bold">
+        <h2 className="text-[24px] font-semibold mb-10 text-[#000] lg:text-[32px]">OA.KG это:</h2>
+        <div className="flex flex-col md:flex-row justify-center gap-8 mb-14 lg:justify-around">
+          <div className="text-[#0072DE] text-[55px] font-bold lg:text-7xl">
             {inView && <CountUp end={38} duration={2} suffix="K+" />} <br />
-            <span className="text-[22px] font-semibold text-[#000]">сом выплачено</span>
+            <span className="text-[22px] font-normal text-[#000]">сом выплачено</span>
           </div>
-          <div className="text-[#FF5E42] text-[55px] font-bold">
+          <div className="text-[#FF5E42] text-[55px] font-bold lg:text-7xl">
             {inView && <CountUp end={1500} duration={2} suffix="+" />} <br />
-            <span className="text-[22px] font-semibold text-[#000]">оформленных ОСАГО</span>
+            <span className="text-[22px] font-normal text-[#000]">оформленных ОСАГО</span>
           </div>
-          <div className="text-[#1AA37F] text-[55px] font-bold">
+          <div className="text-[#1AA37F] text-[55px] font-bold lg:text-7xl">
             {inView && <CountUp end={750} duration={2} suffix="+" />} <br />
-            <span className="text-[22px] font-semibold text-[#000]">агентов по всей стране</span>
+            <span className="text-[22px] font-normal text-[#000]">агентов по всей стране</span>
           </div>
         </div>
-        <h3 className="text-[20px] font-semibold mb-8 text-[#000]">Почему OA.KG?</h3>
+        <h3 className="text-[20px] font-semibold mb-8 text-[#000] lg:text-[32px]">Почему OA.KG?</h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
           {advantages.map((item, index) => (
             <div
@@ -37,8 +37,8 @@ export default function AboutStats() {
             >
               <img src={item.icon} alt={item.title} className="w-10 h-10 m-auto md:m-0" />
               <div>
-                <p className="font-semibold mb-1 text-[#000]">{item.title}</p>
-                <p className="text-[15px] text-[#4a4a4a] leading-[1.4]">{item.desc}</p>
+                <p className="font-normal mb-1 text-[#000] text-xl">{item.title}</p>
+                <p className="text-[15px] text-[#000] leading-[1.4]">{item.desc}</p>
               </div>
             </div>
           ))}

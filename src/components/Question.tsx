@@ -43,7 +43,7 @@ export default function FAQ() {
       <h2 className="text-center text-2xl md:text-3xl font-bold mb-6 text-[#000]">
         Остались вопросы?
       </h2>
-      <div className="max-w-3xl mx-auto border border-[#cddef1] rounded-3xl p-5 md:p-10">
+      <div className="max-w-[1200px] mx-auto border border-[#cddef1] rounded-3xl p-5 md:p-10">
         {questions.map((item, index) => (
           <div key={index}>
             <button

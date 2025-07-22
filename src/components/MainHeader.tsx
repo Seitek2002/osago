@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import Container from "./Container";
 import type { FC } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import logo from "../assets/logo.svg";
 
 interface IProps {
@@ -29,7 +29,7 @@ const Header: FC<IProps> = ({ type }) => {
           <img
             src={logo}
             alt="Main Logo"
-            className="w-[150px] cursor-pointer"
+            className="md:w-[150px] cursor-pointer"
             onClick={() => navigate("/")}
           />
           <div className="flex items-center">
@@ -43,14 +43,18 @@ const Header: FC<IProps> = ({ type }) => {
               }}
               onClick={handleLangSwitch}
             >
-              {i18n.language === "kg" ? "РУ" : "КР"}
+              {i18n.language === "kg" ? "Русский" : "Кыргызча"}
             </span>
+            <Link
+              to="/choose-form"
+            >
             <button
-              className="bg-[#1AA37F] py-[8px] px-[14px] rounded-[8px]"
+              className="hidden md:block bg-[#1AA37F] py-[8px] px-[14px] rounded-[8px] cursor-pointer"
               onClick={() => navigate("/")}
             >
               Начать зарабатывать
             </button>
+            </Link>
           </div>
         </div>
       </Container>

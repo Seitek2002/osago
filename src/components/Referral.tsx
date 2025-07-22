@@ -64,11 +64,11 @@ const StepCard: React.FC<StepCardProps> = ({
         backgroundColor: bgColor,
       }}
     >
-      <h3 className='text-[#000] text-[22px] font-semibold mb-6'>{title}</h3>
+      <h3 className='text-[#000] text-[24px] font-normal mb-6 lg:text-2xl'>{title}</h3>
       <ol className='flex flex-col gap-[20px] relative'>
         {steps.map((step, i) => (
           <div key={i}>
-            <div className='text-[#000] text-[16px] list-none flex items-center gap-2'>
+            <div className='text-[#000] text-sm md:text-[16px] list-none flex items-center gap-5'>
               <span
                 className={`border py-[2px] px-[9px] rounded-full`}
                 style={{ borderColor: color }}
@@ -88,7 +88,7 @@ const StepCard: React.FC<StepCardProps> = ({
       </ol>
       <Link
         to={link}
-        className={`mt-6 inline-flex items-center justify-center gap-2 ${btnColor} text-white text-[16px] rounded-[10px] py-[12px] px-[24px] w-full`}
+        className={`h-[60px] rounded-xl mt-6 inline-flex items-center justify-center gap-2 ${btnColor} text-white text-[16px] py-[12px] px-[24px] w-full`}
       >
         <img src={icon} alt='' />
         {btnText}
@@ -100,7 +100,7 @@ const StepCard: React.FC<StepCardProps> = ({
 const Referral = () => {
   return (
     <Container>
-      <h2 className='text-center text-[32px] font-semibold text-[#000] mb-[30px]'>
+      <h2 className='text-center text-xl md:text-[32px] font-semibold text-[#000] mb-[30px]'>
         Для чего нужен ОСАГО?
       </h2>
 
@@ -110,7 +110,7 @@ const Referral = () => {
             key={index}
             className='bg-white rounded-[12px] p-[20px] border border-[#CCE3FF]'
           >
-            <h3 className='text-[#000] font-semibold text-[18px] mb-2'>
+            <h3 className='text-[#000] font-semibold mb-2 lg:text-xl'>
               {item.title}
             </h3>
             <p className='text-[#000] text-[15px] leading-[22px]'>

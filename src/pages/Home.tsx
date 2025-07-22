@@ -24,10 +24,10 @@ const Home = () => {
         <div className="home__content text-center">
           <div className="home__top pt-[140px] max-w-[766px] mx-auto">
             <div className="home__title text-center">
-              <span className="text-[40px] font-semibold text-[#0072DE]">
+              <span className="text-[40px] font-medium text-[#0072DE]">
                 {t("home.title.span")}
               </span>{" "}
-              <span className="text-[40px] font-semibold text-[#000]">
+              <span className="text-[40px] font-medium text-[#000]">
                 {t("home.title.title")}
               </span>
             </div>
@@ -36,7 +36,7 @@ const Home = () => {
           <div className="home__btns mt-[30px]">
             <Link
               to="/choose-form"
-              className="button max-w-[305px] mx-auto py-[14px] bg-[#0072DE] rounded-[6px] text-[#fff] text-[16px] mb-[16px] flex text-center items-center justify-center gap-4"
+              className="button rounded-xl max-w-[305px] mx-auto py-[14px] bg-[#0072DE] text-[#fff] text-[16px] mb-[16px] flex text-center items-center justify-center gap-4"
             >
               <img src={dollar} alt="" />
               <span className="text-[20px]">Начать зарабатывать</span>
@@ -48,22 +48,22 @@ const Home = () => {
               Начни зарабатывать уже сейчас
             </span>
             <div className="earnings__content md:flex gap-[40px] md:justify-center">
-              <div className="bg-[#fff] rounded-3xl p-[5px] border border-[#C0D2F9] mt-[30px] md:flex  md:items-center md:flex-col md:py-[20px] md:px-[40px]">
+              <div className="bg-[#fff] rounded-3xl p-5 border border-[#C0D2F9] mt-[30px] md:flex  md:items-center md:flex-col md:py-[20px] md:px-[40px]">
                 <img src={hrs} className="mb-[12px] m-auto" />
-                <span className="text-[#000]">
+                <span className="text-[#000] text-lg md:text-2xl">
                   Помоги другим оформить ОСАГО <br /> и заработай до 100 000 сом
                 </span>
-                <p className="text-[#1AA37F] mt-[12px]">
+                <p className="text-[#1AA37F] mt-[12px] text-sm md:text-lg">
                   Вознаграждение 15% от ОСАГО
                 </p>
               </div>
-              <div className="bg-[#fff] rounded-3xl p-[10px] border border-[#C0D2F9] mt-[30px] md:flex md:items-center md:flex-col md:p-[20px] md:px-[40px]">
+              <div className="bg-[#fff] rounded-3xl p-5 border border-[#C0D2F9] mt-[30px] md:flex md:items-center md:flex-col md:p-[20px] md:px-[40px]">
                 <img src={reg} className="mb-[12px] m-auto" />
-                <span className="text-[#000]">
+                <span className="text-[#000] text-lg md:text-2xl">
                   Научи регистрировать друзей <br /> и зарабатывай пассивно
                   от их продаж
                 </span>
-                <p className="text-[#1AA37F] mt-[12px]">
+                <p className="text-[#1AA37F] mt-[12px] text-sm md:text-lg">
                   Вознаграждение 5% от ОСАГО друзей
                 </p>
               </div>
@@ -76,19 +76,19 @@ const Home = () => {
           <div className="md:flex gap-[60px] justify-center ">
             <img src={referral} alt="" />
             <div className="">
-              <p className="text-[#000] text-[24px] mt-[40px]">
-                Все легально! Стань агентом <br /> по продаже ОСАГО за 2 минуты
+              <p className="text-[#000] text-[24px] mt-[40px] lg:text-[32px]">
+                Все легально! <br className="md:hidden"/> Стань агентом <br className="hidden md:block"/> по продаже ОСАГО за 2 минуты
               </p>
-              <p className="text-[#000] my-4">
+              <p className="text-[#000] my-4 text-[13px] md:text-[15px]">
                 ОсОО «Агент КейДжи» является официальным партнёром
                 ЗАО «Бакай Иншуренс»
               </p>
               <Link
                 to="/referral"
-                className="button py-[18px] px-[35px] bg-[#1AA37F] rounded-[12px] text-[#fff] flex text-center items-center justify-center w-full"
+                className="button py-[18px] px-[35px] bg-[#1AA37F] rounded-[12px] text-[#fff] flex text-center items-center justify-center w-full lg:w-[70%]"
               >
                 <img src={add} alt="/" />
-                <span className="text-[20px]">Пригласить друга в команду</span>
+                <span className="text-base md:text-[20px]">Пригласить друга в команду</span>
                 <br />
               </Link>
             </div>
