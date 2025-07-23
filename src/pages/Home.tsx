@@ -3,8 +3,8 @@ import MainHeader from "../components/MainHeader";
 import Container from "../components/Container";
 import AboutStats from "../components/AboutStats";
 import Question from "../components/Question";
-import Reviews from "../components/Reviews";
-import MobileApp from "../components/MobileApp";
+// import Reviews from "../components/Reviews";
+// import MobileApp from "../components/MobileApp";
 import Mainfooter from "../components/MainFooter";
 import Referral from "../components/Referral";
 import { Link } from "react-router";
@@ -97,8 +97,8 @@ const Home = () => {
       </div>
       <Referral />
       <AboutStats />
-      <Reviews />
-      <MobileApp />
+      {/* <Reviews /> */}
+      {/* <MobileApp /> */}
       <Question />
       <Mainfooter />
       {/* <footer className="footer bg-[#2C2C2C] text-[#fff] py-8 text-sm leading-relaxed">
