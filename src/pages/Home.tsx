@@ -35,7 +35,7 @@ const Home = () => {
           </div>
           <div className="home__btns mt-[30px]">
             <Link
-              to="/choose-form"
+              to="https://oa.kg/a/"
               className="button rounded-xl max-w-[305px] mx-auto py-[14px] bg-[#0072DE] text-[#fff] text-[16px] mb-[16px] flex text-center items-center justify-center gap-4"
             >
               <img src={dollar} alt="" />
