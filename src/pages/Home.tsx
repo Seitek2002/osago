@@ -84,10 +84,10 @@ const Home = () => {
                 ЗАО «Бакай Иншуренс»
               </p>
               <Link
-                to="/referral"
+                to="https://oa.kg/a/"
                 className="button py-[18px] px-[35px] bg-[#1AA37F] rounded-[12px] text-[#fff] flex text-center items-center justify-center w-full lg:w-[70%]"
               >
-                <img src={add} alt="/" />
+                <img src={add} alt="" />
                 <span className="text-base md:text-[20px]">Пригласить друга в команду</span>
                 <br />
               </Link>

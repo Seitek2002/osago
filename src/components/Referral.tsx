@@ -129,7 +129,7 @@ const Referral = () => {
           bgColor='#F9FBFF'
           btnText='Начать зарабатывать'
           btnColor='bg-[#0072DE]'
-          link='/choose-form'
+          link='https://oa.kg/a/'
           icon={dollar}
         />
         <StepCard
@@ -140,7 +140,7 @@ const Referral = () => {
           bgColor='#F9FFF9'
           btnText='Пригласить друга в команду'
           btnColor='bg-[#1AA37F]'
-          link='/referral'
+          link='https://oa.kg/a/'
           icon={add}
         />
       </div>

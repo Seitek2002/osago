@@ -6,7 +6,7 @@ const MainFooter = () => {
   return (
     <footer className='py-[40px] text-[#000] text-[14px]'>
       <Container>
-        <div className='md:bg-[#E3EFFF] rounded-[16px] p-6 flex flex-col gap-[40px] gap-2xl lg:flex-row bg-[#dbe4f1] '>
+        <div className='md:bg-[#E3EFFF] rounded-[16px] p-6 flex flex-col gap-[40px] gap-2xl lg:flex-row bg-[#dbe4f1] justify-between '>
           <div className='space-y-2 lg:max-w-[225px] order-2'>
             <a href='tel:+996777394080'>
               <p>Телефон:+996777394080</p>
