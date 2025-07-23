@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { useRecognizeDocumentMutation } from '../store/ocrApi';
 
@@ -8,6 +8,49 @@ import tp_front from '../assets/images/tp_front.png';
 import tp_back from '../assets/images/tp_back.png';
 import loader from '../assets/loader.svg';
 import ReferralIdInput from './ReferralIdInput';
+
+const SourceModal2 = ({
+  isOpen,
+  onClose,
+  onSelectSource,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  onSelectSource: (source: 'camera' | 'gallery') => void;
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <div
+      className='fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]'
+      onClick={onClose}
+    >
+      <div
+        className='bg-white p-4 rounded shadow-sm'
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h3 className='text-lg font-bold mb-2'>Выберите источник</h3>
+        <div className='flex flex-col gap-2'>
+          <button
+            onClick={() => onSelectSource('camera')}
+            className='bg-blue-500 text-white rounded px-4 py-2'
+          >
+            Камера
+          </button>
+          <button
+            onClick={() => onSelectSource('gallery')}
+            className='bg-blue-500 text-white rounded px-4 py-2'
+          >
+            Галерея
+          </button>
+          <button onClick={onClose} className='text-gray-600 mt-2 underline'>
+            Отмена
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const RemoveIcon = ({ onClick }: { onClick: React.MouseEventHandler }) => (
   <svg
@@ -84,25 +127,83 @@ const DocumentsForm2: React.FC = () => {
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [recognizeDocument, { isLoading }] = useRecognizeDocumentMutation();
-  const [selectedId, setSelectedId] = React.useState<string | undefined>(params.id);
+  const [selectedId, setSelectedId] = useState<string | undefined>(params.id);
 
-  const [passportFront, setPassportFront] = React.useState<File | null>(null);
-  const [passportBack, setPassportBack] = React.useState<File | null>(null);
-  const [tpFront, setTpFront] = React.useState<File | null>(null);
-  const [tpBack, setTpBack] = React.useState<File | null>(null);
+  const [passportFront, setPassportFront] = useState<File | null>(null);
+  const [passportBack, setPassportBack] = useState<File | null>(null);
+  const [tpFront, setTpFront] = useState<File | null>(null);
+  const [tpBack, setTpBack] = useState<File | null>(null);
 
-  const [personalDataChecked, setPersonalDataChecked] = React.useState(false);
-  // Глобальная ошибка больше не нужна
-  // const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
+  const [passportError, setPassportError] = useState<string | null>(null);
+  const [vehicleError, setVehicleError] = useState<string | null>(null);
 
-  // Состояния ошибок для каждого документа
-  const [passportError, setPassportError] = React.useState<string | null>(null);
-  const [vehicleError, setVehicleError] = React.useState<string | null>(null);
+  const [personalDataChecked, setPersonalDataChecked] = useState(false);
+  const [timer, setTimer] = useState(30);
 
-  // Состояние для таймера
-  const [timer, setTimer] = React.useState(30);
+  const [showSourceModal, setShowSourceModal] = useState(false);
+  type FileKey = 'passportFront' | 'passportBack' | 'tpFront' | 'tpBack' | null;
+  const [currentKey, setCurrentKey] = useState<FileKey>(null);
 
-  React.useEffect(() => {
+  const isAndroid = /Android/i.test(navigator.userAgent);
+
+  const fileRefs = {
+    passportFront: useRef<HTMLInputElement>(null),
+    passportBack: useRef<HTMLInputElement>(null),
+    tpFront: useRef<HTMLInputElement>(null),
+    tpBack: useRef<HTMLInputElement>(null),
+  };
+
+  const handleClickUpload = (key: FileKey) => {
+    if (!key) return;
+    const file = getFileByKey(key);
+    if (!file) {
+      setCurrentKey(key);
+      setShowSourceModal(true);
+    }
+  };
+
+  const getFileByKey = (key: FileKey) => {
+    if (key === 'passportFront') return passportFront;
+    if (key === 'passportBack') return passportBack;
+    if (key === 'tpFront') return tpFront;
+    if (key === 'tpBack') return tpBack;
+    return null;
+  };
+
+  const handleSelectSource = (source: 'camera' | 'gallery') => {
+    if (!currentKey) return;
+    const inputEl = fileRefs[currentKey].current;
+    if (inputEl) {
+      if (source === 'camera' && isAndroid) {
+        inputEl.setAttribute('capture', 'environment');
+      } else {
+        inputEl.removeAttribute('capture');
+      }
+      inputEl.click();
+    }
+    setShowSourceModal(false);
+    setCurrentKey(null);
+  };
+
+  const handleFileChange = (key: FileKey, file: File | null) => {
+    if (!key || !file) return;
+    switch (key) {
+      case 'passportFront':
+        setPassportFront(file);
+        break;
+      case 'passportBack':
+        setPassportBack(file);
+        break;
+      case 'tpFront':
+        setTpFront(file);
+        break;
+      case 'tpBack':
+        setTpBack(file);
+        break;
+    }
+  };
+
+  useEffect(() => {
     let interval: number | null = null;
     if (isLoading) {
       setTimer(30);
@@ -122,7 +223,6 @@ const DocumentsForm2: React.FC = () => {
   );
 
   const handleSend = async () => {
-    // Сброс ошибок перед отправкой
     setPassportError(null);
     setVehicleError(null);
 
@@ -132,12 +232,12 @@ const DocumentsForm2: React.FC = () => {
       !tpFront ||
       !tpBack ||
       !personalDataChecked
-    )
+    ) {
       return;
+    }
 
     let passportRes, vehicleRes;
 
-    // Паспорт
     try {
       passportRes = await recognizeDocument({
         documentType: 'passport',
@@ -155,7 +255,6 @@ const DocumentsForm2: React.FC = () => {
       return;
     }
 
-    // Свидетельство
     try {
       vehicleRes = await recognizeDocument({
         documentType: 'vehicle_cert',
@@ -174,7 +273,6 @@ const DocumentsForm2: React.FC = () => {
     }
 
     localStorage.setItem('ocrData', '{}');
-
     const data: any = {
       passport: passportRes.data,
       vehicle_cert: vehicleRes.data,
@@ -182,7 +280,6 @@ const DocumentsForm2: React.FC = () => {
     if (params.id) {
       data.referralCode = params.id;
     }
-
     localStorage.setItem('ocrData', JSON.stringify(data));
 
     if (selectedId) {
@@ -194,11 +291,28 @@ const DocumentsForm2: React.FC = () => {
 
   return (
     <section className='passport py-14 pb-[100px]'>
+      <SourceModal2
+        isOpen={showSourceModal}
+        onClose={() => setShowSourceModal(false)}
+        onSelectSource={handleSelectSource}
+      />
+      {isLoading && (
+        <div className='fixed z-[10000] top-0 left-0 w-full h-full flex items-center justify-center bg-[rgba(0,0,0,0.5)]'>
+          <div className='w-[50%] h-[40%] bg-white flex flex-col items-center justify-center rounded'>
+            <img src={loader} alt='' />
+            <p className='text-center text-[16px] mb-2'>
+              Идет сканирование документов
+            </p>
+            <div className='text-center text-[24px] font-bold text-blue-600'>
+              {timer} сек
+            </div>
+          </div>
+        </div>
+      )}
       <div className='mx-auto px-4 max-w-[1200px]'>
         <h2 className='text-[#000B16] text-[20px] font-semibold mb-4'>
           Загрузка документов
         </h2>
-
         <div className='referral-hint'>
           <img
             alt='warning'
@@ -209,13 +323,13 @@ const DocumentsForm2: React.FC = () => {
             из сервиса госуслуг "Түндүк"
           </span>
         </div>
-
-        {/* Блок загрузки паспорта */}
         <div className='mb-[30px]'>
           <h2 className='mb-[12px] text-[16px] font-medium'>Паспорт</h2>
           <div className='grid grid-cols-2 gap-[12px]'>
-            {/* Лицевая сторона */}
-            <label className='relative flex flex-col cursor-pointer'>
+            <div
+              className='relative flex flex-col cursor-pointer'
+              onClick={() => handleClickUpload('passportFront')}
+            >
               <div className='relative w-full h-[150px] border border-dashed border-gray-300 rounded overflow-hidden flex items-center justify-center'>
                 {passportFront ? (
                   <div className='relative h-full w-full flex items-center justify-center'>
@@ -246,14 +360,19 @@ const DocumentsForm2: React.FC = () => {
                 Лицевая сторона
               </div>
               <input
+                ref={fileRefs.passportFront}
                 type='file'
+                accept='image/*'
                 className='hidden'
-                onChange={(e) => setPassportFront(e.target.files![0])}
+                onChange={(e) =>
+                  handleFileChange('passportFront', e.target.files?.[0] || null)
+                }
               />
-            </label>
-
-            {/* Обратная сторона */}
-            <label className='relative flex flex-col cursor-pointer'>
+            </div>
+            <div
+              className='relative flex flex-col cursor-pointer'
+              onClick={() => handleClickUpload('passportBack')}
+            >
               <div className='relative w-full h-[150px] border border-dashed border-gray-300 rounded overflow-hidden flex items-center justify-center'>
                 {passportBack ? (
                   <div className='relative h-full w-full flex items-center justify-center'>
@@ -284,11 +403,15 @@ const DocumentsForm2: React.FC = () => {
                 Обратная сторона
               </div>
               <input
+                ref={fileRefs.passportBack}
                 type='file'
+                accept='image/*'
                 className='hidden'
-                onChange={(e) => setPassportBack(e.target.files![0])}
+                onChange={(e) =>
+                  handleFileChange('passportBack', e.target.files?.[0] || null)
+                }
               />
-            </label>
+            </div>
           </div>
           {passportError && (
             <div className='text-red-500 text-center text-[13px] -mt-2 mb-[20px]'>
@@ -296,15 +419,15 @@ const DocumentsForm2: React.FC = () => {
             </div>
           )}
         </div>
-
-        {/* Блок загрузки свидетельства */}
         <div className='mb-[30px]'>
           <h2 className='mb-[12px] text-[16px] font-medium'>
             Свидетельство о регистрации ТС
           </h2>
           <div className='grid grid-cols-2 gap-[12px]'>
-            {/* Лицевая сторона */}
-            <label className='relative flex flex-col cursor-pointer'>
+            <div
+              className='relative flex flex-col cursor-pointer'
+              onClick={() => handleClickUpload('tpFront')}
+            >
               <div className='relative w-full h-[150px] border border-dashed border-gray-300 rounded overflow-hidden flex items-center justify-center'>
                 {tpFront ? (
                   <div className='relative h-full w-full flex items-center justify-center'>
@@ -335,14 +458,19 @@ const DocumentsForm2: React.FC = () => {
                 Лицевая сторона
               </div>
               <input
+                ref={fileRefs.tpFront}
                 type='file'
+                accept='image/*'
                 className='hidden'
-                onChange={(e) => setTpFront(e.target.files![0])}
+                onChange={(e) =>
+                  handleFileChange('tpFront', e.target.files?.[0] || null)
+                }
               />
-            </label>
-
-            {/* Обратная сторона */}
-            <label className='relative flex flex-col cursor-pointer'>
+            </div>
+            <div
+              className='relative flex flex-col cursor-pointer'
+              onClick={() => handleClickUpload('tpBack')}
+            >
               <div className='relative w-full h-[150px] border border-dashed border-gray-300 rounded overflow-hidden flex items-center justify-center'>
                 {tpBack ? (
                   <div className='relative h-full w-full flex items-center justify-center'>
@@ -373,24 +501,23 @@ const DocumentsForm2: React.FC = () => {
                 Обратная сторона
               </div>
               <input
+                ref={fileRefs.tpBack}
                 type='file'
+                accept='image/*'
                 className='hidden'
-                onChange={(e) => setTpBack(e.target.files![0])}
+                onChange={(e) =>
+                  handleFileChange('tpBack', e.target.files?.[0] || null)
+                }
               />
-            </label>
+            </div>
           </div>
-          {/* Блок ошибки */}
           {vehicleError && (
             <div className='text-red-500 text-center text-[13px] mt-2 mb-[20px]'>
               {vehicleError}
             </div>
           )}
         </div>
-
-        {/* Блок ввода реферального ID */}
-        
         <ReferralIdInput paramsId={params.id} onIdChange={setSelectedId} />
-        {/* Чекбокс согласия */}
         <div className='passport__bottom flex flex-col gap-[20px] mt-[20px]'>
           <label className='flex items-center gap-[14px] text-[13px]'>
             <input
@@ -401,18 +528,17 @@ const DocumentsForm2: React.FC = () => {
             />
             <span>
               Согласие на
-            <a
-              href="/ПУБЛИЧНАЯ ОФЕРТА для субагентов.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline text-blue-600 ml-[6px]"
-            >
-              обработку персональных данных
-            </a>
+              <a
+                href='/ПУБЛИЧНАЯ ОФЕРТА для субагентов.pdf'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='underline text-blue-600 ml-[6px]'
+              >
+                обработку персональных данных
+              </a>
             </span>
           </label>
         </div>
-        {/* Кнопка "Далее" */}
         <div className='w-full mt-[20px]'>
           <button
             type='button'
@@ -423,20 +549,6 @@ const DocumentsForm2: React.FC = () => {
             Далее
           </button>
         </div>
-        {/* Модальное окно загрузки */}
-        {isLoading && (
-          <div className='fixed z-[10000] top-0 left-0 w-full h-full flex items-center justify-center bg-[rgba(0,0,0,0.5)]'>
-            <div className='w-[50%] h-[40%] bg-white flex flex-col items-center justify-center rounded'>
-              <img src={loader} alt='' />
-              <p className='text-center text-[16px] mb-2'>
-                Идет сканирование документов
-              </p>
-              <div className='text-center text-[24px] font-bold text-blue-600'>
-                {timer} сек
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );
