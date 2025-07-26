@@ -73,7 +73,7 @@ const Home = () => {
       </Container>
       <div className="home__referral bg-[#E3EFFF] py-[40px] flex justify-center items-center mt-[60px] mb-[60px]">
         <Container>
-          <div className="md:flex gap-[60px] justify-center ">
+          <div className="md:flex gap-[60px] justify-center items-center">
             <img src={referral} alt="" />
             <div className="">
               <p className="text-[#000] text-[24px] mt-[40px] lg:text-[32px]">
