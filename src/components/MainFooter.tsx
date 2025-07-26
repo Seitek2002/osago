@@ -14,7 +14,7 @@ const MainFooter = () => {
             <a href='mailto:office@insurancebakai.kg'>
               <p>Электронная почта: office@insurancebakai.kg</p>
             </a>
-            <div className='flex gap-2 mt-2'>
+            <div className='gap-2 mt-2 hidden'>
               <a
                 href='https://oa.kg/a/'
                 className='h-[30px] bg-[#fff] rounded-[8px]'
