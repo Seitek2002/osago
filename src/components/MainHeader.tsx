@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import Container from './Container';
 import type { FC } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import logo from '../assets/logo.svg';
 
 interface IProps {
@@ -33,14 +33,14 @@ const Header: FC<IProps> = ({ type }) => {
             onClick={() => navigate('/')}
           />
           <div className='flex items-center'>
-            <Link to='/choose-form'>
+            <a href='https://oa.kg/a/'>
               <button
                 className='hidden md:block bg-[#1AA37F] py-[8px] px-[14px] rounded-[8px] cursor-pointer'
                 onClick={() => navigate('/')}
               >
-                Начать зарабатывать
+                Войти в кабинет
               </button>
-            </Link>
+            </a>
             <span
               className='lang-switch'
               style={{

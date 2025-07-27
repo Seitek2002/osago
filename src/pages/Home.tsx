@@ -1,67 +1,65 @@
-import { useTranslation } from "react-i18next";
-import MainHeader from "../components/MainHeader";
-import Container from "../components/Container";
-import AboutStats from "../components/AboutStats";
-import Question from "../components/Question";
+import MainHeader from '../components/MainHeader';
+import Container from '../components/Container';
+import AboutStats from '../components/AboutStats';
+import Question from '../components/Question';
 // import Reviews from "../components/Reviews";
 // import MobileApp from "../components/MobileApp";
-import Mainfooter from "../components/MainFooter";
-import Referral from "../components/Referral";
-import referral from "../assets/images/logo.png";
-import dollar from "../assets/dollar-logo.svg";
-import add from "../assets/add-icon.svg";
-import hrs from "../assets/images/earnings-hrs.png";
-import reg from "../assets/images/earnings-reg.png";
+import Mainfooter from '../components/MainFooter';
+import Referral from '../components/Referral';
+import referral from '../assets/images/logo.png';
+import dollar from '../assets/dollar-logo.svg';
+import add from '../assets/add-icon.svg';
+import hrs from '../assets/images/earnings-hrs.png';
+import reg from '../assets/images/earnings-reg.png';
 
 const Home = () => {
-  const { t } = useTranslation();
-
   return (
-    <section className="home min-h-screen text-white bg-gradient-to-b from-[#c9dcf1]/30 to-[#fff]/10 box-border">
+    <section className='home min-h-screen text-white bg-gradient-to-b from-[#c9dcf1]/30 to-[#fff]/10 box-border'>
       <MainHeader />
       <Container>
-        <div className="home__content text-center">
-          <div className="home__top pt-[140px] max-w-[766px] mx-auto">
-            <div className="home__title text-center">
-              <span className="text-[40px] font-medium text-[#0072DE]">
-                {t("home.title.span")}
-              </span>{" "}
-              <span className="text-[40px] font-medium text-[#000]">
-                {t("home.title.title")}
+        <div className='home__content text-center'>
+          <div className='home__top pt-[100px] lg:pt-[140px] max-w-[766px] mx-auto'>
+            <div className='home__title text-center leading-[41px]'>
+              <span className='text-[36px] font-medium text-[#000]'>
+                Начни <br className='lg:hidden' /> зарабатывать{' '}
+                <br className='hidden lg:block' /> уже сегодня -
+              </span>{' '}
+              <span className='text-[36px] font-medium text-[#0072DE]'>
+                помоги купить ОСАГО близким!
               </span>
             </div>
-            <p className="text-[#000] mt-[30px]">Вознаграждение 15% от ОСАГО</p>
+            <p className='text-[#000] mt-[30px]'>Вознаграждение 15% от ОСАГО</p>
           </div>
-          <div className="home__btns mt-[30px]">
+          <div className='home__btns mt-[30px]'>
             <a
-              href="https://oa.kg/a/"
-              className="button rounded-xl max-w-[305px] mx-auto py-[14px] bg-[#0072DE] text-[#fff] text-[16px] mb-[16px] flex text-center items-center justify-center gap-4"
+              href='https://oa.kg/a/'
+              className='button rounded-xl max-w-[305px] mx-auto py-[14px] bg-[#0072DE] text-[#fff] text-[16px] mb-[16px] flex text-center items-center justify-center gap-4'
             >
-              <img src={dollar} alt="" />
-              <span className="text-[20px]">Начать зарабатывать</span>
+              <img src={dollar} alt='' />
+              <span className='text-[20px]'>Начать зарабатывать</span>
             </a>
           </div>
-          <div className="home__earnings mt-[140px]">
-            <span className="font-semibold text-[32px] text-[#000]">
-              Начни зарабатывать уже сейчас
+          <div className='home__earnings mt-[60px]'>
+            <span className='font-semibold text-[32px] text-[#000]'>
+              Твои источники дохода:
             </span>
-            <div className="earnings__content md:flex gap-[40px] md:justify-center">
-              <div className="bg-[#fff] rounded-3xl p-5 border border-[#C0D2F9] mt-[30px] md:flex  md:items-center md:flex-col md:py-[20px] md:px-[40px]">
-                <img src={hrs} className="mb-[12px] m-auto" />
-                <span className="text-[#000] text-lg md:text-2xl">
+            <div className='earnings__content md:flex gap-[40px] md:justify-center'>
+              <div className='bg-[#fff] rounded-3xl p-5 border border-[#C0D2F9] mt-[30px] md:flex  md:items-center md:flex-col md:py-[20px] md:px-[40px]'>
+                <img src={hrs} className='mb-[12px] m-auto' />
+                <span className='text-[#000] text-lg md:text-2xl'>
                   Помоги другим оформить ОСАГО <br /> и заработай до 100 000 сом
                 </span>
-                <p className="text-[#1AA37F] mt-[12px] text-sm md:text-lg">
+                <p className='text-[#1AA37F] mt-[12px] text-sm md:text-lg'>
                   Вознаграждение 15% от ОСАГО
                 </p>
               </div>
-              <div className="bg-[#fff] rounded-3xl p-5 border border-[#C0D2F9] mt-[30px] md:flex md:items-center md:flex-col md:p-[20px] md:px-[40px]">
-                <img src={reg} className="mb-[12px] m-auto" />
-                <span className="text-[#000] text-lg md:text-2xl">
-                  Научи регистрировать друзей <br /> и зарабатывай пассивно
-                  от их продаж
+              <div className='bg-[#fff] rounded-3xl p-5 border border-[#C0D2F9] mt-[30px] md:flex md:items-center md:flex-col md:p-[20px] md:px-[40px]'>
+                <img src={reg} className='mb-[12px] m-auto' />
+                <span className='text-[#000] text-lg md:text-2xl'>
+                  Научи регистрировать друзей <br /> и зарабатывай пассивно от
+                  их продаж
                 </span>
-                <p className="text-[#1AA37F] mt-[12px] text-sm md:text-lg">
+                <p className='text-[#1AA37F] mt-[12px] text-sm md:text-lg'>
                   Вознаграждение 5% от ОСАГО друзей
                 </p>
               </div>
@@ -69,25 +67,27 @@ const Home = () => {
           </div>
         </div>
       </Container>
-      <div className="home__referral bg-[#E3EFFF] py-[40px] flex justify-center items-center mt-[60px] mb-[60px]">
+      <div className='home__referral bg-[#E3EFFF] py-[40px] flex justify-center items-center mt-[60px] mb-[60px]'>
         <Container>
-          <div className="md:flex gap-[60px] justify-center items-center">
-            <img src={referral} alt="" />
-            <div className="">
-              <p className="text-[#000] text-[24px] mt-[40px] lg:text-[32px]">
-                Все легально! <br className="md:hidden"/> Стань агентом <br className="hidden md:block"/> по продаже ОСАГО за 2 минуты
+          <div className='md:flex justify-evenly items-center'>
+            <img src={referral} alt='' className='w-[60%] mx-auto lg:w-[27%]' />
+            <div className='text-center lg:text-center mx-auto lg:max-w-[55%]'>
+              <p className='text-[#000] text-[36px] leading-[41px] mt-[30px] lg:text-[32px]'>
+                <span className='text-[#0072DE] font-medium'>
+                  Все легально!
+                </span>
               </p>
-              <p className="text-[#000] my-4 text-[13px] md:text-[15px]">
-                ОсОО «Агент КейДжи» является официальным партнёром
-                ЗАО «Бакай Иншуренс»
+              <p className='text-[#000] my-4 text-2xl max-w-[80%] mx-auto'>
+                Наша команда является официальным партнёром ЗАО «Бакай Иншуренс»
               </p>
               <a
-                href="https://oa.kg/a/"
-                className="button py-[18px] px-[35px] bg-[#1AA37F] rounded-[12px] text-[#fff] flex text-center items-center justify-center w-full lg:w-[70%]"
+                href='https://oa.kg/a/'
+                className='button py-[18px] mx-auto mt-[25px] px-[35px] bg-[#1AA37F] rounded-[12px] text-[#fff] flex text-center items-center justify-center w-full lg:w-[70%]'
               >
-                <img src={add} alt="" />
-                <span className="text-base md:text-[20px]">Пригласить друга в команду</span>
-                <br />
+                <img src={add} alt='' />
+                <span className='text-base md:text-[20px]'>
+                  Присоединиться к команде
+                </span>
               </a>
             </div>
           </div>

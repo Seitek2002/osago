@@ -5,31 +5,31 @@ import add from '../assets/add-icon.svg';
 
 const cardData = [
   {
+    title: '❗ У каждого должен быть ОСАГО!',
+    text: 'Каждый автомобиль в стране обязан иметь оформленный полис ОСАГО согласно закону Кыргызсзкой Республики №192  "Об обязательном страховании гражданско-правовой ответственности владельцев автотранспортных средств"',
+  },
+  {
+    title: '❗Штрафы за отсутствие ОСАГО',
+    text: 'Введен штраф 3000 сомов за отсутствие полиса ОСАГО с 01.07.2025 при каждой проверке сотрудниками ГУОБДД КР. Помогите близким оформить ОСАГО и защитите их от лишних затрат.',
+  },
+  {
     title: 'Что такое ОСАГО?',
-    text: 'ОСАГО — это обязательная страховка для всех водителей. В случае ДТП страховая компания покрывает расходы на ремонт чужого автомобиля и лечение пострадавших.',
-  },
-  {
-    title: 'Не переживайте о расходах',
-    text: 'Если вы стали виновником аварии, страховая возьмёт на себя оплату ремонта чужого транспорта и компенсацию за причинённый вред здоровью.',
-  },
-  {
-    title: 'Штрафы за отсутствие ОСАГО',
-    text: 'Отсутствие полиса ОСАГО влечёт за собой штраф в размере 3000 сомов. Не рискуйте — оформите ОСАГО и защитите себя от лишних затрат.',
+    text: 'ОСАГО - это Обязательное Страхование Автогражданской Ответственности, который обязателен для всех. В случае ДТП страховая компания покрывает расходы на ремонт чужого автомобиля и лечение пострадавших.',
   },
 ];
 
 const earnSteps = [
-  'Регистрируешься на OA.KG',
-  'Получаешь личную ссылку на ОСАГО',
-  'Делишься ссылкой и помогаешь оформить ОСАГО',
-  'Получаешь 15% с каждой продажи',
+  'Зарегистрируйся',
+  'Получи свой личный код',
+  'Делись ссылкой для регистрации ОСАГО с личным кодом',
+  'Помогай и зарабатывай 15% с каждого ОСАГО',
 ];
 
 const passiveSteps = [
-  'Регистрируешься на OA.KG',
-  'Получаешь личную ссылку на OA.KG',
-  'Делишься ссылкой и приглашаешь друзей в свою команду',
-  'Получаешь 5% с каждой продажи твоей команды',
+  'Зарегистрируйся и получи свой личный код',
+  'Приглашай друзей в свою команду',
+  'Научи их оформлять полис ОСАГО',
+  'Получай 5% со всех продаж твоей команды',
 ];
 
 type StepCardProps = {
@@ -63,11 +63,13 @@ const StepCard: React.FC<StepCardProps> = ({
         backgroundColor: bgColor,
       }}
     >
-      <h3 className='text-[#000] text-[24px] font-normal mb-6 lg:text-2xl'>{title}</h3>
+      <h3 className='text-[#000] text-[24px] font-medium mb-6 lg:text-2xl'>
+        {title}
+      </h3>
       <ol className='flex flex-col gap-[20px] relative'>
         {steps.map((step, i) => (
           <div key={i}>
-            <div className='text-[#000] text-sm md:text-[16px] list-none flex items-center gap-5'>
+            <div className='text-[#000] text-lg list-none flex items-center gap-5'>
               <span
                 className={`border py-[2px] px-[9px] rounded-full`}
                 style={{ borderColor: color }}
@@ -76,12 +78,6 @@ const StepCard: React.FC<StepCardProps> = ({
               </span>
               <li>{step}</li>
             </div>
-            {i !== steps.length - 1 && (
-              <div
-                className={`m-0 border-l-[3px] border-dotted w-0 h-5 absolute hidden lg:block`}
-                style={{ top: `${30 + i * 50}px`, left: '12px', borderColor: borderColor }}
-              ></div>
-            )}
           </div>
         ))}
       </ol>
@@ -99,11 +95,11 @@ const StepCard: React.FC<StepCardProps> = ({
 const Referral = () => {
   return (
     <Container>
-      <h2 className='text-center text-xl md:text-[32px] font-semibold text-[#000] mb-[30px]'>
+      <h2 className='text-center text-[32px] font-semibold text-[#000] mb-[30px]'>
         Для чего нужен ОСАГО?
       </h2>
 
-      <div className='grid md:grid-cols-3 gap-6 mb-[60px]'>
+      <div className='grid md:grid-cols-3 gap-6 mb-[60px] text-justify'>
         {cardData.map((item, index) => (
           <div
             key={index}
@@ -126,18 +122,18 @@ const Referral = () => {
           color='#0072DE'
           borderColor='#C0D2F9'
           bgColor='#F9FBFF'
-          btnText='Начать зарабатывать'
+          btnText='Зарегистрироваться'
           btnColor='bg-[#0072DE]'
           link='https://oa.kg/a/'
           icon={dollar}
         />
         <StepCard
-          title='Как пассивно зарабатывать?'
+          title='Как зарабатывать пассивно с OA.KG?'
           steps={passiveSteps}
           color='#1AA37F'
           borderColor='#8AD4A9'
           bgColor='#F9FFF9'
-          btnText='Пригласить друга в команду'
+          btnText='Создать команду'
           btnColor='bg-[#1AA37F]'
           link='https://oa.kg/a/'
           icon={add}

@@ -13,10 +13,10 @@ export default function AboutStats() {
   return (
     <section className="bg-[#EAF4FF] py-4 md:py-4 px-4" ref={ref}>
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-[24px] font-semibold mb-4 text-[#000] lg:text-[32px]">OA.KG это:</h2>
+        <h2 className="text-[24px] font-semibold mb-4 text-[#000] lg:text-[32px]">Наши достижения:</h2>
         <div className="flex flex-col md:flex-row justify-center gap-8 mb-10 lg:justify-around">
           <div className="text-[#0072DE] text-[55px] font-bold flex flex-col lg:text-7xl">
-            {inView && <CountUp end={38} duration={2} suffix="K+" />}
+            {inView && <CountUp end={600} duration={2} suffix="K+" />}
             <span className="text-[25px] leading-[5px] lg:leading-[35px] font-normal text-[#000]">сом выплачено</span>
           </div>
           <div className="text-[#FF5E42] text-[55px] font-bold flex flex-col lg:text-7xl">
@@ -28,7 +28,15 @@ export default function AboutStats() {
             <span className="text-[25px] leading-[5px] lg:leading-[35px] font-normal text-[#000]">агентов по всей стране</span>
           </div>
         </div>
-        <h3 className="text-[20px] font-semibold mb-8 mt-[60px] text-[#000] lg:text-[32px] lg:mt-[0]">Почему OA.KG?</h3>
+        <hr />
+        <hr />
+        <hr />
+        <hr />
+        <hr />
+        <hr />
+        <hr />
+        <hr />
+        <h3 className="text-[24px] font-semibold mb-4 text-[#000] lg:text-[32px] mt-[20px] lg:mt-[0]">Преимущества работать с нами</h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
           {advantages.map((item, index) => (
             <div
@@ -51,7 +59,7 @@ export default function AboutStats() {
 const advantages = [
   {
     icon: bag,
-    title: "Лёгкий онлайн заработок",
+    title: "Зарабатывай онлайн",
     desc: "Работай не выходя из дома, договор заключаем онлайн",
   },
   {
@@ -61,8 +69,8 @@ const advantages = [
   },
   {
     icon: percent,
-    title: "Высокие проценты",
-    desc: "Лучшие условия на рынке",
+    title: "Большие выплаты",
+    desc: "Самые выгодные условия на рынке",
   },
   {
     icon: noexp,
@@ -72,11 +80,11 @@ const advantages = [
   {
     icon: legal,
     title: "Всё легально",
-    desc: "ОСАГО оформляется у ЗАО «БакАй Иншуранс»",
+    desc: 'ОСАГО оформляется официально',
   },
   {
     icon: money,
-    title: "Лёгкий вывод денег",
-    desc: "Вывод 24/7 на Bakai и MBANK",
+    title: "Простой вывод денег",
+    desc: "Выводи на BakAi и MBANK",
   },
 ];
