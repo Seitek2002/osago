@@ -83,7 +83,7 @@ const StepCard: React.FC<StepCardProps> = ({
       </ol>
       <a
         href={link}
-        className={`h-[60px] rounded-xl mt-6 inline-flex items-center justify-center gap-2 ${btnColor} text-white text-[16px] py-[12px] px-[24px] w-full`}
+        className={`h-[60px] rounded-xl mt-6 inline-flex items-center justify-center gap-2 ${btnColor} text-white text-[20px] py-[12px] px-[24px] w-full`}
       >
         <img src={icon} alt='' />
         {btnText}
