@@ -34,14 +34,13 @@ const Home = () => {
             <p className="text-[#000] mt-[30px]">Вознаграждение 15% от ОСАГО</p>
           </div>
           <div className="home__btns mt-[30px]">
-            <Link
-              to="https://oa.kg/a/"
+            <a
+              href="https://oa.kg/a/"
               className="button rounded-xl max-w-[305px] mx-auto py-[14px] bg-[#0072DE] text-[#fff] text-[16px] mb-[16px] flex text-center items-center justify-center gap-4"
             >
               <img src={dollar} alt="" />
               <span className="text-[20px]">Начать зарабатывать</span>
-              <br />
-            </Link>
+            </a>
           </div>
           <div className="home__earnings mt-[140px]">
             <span className="font-semibold text-[32px] text-[#000]">
@@ -83,14 +82,14 @@ const Home = () => {
                 ОсОО «Агент КейДжи» является официальным партнёром
                 ЗАО «Бакай Иншуренс»
               </p>
-              <Link
-                to="https://oa.kg/a/"
+              <a
+                href="https://oa.kg/a/"
                 className="button py-[18px] px-[35px] bg-[#1AA37F] rounded-[12px] text-[#fff] flex text-center items-center justify-center w-full lg:w-[70%]"
               >
                 <img src={add} alt="" />
                 <span className="text-base md:text-[20px]">Пригласить друга в команду</span>
                 <br />
-              </Link>
+              </a>
             </div>
           </div>
         </Container>
