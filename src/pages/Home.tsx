@@ -82,7 +82,7 @@ const Home = () => {
               </p>
               <a
                 href='https://oa.kg/a/'
-                className='button py-[18px] mx-auto mt-[25px] px-[35px] bg-[#1AA37F] rounded-[12px] text-[#fff] flex text-center items-center justify-center w-full lg:w-[70%]'
+                className='button text-[16px] py-[18px] mx-auto mt-[25px] px-[35px] bg-[#1AA37F] rounded-[12px] text-[#fff] flex text-center items-center justify-center w-full lg:w-[70%]'
               >
                 <img src={add} alt='' />
                 <span className='text-base md:text-[20px]'>
