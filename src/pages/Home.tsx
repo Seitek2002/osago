@@ -7,7 +7,6 @@ import Question from "../components/Question";
 // import MobileApp from "../components/MobileApp";
 import Mainfooter from "../components/MainFooter";
 import Referral from "../components/Referral";
-import { Link } from "react-router";
 import referral from "../assets/images/logo.png";
 import dollar from "../assets/dollar-logo.svg";
 import add from "../assets/add-icon.svg";

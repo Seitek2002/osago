@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import Container from '../components/Container';
 import dollar from '../assets/dollar-logo.svg';
 import add from '../assets/add-icon.svg';
