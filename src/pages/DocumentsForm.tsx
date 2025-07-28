@@ -157,6 +157,7 @@ const DocumentsForm: React.FC = () => {
   >(null);
 
   const isAndroid = /Android/i.test(navigator.userAgent);
+  const isIphone = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   const fileRefs = {
     passportFront: useRef<HTMLInputElement>(null),
@@ -177,8 +178,24 @@ const DocumentsForm: React.FC = () => {
       | 'pravaBack'
   ) => {
     if (!getFileByKey(key)) {
-      setCurrentKey(key);
-      setShowSourceModal(true);
+      if (isAndroid) {
+        setCurrentKey(key);
+        setShowSourceModal(true);
+      } else if (isIphone) {
+        // Для iPhone сразу открываем input file
+        const ref = fileRefs[key].current;
+        if (ref) {
+          ref.removeAttribute('capture');
+          ref.click();
+        }
+      } else {
+        // Для других устройств — обычный input file
+        const ref = fileRefs[key].current;
+        if (ref) {
+          ref.removeAttribute('capture');
+          ref.click();
+        }
+      }
     }
   };
 

@@ -145,6 +145,7 @@ const DocumentsForm2: React.FC = () => {
   const [currentKey, setCurrentKey] = useState<FileKey>(null);
 
   const isAndroid = /Android/i.test(navigator.userAgent);
+  const isIphone = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   const fileRefs = {
     passportFront: useRef<HTMLInputElement>(null),
@@ -157,8 +158,24 @@ const DocumentsForm2: React.FC = () => {
     if (!key) return;
     const file = getFileByKey(key);
     if (!file) {
-      setCurrentKey(key);
-      setShowSourceModal(true);
+      if (isAndroid) {
+        setCurrentKey(key);
+        setShowSourceModal(true);
+      } else if (isIphone) {
+        // Для iPhone сразу открываем input file
+        const ref = fileRefs[key].current;
+        if (ref) {
+          ref.removeAttribute('capture');
+          ref.click();
+        }
+      } else {
+        // Для других устройств — обычный input file
+        const ref = fileRefs[key].current;
+        if (ref) {
+          ref.removeAttribute('capture');
+          ref.click();
+        }
+      }
     }
   };
 
