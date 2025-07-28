@@ -19,7 +19,7 @@ export const routerConfig: RouteObject[] = [
     element: <Home />,
   },
   {
-    path: '/choose-form',
+    path: '/bishkek-osago-online',
     element: (
       <ServiceLayout>
         <ChooseForm />
