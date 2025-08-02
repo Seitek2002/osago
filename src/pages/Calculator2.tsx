@@ -298,7 +298,7 @@ export default function Calculator2() {
               {isCalculating
                 ? 'Идет рассчет'
                 : isCalcError
-                ? 'Попробуйте снова'
+                ? 'Покупка недоступна'
                 : `${amount} сом`}
             </b>
           </div>
