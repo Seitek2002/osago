@@ -51,7 +51,7 @@ const Home = () => {
                 помоги купить ОСАГО близким!
               </span>
             </div>
-            <p className='text-[#000] mt-[30px]'>Вознаграждение 15% от ОСАГО</p>
+            <p className='text-[#000] mt-[30px]'>Кэшбек 15% за каждый полис ОСАГО</p>
           </div>
           <div className='home__btns mt-[30px]'>
             <a
@@ -64,7 +64,7 @@ const Home = () => {
           </div>
           <div className='home__earnings mt-[60px]'>
             <span className='font-semibold text-[32px] text-[#000]'>
-              Твои источники дохода:
+              Твои источники кэшбека:
             </span>
             <div className='earnings__content md:flex gap-[40px] md:justify-center'>
               <div className='bg-[#fff] rounded-3xl p-5 border border-[#C0D2F9] mt-[30px] md:flex  md:items-center md:flex-col md:py-[20px] md:px-[40px]'>
