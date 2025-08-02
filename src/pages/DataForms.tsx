@@ -256,6 +256,7 @@ const DataForms: React.FC = () => {
                 })
               }
             />
+            <span className='text-[14px] block text-[grey]'>На данный номер будет отправлена ссылка на ОСАГО</span>
           </div>
 
           {/* Адрес (необязательный) */}
