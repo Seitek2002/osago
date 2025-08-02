@@ -56,7 +56,7 @@ const ChooseForm: React.FC = () => {
         to={`/documents-form-2/${referalId}`}
         className='button flex justify-center w-full py-[14px] bg-[#005CAA] rounded-[6px] text-[#fff] text-[16px] disabled:opacity-50 disabled:cursor-not-allowed'
       >
-        Несколько водителей
+        Без ограничений по водителям
       </Link>
     </div>
   );
