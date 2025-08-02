@@ -12,7 +12,30 @@ import add from '../assets/add-icon.svg';
 import hrs from '../assets/images/earnings-hrs.png';
 import reg from '../assets/images/earnings-reg.png';
 
+import { useEffect } from 'react';
+import { setMetaTags } from '../utils/setMetaTags';
+
 const Home = () => {
+  useEffect(() => {
+    setMetaTags({
+      title: 'Зарабатывай онлайн оформляя ОСАГО. Премия 15%',
+      metaTags: [
+        { name: 'description', content: 'ОСАГО — ваша защита на дороге! Оформите полис онлайн за 1 минуту и получите уверенность в каждой поездке. Надежная страховка по выгодной цене!' },
+        { property: 'og:url', content: 'https://oa.kg/a/' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:title', content: 'Оформи онлайн ОСАГО' },
+        { property: 'og:description', content: 'ОСАГО — ваша защита на дороге! Оформите полис онлайн за 1 минуту и получите уверенность в каждой поездке. Надежная страховка по выгодной цене!' },
+        { property: 'og:image', content: 'https://opengraph.b-cdn.net/production/images/20eb0cca-8f31-41d8-a6d7-0077ab4d12b2.png?token=Mdv4e_CfnkITY3MGKE-qqFVo2oKfBgvx-Z7Z_oOvdK0&height=348&width=601&expires=33288042538' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { property: 'twitter:domain', content: 'oa.kg' },
+        { property: 'twitter:url', content: 'https://oa.kg/a/' },
+        { name: 'twitter:title', content: 'Оформи онлайн ОСАГО' },
+        { name: 'twitter:description', content: 'ОСАГО — ваша защита на дороге! Оформите полис онлайн за 1 минуту и получите уверенность в каждой поездке. Надежная страховка по выгодной цене!' },
+        { name: 'twitter:image', content: 'https://opengraph.b-cdn.net/production/images/20eb0cca-8f31-41d8-a6d7-0077ab4d12b2.png?token=Mdv4e_CfnkITY3MGKE-qqFVo2oKfBgvx-Z7Z_oOvdK0&height=348&width=601&expires=33288042538' },
+      ],
+    });
+  }, []);
+
   return (
     <section className='home min-h-screen text-white bg-gradient-to-b from-[#c9dcf1]/30 to-[#fff]/10 box-border'>
       <MainHeader />
