@@ -72,7 +72,6 @@ export interface IVehicleCert {
 
 export interface IFormData {
   phoneNumber: string;
-  address?: string;
   passport: IPassport;
   vehicle_cert: IVehicleCert;
   driverLicense?: IDriverLicense;
@@ -92,7 +91,6 @@ const DataForms: React.FC = () => {
     passport: localData.passport ?? {},
     vehicle_cert: localData.vehicle_cert ?? {},
     purpose: { name: 'Личная', id: 2 },
-    address: localData.address ?? '',
     unlimitedDrivers: true,
     referralCode: undefined,
     driverLicense: localData.driverLicense ?? {},
@@ -259,27 +257,6 @@ const DataForms: React.FC = () => {
             <span className='text-[14px] block text-[grey]'>На данный номер будет отправлена ссылка на ОСАГО</span>
           </div>
 
-          {/* Адрес (необязательный) */}
-          <div className='form-group mt-4'>
-            <label className='text-suptitle mb-[12px] block' htmlFor='address'>
-              Адрес проживания
-            </label>
-            <textarea
-              className={`form-input w-full bg-[#F7F8FA] rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 border ${
-                isEmpty(userFormData.address) ? 'h-[42px]' : 'h-auto'
-              }`}
-              style={getInputStyle(userFormData.address)}
-              id='address'
-              placeholder='Введите адрес'
-              value={userFormData.address || ''}
-              onChange={(e) =>
-                setUserFormData((prev) => ({
-                  ...prev,
-                  address: e.target.value,
-                }))
-              }
-            />
-          </div>
 
           {/* Использование авто */}
           <PurposeDropdown
