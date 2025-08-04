@@ -14,8 +14,10 @@ import reg from '../assets/images/earnings-reg.png';
 
 import { useEffect } from 'react';
 import { setMetaTags } from '../utils/setMetaTags';
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
+  const { t } = useTranslation();
   useEffect(() => {
     setMetaTags({
       title: 'Зарабатывай онлайн оформляя ОСАГО. Премия 15%',
@@ -44,14 +46,13 @@ const Home = () => {
           <div className='home__top pt-[100px] lg:pt-[140px] max-w-[766px] mx-auto'>
             <div className='home__title text-center leading-[41px]'>
               <span className='text-[36px] font-medium text-[#000]'>
-                Начни <br className='lg:hidden' /> зарабатывать{' '}
-                <br className='hidden lg:block' /> уже сегодня -
+                {t('home.title.main')}
               </span>{' '}
               <span className='text-[36px] font-medium text-[#0072DE]'>
-                помоги купить ОСАГО близким!
+                {t('home.title.highlight')}
               </span>
             </div>
-            <p className='text-[#000] mt-[30px]'>Кэшбек 15% за каждый полис ОСАГО</p>
+            <p className='text-[#000] mt-[30px]'>{t('home.subtitle')}</p>
           </div>
           <div className='home__btns mt-[30px]'>
             <a
@@ -59,31 +60,30 @@ const Home = () => {
               className='button rounded-xl max-w-[305px] mx-auto py-[14px] bg-[#0072DE] text-[#fff] text-[16px] mb-[16px] flex text-center items-center justify-center gap-4'
             >
               <img src={dollar} alt='' />
-              <span className='text-[20px]'>Начать зарабатывать</span>
+              <span className='text-[20px]'>{t('home.cta.earnBtn')}</span>
             </a>
           </div>
           <div className='home__earnings mt-[60px]'>
             <span className='font-semibold text-[32px] text-[#000]'>
-              Твои источники кэшбека:
+              {t('home.earnings.title')}
             </span>
             <div className='earnings__content md:flex gap-[40px] md:justify-center'>
               <div className='bg-[#fff] rounded-3xl p-5 border border-[#C0D2F9] mt-[30px] md:flex  md:items-center md:flex-col md:py-[20px] md:px-[40px]'>
                 <img src={hrs} className='mb-[12px] m-auto' />
                 <span className='text-[#000] text-lg md:text-2xl'>
-                  Помоги другим оформить ОСАГО <br /> и заработай до 100 000 сом
+                  {t('home.earnings.helpOthers.desc')}
                 </span>
                 <p className='text-[#1AA37F] mt-[12px] text-sm md:text-lg'>
-                  Вознаграждение 15% от ОСАГО
+                  {t('home.earnings.helpOthers.reward')}
                 </p>
               </div>
               <div className='bg-[#fff] rounded-3xl p-5 border border-[#C0D2F9] mt-[30px] md:flex md:items-center md:flex-col md:p-[20px] md:px-[40px]'>
                 <img src={reg} className='mb-[12px] m-auto' />
                 <span className='text-[#000] text-lg md:text-2xl'>
-                  Научи регистрировать друзей <br /> и зарабатывай пассивно от
-                  их продаж
+                  {t('home.earnings.teachFriends.desc')}
                 </span>
                 <p className='text-[#1AA37F] mt-[12px] text-sm md:text-lg'>
-                  Вознаграждение 5% от ОСАГО друзей
+                  {t('home.earnings.teachFriends.reward')}
                 </p>
               </div>
             </div>
@@ -97,11 +97,11 @@ const Home = () => {
             <div className='text-center lg:text-center mx-auto lg:max-w-[55%]'>
               <p className='text-[#000] text-[36px] leading-[41px] mt-[30px] lg:text-[32px]'>
                 <span className='text-[#0072DE] font-medium'>
-                  Все легально!
+                  {t('home.referral.title')}
                 </span>
               </p>
               <p className='text-[#000] my-4 text-2xl max-w-[80%] mx-auto'>
-                Наша команда является официальным партнёром ЗАО «Бакай Иншуренс»
+                {t('home.referral.desc')}
               </p>
               <a
                 href='https://oa.kg/a/'
@@ -109,7 +109,7 @@ const Home = () => {
               >
                 <img src={add} alt='' />
                 <span className='text-[20px] md:text-[20px]'>
-                  Присоединиться к команде
+                  {t('home.referral.joinBtn')}
                 </span>
               </a>
             </div>

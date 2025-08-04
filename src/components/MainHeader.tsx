@@ -9,7 +9,7 @@ interface IProps {
 }
 
 const Header: FC<IProps> = ({ type }) => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
   const handleLangSwitch = () => {
@@ -38,7 +38,7 @@ const Header: FC<IProps> = ({ type }) => {
                 className='hidden md:block bg-[#1AA37F] py-[8px] px-[14px] rounded-[8px] cursor-pointer'
                 onClick={() => navigate('/')}
               >
-                Войти в кабинет
+                {t('home.mainHeader.loginBtn')}
               </button>
             </a>
             <span
@@ -51,7 +51,7 @@ const Header: FC<IProps> = ({ type }) => {
               }}
               onClick={handleLangSwitch}
             >
-              {i18n.language === 'kg' ? 'Русский' : 'Кыргызча'}
+              {i18n.language === 'kg' ? t('home.mainHeader.langRu') : t('home.mainHeader.langKg')}
             </span>
           </div>
         </div>

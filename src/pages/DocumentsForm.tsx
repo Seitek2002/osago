@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { useRecognizeDocumentMutation } from '../store/ocrApi';
+import { useTranslation } from 'react-i18next';
 
 import passportFrontSide from '../assets/images/passport-front-side.png';
 import passportBackSide from '../assets/images/passport-back-side.png';
@@ -15,10 +16,12 @@ const SourceModal = ({
   isOpen,
   onClose,
   onSelectSource,
+  t
 }: {
   isOpen: boolean;
   onClose: () => void;
   onSelectSource: (source: 'camera' | 'gallery') => void;
+  t: (key: string) => string;
 }) => {
   if (!isOpen) return null;
 
@@ -31,22 +34,22 @@ const SourceModal = ({
         className="bg-white p-4 rounded shadow-sm"
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 className="text-lg font-bold mb-2">Выберите источник</h3>
+        <h3 className="text-lg font-bold mb-2">{t('documentsForm2.selectSource')}</h3>
         <div className="flex flex-col gap-2">
           <button
             onClick={() => onSelectSource('camera')}
             className="bg-blue-500 text-white rounded px-4 py-2"
           >
-            Камера
+            {t('documentsForm2.camera')}
           </button>
           <button
             onClick={() => onSelectSource('gallery')}
             className="bg-blue-500 text-white rounded px-4 py-2"
           >
-            Галерея
+            {t('documentsForm2.gallery')}
           </button>
           <button onClick={onClose} className="text-gray-600 mt-2 underline">
-            Отмена
+            {t('documentsForm2.cancel')}
           </button>
         </div>
       </div>
@@ -126,6 +129,7 @@ const UploadIcon = () => (
 );
 
 const DocumentsForm: React.FC = () => {
+  const { t } = useTranslation();
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [selectedId, setSelectedId] = useState<string | undefined>(params.id);
@@ -397,10 +401,11 @@ const DocumentsForm: React.FC = () => {
         isOpen={showSourceModal}
         onClose={() => setShowSourceModal(false)}
         onSelectSource={handleSelectSource}
+        t={t}
       />
       <div className="mx-auto px-4 max-w-[1200px]">
         <h2 className="text-[#000B16] text-[20px] font-semibold mb-4">
-          Загрузка документов
+          {t('documentsForm2.uploadTitle')}
         </h2>
         <div className="referral-hint mb-4">
           <img
@@ -408,12 +413,11 @@ const DocumentsForm: React.FC = () => {
             src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M12%206.75C12.4142%206.75%2012.75%207.08579%2012.75%207.5V12.5C12.75%2012.9142%2012.4142%2013.25%2012%2013.25C11.5858%2013.25%2011.25%2012.9142%2011.25%2012.5V7.5C11.25%207.08579%2011.5858%206.75%2012%206.75Z'%20fill='%230072DE'%20/%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M12%2015.25C12.4142%2015.25%2012.75%2015.5858%2012.75%2016V16.5C12.75%2016.9142%2012.4142%2017.25%2012%2017.25C11.5858%2017.25%2011.25%2016.9142%2011.25%2016.5V16C11.25%2015.5858%2011.5858%2015.25%2012%2015.25Z'%20fill='%230072DE'%20/%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M12%202.75C6.89137%202.75%202.75%206.89137%202.75%2012C2.75%2017.1086%206.89137%2021.25%2012%2021.25C17.1086%2021.25%2021.25%2017.1086%2021.25%2012C21.25%206.89137%2017.1086%202.75%2012%202.75ZM1.25%2012C1.25%206.06294%206.06294%201.25%2012%201.25C17.9371%201.25%2022.75%206.06294%2022.75%2012C22.75%2017.9371%2017.9371%2022.75%2012%2022.75C6.06294%2022.75%201.25%2017.9371%201.25%2012Z'%20fill='%230072DE'%20/%3e%3c/svg%3e"
           />
           <span>
-            Допускается загрузка фотографии оригиналов документов либо скриншота
-            из сервиса госуслуг "Түндүк"
+            {t('documentsForm2.uploadHint')}
           </span>
         </div>
         <div className="mb-[30px]">
-          <h2 className="mb-[12px] text-[16px] font-medium">Паспорт</h2>
+          <h2 className="mb-[12px] text-[16px] font-medium">{t('documentsForm2.passport')}</h2>
           <div className="grid grid-cols-2 gap-[12px]">
             <div
               className="relative flex flex-col cursor-pointer"
@@ -445,7 +449,7 @@ const DocumentsForm: React.FC = () => {
                   </div>
                 )}
               </div>
-              <div className="text-center mt-2 text-[14px]">Лицевая сторона</div>
+              <div className="text-center mt-2 text-[14px]">{t('documentsForm2.frontSide')}</div>
               <input
                 ref={fileRefs.passportFront}
                 type="file"
@@ -487,7 +491,7 @@ const DocumentsForm: React.FC = () => {
                 )}
               </div>
               <div className="text-center mt-2 text-[14px]">
-                Обратная сторона
+                {t('documentsForm2.backSide')}
               </div>
               <input
                 ref={fileRefs.passportBack}
@@ -508,7 +512,7 @@ const DocumentsForm: React.FC = () => {
         </div>
         <div className="mb-[30px]">
           <h2 className="mb-[12px] text-[16px] font-medium">
-            Водительские права
+            {t('documentsForm2.driverLicence')}
           </h2>
           <div className="grid grid-cols-2 gap-[12px]">
             <div
@@ -606,7 +610,7 @@ const DocumentsForm: React.FC = () => {
         </div>
         <div className="mb-[30px]">
           <h2 className="mb-[12px] text-[16px] font-medium">
-            Свидетельство о регистрации ТС
+            {t('documentsForm2.vehicleCert')}
           </h2>
           <div className="grid grid-cols-2 gap-[12px]">
             <div
@@ -634,7 +638,7 @@ const DocumentsForm: React.FC = () => {
                     <img
                       className="file-upload-image blur-sm object-contain"
                       src={tp_front}
-                      alt="Изображение"
+                      alt={t('documentsForm2.image')}
                     />
                   </div>
                 )}
@@ -710,14 +714,14 @@ const DocumentsForm: React.FC = () => {
               onChange={(e) => setPersonalDataChecked(e.target.checked)}
             />
             <span>
-              Согласие на
+              {t('documentsForm2.consent')}
               <a
                 href="/ПУБЛИЧНАЯ ОФЕРТА для субагентов.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline text-blue-600 ml-[6px]"
               >
-                обработку персональных данных
+                {t('documentsForm2.consentLink')}
               </a>
             </span>
           </label>
@@ -729,7 +733,7 @@ const DocumentsForm: React.FC = () => {
             className="flex justify-center w-full py-[14px] bg-[#005CAA] rounded-[6px] text-white text-[16px] mb-[16px] disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={handleSend}
           >
-            Далее
+            {t('documentsForm2.next')}
           </button>
         </div>
         {isLoading && (
@@ -737,10 +741,10 @@ const DocumentsForm: React.FC = () => {
             <div className="w-[50%] h-[40%] bg-white flex flex-col items-center justify-center rounded">
               <img src={loader} alt="" />
               <p className="text-center text-[16px] mb-2">
-                Идет сканирование документов
+                {t('documentsForm2.scanning')}
               </p>
               <div className="text-center text-[24px] font-bold text-blue-600">
-                {timer} сек
+                {t('documentsForm2.seconds', { timer })}
               </div>
             </div>
           </div>

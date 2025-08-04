@@ -2,35 +2,8 @@ import React from 'react';
 import Container from '../components/Container';
 import dollar from '../assets/dollar-logo.svg';
 import add from '../assets/add-icon.svg';
+import { useTranslation } from 'react-i18next';
 
-const cardData = [
-  {
-    title: '❗ У каждого должен быть ОСАГО!',
-    text: 'Каждый автомобиль в стране обязан иметь оформленный полис ОСАГО согласно закону Кыргызской Республики №192  "Об обязательном страховании гражданско-правовой ответственности владельцев автотранспортных средств"',
-  },
-  {
-    title: '❗Штрафы за отсутствие ОСАГО',
-    text: 'Введен штраф 3000 сомов за отсутствие полиса ОСАГО с 01.07.2025 при каждой проверке сотрудниками ГУОБДД КР. Помогите близким оформить ОСАГО и защитите их от лишних затрат.',
-  },
-  {
-    title: 'Что такое ОСАГО?',
-    text: 'ОСАГО - это Обязательное Страхование Автогражданской Ответственности, который обязателен для всех. В случае ДТП страховая компания покрывает расходы на ремонт чужого автомобиля и лечение пострадавших.',
-  },
-];
-
-const earnSteps = [
-  'Зарегистрируйся',
-  'Получи свой личный код',
-  'Делись ссылкой для регистрации ОСАГО с личным кодом',
-  'Помогай и зарабатывай 15% с каждого ОСАГО',
-];
-
-const passiveSteps = [
-  'Зарегистрируйся и получи свой личный код',
-  'Приглашай друзей в свою команду',
-  'Научи их оформлять полис ОСАГО',
-  'Получай 5% со всех продаж твоей команды',
-];
 
 type StepCardProps = {
   title: string;
@@ -93,14 +66,17 @@ const StepCard: React.FC<StepCardProps> = ({
 };
 
 const Referral = () => {
+  const { t } = useTranslation();
+  const cards = t('home.referral.cards', { returnObjects: true }) as { title: string; text: string }[];
+
   return (
     <Container>
       <h2 className='text-center text-[32px] font-semibold text-[#000] mb-[30px]'>
-        Для чего нужен ОСАГО?
+        {t('home.referral.purposeTitle')}
       </h2>
 
       <div className='grid md:grid-cols-3 gap-6 mb-[60px] text-justify'>
-        {cardData.map((item, index) => (
+        {cards.map((item, index) => (
           <div
             key={index}
             className='bg-white rounded-[12px] p-[20px] border border-[#CCE3FF]'
@@ -117,23 +93,23 @@ const Referral = () => {
 
       <div className='grid md:grid-cols-2 gap-6 mb-[60px]'>
         <StepCard
-          title='Как начать зарабатывать?'
-          steps={earnSteps}
+          title={t('home.referral.earnStepsTitle')}
+          steps={t('home.referral.earnSteps', { returnObjects: true }) as string[]}
           color='#0072DE'
           borderColor='#C0D2F9'
           bgColor='#F9FBFF'
-          btnText='Зарегистрироваться'
+          btnText={t('home.referral.earnBtn')}
           btnColor='bg-[#0072DE]'
           link='https://oa.kg/a/'
           icon={dollar}
         />
         <StepCard
-          title='Как зарабатывать пассивно с OA.KG?'
-          steps={passiveSteps}
+          title={t('home.referral.passiveStepsTitle')}
+          steps={t('home.referral.passiveSteps', { returnObjects: true }) as string[]}
           color='#1AA37F'
           borderColor='#8AD4A9'
           bgColor='#F9FFF9'
-          btnText='Создать команду'
+          btnText={t('home.referral.passiveBtn')}
           btnColor='bg-[#1AA37F]'
           link='https://oa.kg/a/'
           icon={add}
