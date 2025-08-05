@@ -144,7 +144,7 @@ const Home = () => {
           <p className="text-[#0072DE] font-bold text-center">
             {t("home.referralRules.title")}
           </p>
-          <span className="text-[#000] text-center">
+          <span className="text-[#000] text-center max-w-[511px]">
             {t("home.referralRules.desc")}
           </span>
           <button className="bg-[#0072DE] px-[116px] py-[19px] rounded-[12px]">
