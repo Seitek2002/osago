@@ -140,19 +140,30 @@ const Home = () => {
       </div>
       <Referral />
       <OaKg />
-      <div className="flex justify-center pt-4 gap-40 max-md:flex-col max-md:items-center max-md:gap-5 pb-3 max-md:bg-[#EAF4FF]">
-        <img src={rules} alt="" />
-        <div className="flex flex-col items-center mt-[20px] gap-5 ">
-          <p className="text-[#0072DE] font-bold text-center">
-            Правила реферальной акции
-          </p>
-          <span className="text-[#000] text-center max-w-[511px]">
-            {t("home.referralRules.desc")}
-          </span>
-          <button className="bg-[#0072DE] px-[116px] py-[19px] rounded-[12px]">
-            Подробнее
-          </button>
-        </div>
+      <div className="home__referral bg-[#EAF4FF] py-[40px] flex justify-center items-center pt-[60px] pb-[60px]">
+        <Container>
+          <div className="md:flex justify-evenly items-center">
+            <img src={rules} alt="" className="w-[60%] mx-auto lg:w-[27%]" />
+            <div className="text-center lg:text-center mx-auto lg:max-w-[55%]">
+              <p className="text-[#000] text-[36px] leading-[41px] mt-[30px] lg:text-[32px]">
+                <span className="text-[#0072DE] font-medium">
+                  {t("home.referralRules.title")}
+                </span>
+              </p>
+              <p className="text-[#000] my-4 text-2xl max-w-[80%] mx-auto">
+                {t("home.referralRules.desc")}
+              </p>
+              <a
+                href="https://oa.kg/a/"
+                className="button text-[16px] py-[18px] mx-auto mt-[25px] px-[35px] bg-[#0072DE] rounded-[12px] text-[#fff] flex text-center items-center justify-center w-full lg:w-[70%]"
+              >
+                <span className="text-[20px] md:text-[20px]">
+                  {t("home.referralRules.moreBtn")}
+                </span>
+              </a>
+            </div>
+          </div>
+        </Container>
       </div>
       <AboutStats />
       {/* <Reviews /> */}
