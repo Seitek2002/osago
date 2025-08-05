@@ -2,6 +2,7 @@ import MainHeader from "../components/MainHeader";
 import Container from "../components/Container";
 import AboutStats from "../components/AboutStats";
 import Question from "../components/Question";
+import OaKg from "../components/OaKg";
 // import Reviews from "../components/Reviews";
 // import MobileApp from "../components/MobileApp";
 import Mainfooter from "../components/MainFooter";
@@ -138,9 +139,10 @@ const Home = () => {
         </Container>
       </div>
       <Referral />
-      <div className="flex justify-center mt-4 gap-40 max-md:flex-col max-md:items-center max-md:gap-5 mb-3">
+      <OaKg />
+      <div className="flex justify-center pt-4 gap-40 max-md:flex-col max-md:items-center max-md:gap-5 pb-3 max-md:bg-[#EAF4FF]">
         <img src={rules} alt="" />
-        <div className="flex flex-col items-center mt-[20px] ">
+        <div className="flex flex-col items-center mt-[20px] gap-5 ">
           <p className="text-[#0072DE] font-bold text-center">
             Правила реферальной акции
           </p>
