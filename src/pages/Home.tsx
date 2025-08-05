@@ -146,9 +146,8 @@ const Home = () => {
           <p className="text-[#0072DE] font-bold text-center">
             Правила реферальной акции
           </p>
-          <span className="text-[#000] text-center">
-            Ознакомтесь с условиями участия в реферальноай <br /> “Зарабатывай на
-            ОСАГО”
+          <span className="text-[#000] text-center max-w-[511px]">
+            {t("home.referralRules.desc")}
           </span>
           <button className="bg-[#0072DE] px-[116px] py-[19px] rounded-[12px]">
             Подробнее
