@@ -30,14 +30,6 @@ export default function AboutStats() {
             <span className="text-[25px] leading-[5px] lg:leading-[35px] font-normal text-[#000]">{t('home.aboutStats.agents.amount')}</span>
           </div>
         </div>
-        <hr />
-        <hr />
-        <hr />
-        <hr />
-        <hr />
-        <hr />
-        <hr />
-        <hr />
         <h3 className="text-[24px] font-semibold mb-4 text-[#000] lg:text-[32px] mt-[20px] lg:mt-[0]">{t('home.aboutStats.advantagesTitle')}</h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
           {(t('home.aboutStats.advantages', { returnObjects: true }) as { title: string; desc: string }[]).map((item, index) => (
