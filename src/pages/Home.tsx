@@ -111,7 +111,7 @@ const Home = () => {
           </div>
         </div>
       </Container>
-      <div className="home__referral bg-[#E3EFFF] py-[40px] flex justify-center items-center mt-[60px] mb-[60px]">
+      <div className="home__referral bg-[#E3EFFF] py-[40px] flex justify-center items-center my-[60px]">
         <Container>
           <div className="md:flex justify-evenly items-center">
             <img src={referral} alt="" className="w-[60%] mx-auto lg:w-[27%]" />
@@ -138,18 +138,17 @@ const Home = () => {
         </Container>
       </div>
       <Referral />
-      <div className="flex justify-center mt-4 gap-40 max-md:flex-col max-md:items-center max-md:gap-5 mb-3">
+      <div className="flex justify-center mt-4 gap-40 max-md:flex-col max-md:items-center max-md:gap-5  my-[60px]">
         <img src={rules} alt="" />
         <div className="flex flex-col items-center mt-[20px] ">
           <p className="text-[#0072DE] font-bold text-center">
-            Правила реферальной акции
+            {t("home.referralRules.title")}
           </p>
           <span className="text-[#000] text-center">
-            Ознакомтесь с условиями участия в реферальноай <br /> “Зарабатывай на
-            ОСАГО”
+            {t("home.referralRules.desc")}
           </span>
           <button className="bg-[#0072DE] px-[116px] py-[19px] rounded-[12px]">
-            Подробнее
+            {t("home.referralRules.moreBtn")}
           </button>
         </div>
       </div>
