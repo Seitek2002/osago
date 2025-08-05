@@ -80,7 +80,10 @@ export interface IFormData {
   referralCode?: number;
 }
 
+import { useTranslation } from 'react-i18next';
+
 const DataForms: React.FC = () => {
+  const { t } = useTranslation();
   const [confirmChecked, setConfirmChecked] = useState(false);
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -211,13 +214,13 @@ const DataForms: React.FC = () => {
       <form onSubmit={handleSubmit} className='mx-auto px-4 max-w-[1200px]'>
         <div className='form-section__content space-y-4'>
           <h2 className='text-title text-2xl font-semibold'>
-            Проверьте свои данные
+            {t('dataFormsPage.title')}
           </h2>
 
           {/* Номер телефона */}
           <div className='form-group mt-4'>
             <label className='text-suptitle block' htmlFor='phoneNumber'>
-              Номер телефона <span className='required text-red-500'>*</span>
+              {t('dataFormsPage.phone')} <span className='required text-red-500'>*</span>
             </label>
             <input
               required
@@ -254,7 +257,7 @@ const DataForms: React.FC = () => {
                 })
               }
             />
-            <span className='text-[14px] block text-[grey]'>На данный номер будет отправлена ссылка на ОСАГО</span>
+            <span className='text-[14px] block text-[grey]'>{t('dataFormsPage.phoneHint')}</span>
           </div>
 
 
@@ -265,8 +268,7 @@ const DataForms: React.FC = () => {
           />
 
           <h3 className='text-suptitle'>
-            Проверьте ваши данные{' '}
-            <span className='required text-red-500'>*</span>
+            {t('dataFormsPage.checkData')} <span className='required text-red-500'>*</span>
           </h3>
 
           {/* Блок паспорта */}
@@ -300,8 +302,7 @@ const DataForms: React.FC = () => {
               className='appearance-none border-2 border-[#005CAA] w-5 h-5 rounded-[3px] personal-checkbox'
             />
             <span className='w-[90%] text-[14px]'>
-              Настоящим подтверждаю, что проверил указанные данные и подтверждаю
-              их достоверность для получения полиса ОСАГО
+              {t('dataFormsPage.confirm')}
             </span>
           </label>
         </div>
@@ -311,7 +312,7 @@ const DataForms: React.FC = () => {
             type='submit'
             disabled={!isFormValid || !confirmChecked}
           >
-            Далее
+            {t('dataFormsPage.next')}
           </button>
         </div>
       </form>

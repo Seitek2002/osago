@@ -4,6 +4,7 @@ import {
   useCreatePolicyMutation,
 } from '../store/calculateApi';
 import type { IInsuranceData } from '../types';
+import { useTranslation } from 'react-i18next';
 
 function getFutureDate(period: string): string {
   const date = new Date();
@@ -42,6 +43,7 @@ function getFutureDate(period: string): string {
 }
 
 export default function Calculator2() {
+  const { t } = useTranslation();
   const [calculate, { isLoading: isCalculating, isError: isCalcError }] =
     useCalculateMutation();
   const [createPolicy, { isLoading }] = useCreatePolicyMutation();
@@ -139,10 +141,9 @@ export default function Calculator2() {
     <section className='calculator pt-14 pb-5'>
       <form className='max-w-[800px] mx-auto px-4' onSubmit={handleSubmit}>
         <div className='calculator__content space-y-4'>
-          <h2 className='text-title text-2xl font-bold'>Калькулятор ОСАГО</h2>
+          <h2 className='text-title text-2xl font-bold'>{t('calculatorPage.title')}</h2>
           <h3 className='text-suptitle font-semibold'>
-            Есть ли у Вас диагностическая карта?{' '}
-            <span className='text-[#FC3400]'>*</span>
+            {t('calculatorPage.hasDiagnosticCard')} <span className='text-[#FC3400]'>*</span>
           </h3>
           <div className='radio-group grid grid-cols-2 gap-5'>
             <label className='flex items-center bg-[#F7F8FA] border border-gray-300 rounded-md shadow-sm p-[12px]'>
@@ -161,7 +162,7 @@ export default function Calculator2() {
                 }}
                 className='mr-2'
               />
-              Да
+              {t('calculatorPage.yes')}
             </label>
             <label className='flex items-center bg-[#F7F8FA] border border-gray-300 rounded-md shadow-sm p-[12px]'>
               <input
@@ -179,7 +180,7 @@ export default function Calculator2() {
                 }}
                 className='mr-2'
               />
-              Нет
+              {t('calculatorPage.no')}
             </label>
           </div>
 
@@ -187,8 +188,7 @@ export default function Calculator2() {
             <>
               <div className='form-group mt-4'>
                 <label className='text-suptitle block' htmlFor='number'>
-                  Номер технического осмотра{' '}
-                  <span className='required text-red-500'>*</span>
+                  {t('calculatorPage.diagnosticNumber')} <span className='required text-red-500'>*</span>
                 </label>
                 <input
                   required
@@ -208,8 +208,7 @@ export default function Calculator2() {
               </div>
               <div className='form-group mt-4'>
                 <label className='text-suptitle block' htmlFor='date'>
-                  Дата выдачи технического осмотра{' '}
-                  <span className='required text-red-500'>*</span>
+                  {t('calculatorPage.diagnosticDate')} <span className='required text-red-500'>*</span>
                 </label>
                 <input
                   required
@@ -232,8 +231,7 @@ export default function Calculator2() {
           )}
 
           <h3 className='text-suptitle font-semibold hidden'>
-            Заключали ли Вы раньше договор ОСАГО?{' '}
-            <span className='text-[#FC3400]'>*</span>
+            {t('calculatorPage.previousAgreement')} <span className='text-[#FC3400]'>*</span>
           </h3>
           <div className='radio-group  grid-cols-2 gap-5 hidden'>
             {' '}
@@ -246,7 +244,7 @@ export default function Calculator2() {
                 onChange={() => setPreviousAgreement('1')}
                 className='mr-2'
               />
-              Да
+              {t('calculatorPage.yes')}
             </label>
             <label className='flex items-center bg-[#F7F8FA] border border-gray-300 rounded-md shadow-sm p-[12px]'>
               <input
@@ -256,50 +254,43 @@ export default function Calculator2() {
                 onChange={() => setPreviousAgreement('0')}
                 className='mr-2'
               />
-              Нет
+              {t('calculatorPage.no')}
             </label>
           </div>
           <h3 className='text-suptitle font-semibold'>
-            Укажите срок страхования <span className='text-[#FC3400]'>*</span>
+            {t('calculatorPage.insuranceDuration')} <span className='text-[#FC3400]'>*</span>
           </h3>
           <div className='insurance-duration grid grid-cols-3 gap-[8px]'>
-            {[
-              '15 дней',
-              '1 месяц',
-              '3 месяца',
-              '6 месяцев',
-              '9 месяцев',
-              '12 месяцев',
-            ].map((val) => (
+            {Object.entries(t('calculatorPage.durations', { returnObjects: true }) as Record<string, string>).map(([key, label]) => (
               <div
-                key={val}
+                key={key}
                 onClick={() => {
-                  setInsuranceDuration(val);
+                  setInsuranceDuration(label);
                   setFormData((prev) => ({
                     ...prev,
-                    endDate: getFutureDate(val),
+                    endDate: getFutureDate(label),
                   }));
                 }}
                 className={`px-4 py-2 border rounded-lg text-[14px] text-center ${
-                  insuranceDuration === val
+                  insuranceDuration === label
                     ? 'border-[#005CAA] bg-[#005CAA14]'
                     : ''
                 }`}
               >
-                {val}
+                {label}
               </div>
             ))}
           </div>
         </div>
         <div className='bg-white mt-[50px]'>
           <div className='flex items-center justify-between border-t-[2px] py-[5px]'>
-            <h3>Стоимость:</h3>
+            <h3>{t('calculatorPage.cost')}</h3>
             <b className='text-[22px]'>
               {isCalculating
-                ? 'Идет рассчет'
+                ? t('calculatorPage.calculating')
                 : isCalcError
-                ? 'Покупка недоступна'
-                : `${amount} сом`}
+                ? t('calculatorPage.purchaseUnavailable')
+                : `${amount} ${t('calculatorPage.currency')}`}
             </b>
           </div>
           <footer className='footer w-full mt-[40px]'>
@@ -309,7 +300,7 @@ export default function Calculator2() {
                 disabled={isLoading}
                 className='flex justify-center w-full py-[14px] bg-[#005CAA] rounded-[6px] text-[#fff] text-[16px] mb-[16px] disabled:opacity-50 disabled:cursor-not-allowed'
               >
-                {isLoading ? 'Идет рассчет...' : 'Оплатить'}
+                {isLoading ? t('calculatorPage.calculatingBtn') : t('calculatorPage.pay')}
               </button>
               {errorMessage && (
                 <div className='text-red-600 text-sm mt-2 text-center whitespace-pre-line'>
@@ -319,7 +310,7 @@ export default function Calculator2() {
             </div>
           </footer>
           <p className='text-[12px]'>
-            Тут может быть дополнительная информация о цене
+            {t('calculatorPage.additionalInfo')}
           </p>
         </div>
       </form>
