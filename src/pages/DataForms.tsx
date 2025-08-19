@@ -82,6 +82,7 @@ export interface IFormData {
 
 import { useTranslation } from 'react-i18next';
 
+
 const DataForms: React.FC = () => {
   const { t } = useTranslation();
   const [confirmChecked, setConfirmChecked] = useState(false);
@@ -150,6 +151,7 @@ const DataForms: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const data: any = {
       passport: {
         ...userFormData.passport,
@@ -224,7 +226,10 @@ const DataForms: React.FC = () => {
             </label>
             <input
               required
-              type='text'
+              type='tel'
+              inputMode='tel'
+              autoComplete='tel'
+              pattern='[0-9+ ()-]*'
               id='phoneNumber'
               placeholder='+996 (502) 235-509'
               className='form-input mt-[12px] w-full bg-[#F7F8FA] rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 border'

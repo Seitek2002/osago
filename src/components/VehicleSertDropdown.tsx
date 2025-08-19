@@ -226,6 +226,8 @@ const VehicleSertDropdown: FC<IProps> = ({
                   <input
                     required={field.required}
                     type={field.type}
+                    inputMode={field.name === 'personalNumber' ? 'numeric' : undefined}
+                    pattern={field.name === 'personalNumber' ? '[0-9]*' : undefined}
                     className={`litle-input ${
                       field.type === 'date' ? 'w-full' : ''
                     } bg-white rounded-[8px] py-2 px-3 text-[16px] text-[#201F1F] placeholder:text-[#ADB0BA] outline-none transition-colors border focus:ring-1 focus:ring-indigo-500`}

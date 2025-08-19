@@ -111,6 +111,7 @@ const DataForms2: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const data: any = {
       passport: {
         ...userFormData.passport,
@@ -180,7 +181,10 @@ const DataForms2: React.FC = () => {
             </label>
             <input
               required
-              type='text'
+              type='tel'
+              inputMode='tel'
+              autoComplete='tel'
+              pattern='[0-9+ ()-]*'
               id='phoneNumber'
               placeholder='+996502235509'
               className='form-input mt-[12px] w-full bg-[#F7F8FA] rounded-md shadow-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 border'
