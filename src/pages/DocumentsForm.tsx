@@ -379,15 +379,6 @@ const DocumentsForm: React.FC = () => {
       })
     );
 
-    if (!driverRes.data?.categories) {
-      setPravaError('Не удалось отсканировать права');
-      return;
-    }
-    if (!vehicleRes.data?.vehicleCategory) {
-      setVehicleError('Не удалось отсканировать права');
-      return;
-    }
-
     if (selectedId) {
       navigate(`/data-forms/${selectedId}`);
     } else {
