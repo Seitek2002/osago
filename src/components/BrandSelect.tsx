@@ -79,7 +79,7 @@ const BrandSelect: FC<IProps> = ({ userFormData, setUserFormData }) => {
             {brands
               ?.filter((item) => {
                 if (inputValue.trim()) {
-                  return item.name.toLowerCase().includes(inputValue.trim());
+                  return item.name.toLowerCase().includes(inputValue.toLowerCase().trim());
                 } else {
                   return item;
                 }

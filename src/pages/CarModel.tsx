@@ -81,7 +81,7 @@ const CarModel: FC<IProps> = ({ userFormData, setUserFormData }) => {
             {carModels
               ?.filter((item) => {
                 if (inputValue.trim()) {
-                  return item.name.toLowerCase().includes(inputValue.trim());
+                  return item.name.toLowerCase().includes(inputValue.toLowerCase().trim());
                 } else {
                   return item;
                 }
