@@ -49,6 +49,13 @@
     "secPrice": "The cost is indicated including 3% VAT",
     "som": "som"
   },
+  "modal": {
+    "toNumber": "To this number:",
+    "suffix": "a link to the OSAGO policy will be sent",
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "close": "Close"
+  },
   "footer": {
     "phoneNumber": "Phone",
     "address": "Head office: Bishkek, Ch. Aitmatov Ave. 1, building 2, 4th floor",

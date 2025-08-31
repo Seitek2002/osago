@@ -384,22 +384,28 @@ const DataForms: React.FC = () => {
         </div>
       </form>
       {showConfirm && (
-        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50' onClick={() => setShowConfirm(false)}>
-          <div className='bg-white rounded-lg shadow-lg max-w-sm w-[90%] p-4 relative' onClick={(e) => e.stopPropagation()}>
+        <div
+          className='fixed inset-0 z-50 flex items-center justify-center bg-black/50'
+          onClick={() => setShowConfirm(false)}
+        >
+          <div
+            className='bg-white rounded-lg shadow-lg max-w-sm w-[90%] p-4 relative'
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               type='button'
-              aria-label='Закрыть'
+              aria-label={t('modal.close')}
               className='absolute top-2 right-2 text-gray-400 hover:text-gray-600'
               onClick={() => setShowConfirm(false)}
             >
               ✕
             </button>
             <div className='text-[16px] text-[#201F1F] text-center'>
-              На данный номер:{' '}
+              {t('modal.toNumber')}{' '}
               <span className='block font-bold text-[26px] text-[#005CAA]'>
                 {userFormData.phoneNumber}
               </span>{' '}
-              будет отправлена ссылка для скачивания вашего полис ОСАГО после оплаты
+              {t('modal.suffix')}
             </div>
             <div className='mt-4 flex flex-col justify-center gap-2'>
               <button
@@ -407,14 +413,14 @@ const DataForms: React.FC = () => {
                 className='px-4 py-2 rounded bg-[#005CAA] text-white'
                 onClick={handleConfirmContinue}
               >
-                Далее
+                {t('modal.continue')}
               </button>
               <button
                 type='button'
                 className='px-4 py-2 rounded bg-gray-200'
                 onClick={() => setShowConfirm(false)}
               >
-                Отмена
+                {t('modal.cancel')}
               </button>
             </div>
           </div>
