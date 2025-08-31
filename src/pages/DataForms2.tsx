@@ -63,6 +63,7 @@ import { useTranslation } from 'react-i18next';
 const DataForms2: React.FC = () => {
   const { t } = useTranslation();
   const [confirmChecked, setConfirmChecked] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
   const localData = JSON.parse(localStorage.getItem('ocrData') || '{}');
@@ -111,6 +112,8 @@ const DataForms2: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setShowConfirm(true);
+    return;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const data: any = {
       passport: {
@@ -162,6 +165,56 @@ const DataForms2: React.FC = () => {
 
   const isEmpty = (val?: string | null) => !val || val.trim() === '';
 
+  const handleConfirmContinue = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data: any = {
+      passport: {
+        ...userFormData.passport,
+        citizenshipCountry: userFormData.passport.citizenshipCountryId,
+      },
+      vehicleRegistrationCertificate: {
+        ...userFormData.vehicle_cert,
+        number: userFormData.vehicle_cert.number,
+        vin: userFormData.vehicle_cert.vin,
+        ownerFullName: userFormData.vehicle_cert.ownerFullName,
+        personalNumber: userFormData.vehicle_cert.personalNumber,
+        ownerAddress: userFormData.vehicle_cert.ownerAddress,
+        brand: userFormData.vehicle_cert.brandId,
+        car_model: userFormData.vehicle_cert.carModelId,
+        steeringLocation: userFormData.vehicle_cert.steeringLocation,
+        engineType: userFormData.vehicle_cert.engineType,
+        yearOfManufacture: userFormData.vehicle_cert.yearOfManufacture,
+        color: userFormData.vehicle_cert.color,
+        carBodyChassisNumber: userFormData.vehicle_cert.carBodyChassisNumber,
+        carBodyType: userFormData.vehicle_cert.carBodyType,
+        vehicleCategory: userFormData.vehicle_cert.vehicleCategory,
+        engineCapacity: userFormData.vehicle_cert.engineCapacity,
+        enginePower: userFormData.vehicle_cert.enginePower,
+        unladenMass: userFormData.vehicle_cert.unladenMass,
+        maxPermissibleMass: userFormData.vehicle_cert.maxPermissibleMass,
+        authority: userFormData.vehicle_cert.authority,
+        registrationDate: userFormData.vehicle_cert.registrationDate,
+        registrationCountry: userFormData.vehicle_cert.registrationCountryId,
+      },
+      unlimitedDrivers: true,
+      purpose: userFormData.purpose.id,
+      endDate: '',
+      phoneNumber: userFormData.phoneNumber,
+      technicalInspection: false,
+    };
+    if (params.id) {
+      data.referralCode = params.id;
+    }
+
+    localStorage.setItem('calculateData', JSON.stringify(data));
+    localStorage.setItem('ocrData', JSON.stringify(userFormData));
+    if (params.id) {
+      navigate(`/calculator-2/${params.id}`);
+    } else {
+      navigate('/calculator-2');
+    }
+  };
+
   const getInputStyle = (value?: string | null) => ({
     borderColor: isEmpty(value) ? '#ef4444' : '#d1d5db',
   });
@@ -177,7 +230,8 @@ const DataForms2: React.FC = () => {
           {/* Номер телефона */}
           <div className='form-group mt-4'>
             <label className='text-suptitle block' htmlFor='phoneNumber'>
-              {t('dataFormsPage.phone')} <span className='required text-red-500'>*</span>
+              {t('dataFormsPage.phone')}{' '}
+              <span className='required text-red-500'>*</span>
             </label>
             <input
               required
@@ -217,9 +271,10 @@ const DataForms2: React.FC = () => {
                 })
               }
             />
-            <span className='text-[14px] block text-[grey]'>{t('dataFormsPage.phoneHint')}</span>
+            <span className='text-[14px] block text-[grey]'>
+              {t('dataFormsPage.phoneHint')}
+            </span>
           </div>
-
 
           {/* Использование авто */}
           <PurposeDropdown
@@ -228,7 +283,8 @@ const DataForms2: React.FC = () => {
           />
 
           <h3 className='text-suptitle'>
-            {t('dataFormsPage.checkData')} <span className='required text-red-500'>*</span>
+            {t('dataFormsPage.checkData')}{' '}
+            <span className='required text-red-500'>*</span>
           </h3>
 
           {/* Блок паспорта */}
@@ -252,7 +308,7 @@ const DataForms2: React.FC = () => {
               type='checkbox'
               required
               checked={confirmChecked}
-              onChange={e => setConfirmChecked(e.target.checked)}
+              onChange={(e) => setConfirmChecked(e.target.checked)}
               className='appearance-none border-2 border-[#005CAA] w-5 h-5 rounded-[3px] personal-checkbox'
             />
             <span className='w-[90%] text-[14px]'>
@@ -270,6 +326,43 @@ const DataForms2: React.FC = () => {
           </button>
         </div>
       </form>
+      {showConfirm && (
+        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50' onClick={() => setShowConfirm(false)}>
+          <div className='bg-white rounded-lg shadow-lg max-w-sm w-[90%] p-4 relative' onClick={(e) => e.stopPropagation()}>
+            <button
+              type='button'
+              aria-label='Закрыть'
+              className='absolute top-2 right-2 text-gray-400 hover:text-gray-600'
+              onClick={() => setShowConfirm(false)}
+            >
+              ✕
+            </button>
+            <div className='text-[16px] text-[#201F1F] text-center'>
+              На данный номер:{' '}
+              <span className='block font-bold text-[26px] text-[#005CAA]'>
+                {userFormData.phoneNumber}
+              </span>{' '}
+              будет отправлена ссылка на полис ОСАГО
+            </div>
+            <div className='mt-4 flex flex-col justify-center gap-2'>
+              <button
+                type='button'
+                className='px-4 py-2 rounded bg-[#005CAA] text-white'
+                onClick={handleConfirmContinue}
+              >
+                Далее
+              </button>
+              <button
+                type='button'
+                className='px-4 py-2 rounded bg-gray-200'
+                onClick={() => setShowConfirm(false)}
+              >
+                Отмена
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
