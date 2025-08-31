@@ -342,7 +342,7 @@ const DataForms2: React.FC = () => {
               <span className='block font-bold text-[26px] text-[#005CAA]'>
                 {userFormData.phoneNumber}
               </span>{' '}
-              будет отправлена ссылка на полис ОСАГО
+              будет отправлена ссылка для скачивания вашего полис ОСАГО после оплаты
             </div>
             <div className='mt-4 flex flex-col justify-center gap-2'>
               <button
