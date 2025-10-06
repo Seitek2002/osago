@@ -8,7 +8,7 @@ import OaKg from "../components/OaKg";
 import Mainfooter from "../components/MainFooter";
 import Referral from "../components/Referral";
 import referral from "../assets/images/logo.png";
-import dollar from "../assets/dollar-logo.svg";
+import dollar from "../assets/som.svg";
 import add from "../assets/add-icon.svg";
 import hrs from "../assets/images/earnings-hrs.png";
 import reg from "../assets/images/earnings-reg.png";
@@ -81,7 +81,7 @@ const Home = () => {
               href="https://oa.kg/a/"
               className="button rounded-xl max-w-[305px] mx-auto py-[14px] bg-[#0072DE] text-[#fff] text-[16px] mb-[16px] flex text-center items-center justify-center gap-4"
             >
-              <img src={dollar} alt="" />
+              <img src={dollar} alt="" width={16} />
               <span className="text-[20px]">{t("home.cta.earnBtn")}</span>
             </a>
           </div>

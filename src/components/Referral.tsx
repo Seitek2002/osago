@@ -1,6 +1,6 @@
 import React from 'react';
 import Container from '../components/Container';
-import dollar from '../assets/dollar-logo.svg';
+import dollar from '../assets/som.svg';
 import add from '../assets/add-icon.svg';
 import { useTranslation } from 'react-i18next';
 
@@ -58,7 +58,7 @@ const StepCard: React.FC<StepCardProps> = ({
         href={link}
         className={`h-[60px] rounded-xl mt-6 inline-flex items-center justify-center gap-2 ${btnColor} text-white text-[20px] py-[12px] px-[24px] w-full`}
       >
-        <img src={icon} alt='' />
+        <img src={icon} alt='' width={16} />
         {btnText}
       </a>
     </div>
