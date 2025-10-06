@@ -154,7 +154,7 @@ const Home = () => {
                 {t("home.referralRules.desc")}
               </p>
               <a
-                href="https://oa.kg/a/"
+                href="/ПУБЛИЧНАЯ ОФЕРТА для субагентов.pdf"
                 className="button text-[16px] py-[18px] mx-auto mt-[25px] px-[35px] bg-[#0072DE] rounded-[12px] text-[#fff] flex text-center items-center justify-center w-full lg:w-[70%]"
               >
                 <span className="text-[20px] md:text-[20px]">
