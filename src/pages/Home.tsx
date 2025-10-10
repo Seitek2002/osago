@@ -194,7 +194,7 @@ const Home = () => {
       <div className="home__referral bg-[#E3EFFF] py-[40px] flex justify-center items-center mt-[60px] mb-[60px]">
         <Container>
           <div className="md:flex justify-evenly items-center">
-            <img src={referral} alt="Логотип OA.KG" loading="lazy" className="w-[60%] mx-auto lg:w-[27%]" />
+            <img src={referral} alt="Логотип OA.KG" loading="lazy" className="w-[60%] mx-auto lg:w-[17%]" />
             <div className="text-center lg:text-center mx-auto lg:max-w-[55%]">
               <h2 className="text-[#000] text-[36px] leading-[41px] mt-[30px] lg:text-[32px]">
                 <span className="text-[#0072DE] font-medium">
