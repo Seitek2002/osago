@@ -19,46 +19,124 @@ import { setMetaTags } from "../utils/setMetaTags";
 import { useTranslation } from "react-i18next";
 
 const Home = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   useEffect(() => {
+    const locale = i18n?.language || "ru";
+    const htmlLang = locale === "kg" ? "ky" : locale;
+    const baseUrl = "https://oa.kg";
+    const canonicalUrl = `${baseUrl}/`;
+
+    // Localized SEO
+    const title = (t("home.meta.title") as string) || "Зарабатывай онлайн оформляя ОСАГО. Премия 15%";
+    const description =
+      (t("home.meta.description") as string) ||
+      "ОСАГО — ваша защита на дороге! Оформите полис онлайн за 1 минуту и получите уверенность в каждой поездке. Надежная страховка по выгодной цене!";
+    const ogTitle = (t("home.meta.ogTitle") as string) || "Оформи онлайн ОСАГО";
+    const ogDescription = (t("home.meta.ogDescription") as string) || description;
+
+    // Social image
+    const image =
+      "https://opengraph.b-cdn.net/production/images/20eb0cca-8f31-41d8-a6d7-0077ab4d12b2.png?token=Mdv4e_CfnkITY3MGKE-qqFVo2oKfBgvx-Z7Z_oOvdK0&height=348&width=601&expires=33288042538";
+    const imageWidth = "601";
+    const imageHeight = "348";
+    const imageAlt = ogTitle;
+
+    const ogLocale = htmlLang === "ru" ? "ru_RU" : htmlLang === "ky" ? "ky_KG" : htmlLang;
+    const ogLocaleAlternates = ["ru_RU", "ky_KG"].filter((l) => l !== ogLocale);
+
+    // FAQ structured data from i18n (if available)
+    const faqItems = (t("home.faq.questions", { returnObjects: true }) as Array<{ q: string; a: string }>) || [];
+
     setMetaTags({
-      title: "Зарабатывай онлайн оформляя ОСАГО. Премия 15%",
+      title,
+      htmlLang,
       metaTags: [
+        { name: "description", content: description },
         {
-          name: "description",
+          name: "robots",
           content:
-            "ОСАГО — ваша защита на дороге! Оформите полис онлайн за 1 минуту и получите уверенность в каждой поездке. Надежная страховка по выгодной цене!",
+            "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
         },
-        { property: "og:url", content: "https://oa.kg/a/" },
+        { property: "og:url", content: canonicalUrl },
         { property: "og:type", content: "website" },
-        { property: "og:title", content: "Оформи онлайн ОСАГО" },
-        {
-          property: "og:description",
-          content:
-            "ОСАГО — ваша защита на дороге! Оформите полис онлайн за 1 минуту и получите уверенность в каждой поездке. Надежная страховка по выгодной цене!",
-        },
-        {
-          property: "og:image",
-          content:
-            "https://opengraph.b-cdn.net/production/images/20eb0cca-8f31-41d8-a6d7-0077ab4d12b2.png?token=Mdv4e_CfnkITY3MGKE-qqFVo2oKfBgvx-Z7Z_oOvdK0&height=348&width=601&expires=33288042538",
-        },
+        { property: "og:site_name", content: "OA.KG" },
+        { property: "og:locale", content: ogLocale },
+        ...ogLocaleAlternates.map((l) => ({ property: "og:locale:alternate", content: l })),
+        { property: "og:title", content: ogTitle },
+        { property: "og:description", content: ogDescription },
+        { property: "og:image", content: image },
+        { property: "og:image:width", content: imageWidth },
+        { property: "og:image:height", content: imageHeight },
+        { property: "og:image:alt", content: imageAlt },
         { name: "twitter:card", content: "summary_large_image" },
         { property: "twitter:domain", content: "oa.kg" },
-        { property: "twitter:url", content: "https://oa.kg/a/" },
-        { name: "twitter:title", content: "Оформи онлайн ОСАГО" },
+        { property: "twitter:url", content: canonicalUrl },
+        { name: "twitter:title", content: ogTitle },
+        { name: "twitter:description", content: ogDescription },
+        { name: "twitter:image", content: image },
+        { name: "twitter:image:alt", content: imageAlt },
+        { name: "theme-color", content: "#0072DE" }
+      ],
+      links: [{ rel: "canonical", href: canonicalUrl }],
+      scripts: [
         {
-          name: "twitter:description",
-          content:
-            "ОСАГО — ваша защита на дороге! Оформите полис онлайн за 1 минуту и получите уверенность в каждой поездке. Надежная страховка по выгодной цене!",
+          type: "application/ld+json",
+          textContent: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "OA.KG — ОСАГО онлайн",
+            url: canonicalUrl,
+            logo: `${baseUrl}/favicon.png`,
+            sameAs: ["https://t.me/yourTelegramUsername", "https://wa.me/996777394080"],
+          }),
         },
         {
-          name: "twitter:image",
-          content:
-            "https://opengraph.b-cdn.net/production/images/20eb0cca-8f31-41d8-a6d7-0077ab4d12b2.png?token=Mdv4e_CfnkITY3MGKE-qqFVo2oKfBgvx-Z7Z_oOvdK0&height=348&width=601&expires=33288042538",
+          type: "application/ld+json",
+          textContent: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "OA.KG",
+            url: canonicalUrl,
+            inLanguage: htmlLang,
+          }),
         },
+        {
+          type: "application/ld+json",
+          textContent: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: htmlLang === "ky" ? "Башкы бет" : "Главная",
+                item: canonicalUrl,
+              },
+            ],
+          }),
+        },
+        ...(Array.isArray(faqItems) && faqItems.length
+          ? [
+              {
+                type: "application/ld+json",
+                textContent: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  mainEntity: faqItems.map((f) => ({
+                    "@type": "Question",
+                    name: f.q,
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: f.a,
+                    },
+                  })),
+                }),
+              } as const,
+            ]
+          : []),
       ],
     });
-  }, []);
+  }, [i18n?.language, t]);
 
   return (
     <section className="home min-h-screen text-white bg-gradient-to-b from-[#c9dcf1]/30 to-[#fff]/10 box-border">
@@ -66,32 +144,33 @@ const Home = () => {
       <Container>
         <div className="home__content text-center">
           <div className="home__top pt-[100px] lg:pt-[140px] max-w-[766px] mx-auto">
-            <div className="home__title text-center leading-[41px]">
+            <h1 className="home__title text-center leading-[41px]">
               <span className="text-[36px] font-medium text-[#000]">
                 {t("home.title.main")}
               </span>{" "}
               <span className="text-[36px] font-medium text-[#0072DE]">
                 {t("home.title.highlight")}
               </span>
-            </div>
+            </h1>
             <p className="text-[#000] mt-[30px]">{t("home.subtitle")}</p>
           </div>
           <div className="home__btns mt-[30px]">
             <a
               href="https://oa.kg/a/"
+              aria-label="Начать зарабатывать на ОСАГО онлайн"
               className="button rounded-xl max-w-[305px] mx-auto py-[14px] bg-[#0072DE] text-[#fff] text-[16px] mb-[16px] flex text-center items-center justify-center gap-4"
             >
-              <img src={dollar} alt="" width={16} />
+              <img src={dollar} alt="" aria-hidden="true" width={16} />
               <span className="text-[20px]">{t("home.cta.earnBtn")}</span>
             </a>
           </div>
           <div className="home__earnings mt-[60px]">
-            <span className="font-semibold text-[32px] text-[#000]">
+            <h2 className="font-semibold text-[32px] text-[#000]">
               {t("home.earnings.title")}
-            </span>
+            </h2>
             <div className="earnings__content md:flex gap-[40px] md:justify-center">
               <div className="bg-[#fff] rounded-3xl p-5 border border-[#C0D2F9] mt-[30px] md:flex  md:items-center md:flex-col md:py-[20px] md:px-[40px]">
-                <img src={hrs} className="mb-[12px] m-auto" />
+                <img src={hrs} alt="Бонус за помощь в оформлении ОСАГО" loading="lazy" className="mb-[12px] m-auto" />
                 <span className="text-[#000] text-lg md:text-2xl">
                   {t("home.earnings.helpOthers.desc")}
                 </span>
@@ -100,7 +179,7 @@ const Home = () => {
                 </p>
               </div>
               <div className="bg-[#fff] rounded-3xl p-5 border border-[#C0D2F9] mt-[30px] md:flex md:items-center md:flex-col md:p-[20px] md:px-[40px]">
-                <img src={reg} className="mb-[12px] m-auto" />
+                <img src={reg} alt="Бонус за обучение друзей" loading="lazy" className="mb-[12px] m-auto" />
                 <span className="text-[#000] text-lg md:text-2xl">
                   {t("home.earnings.teachFriends.desc")}
                 </span>
@@ -115,21 +194,22 @@ const Home = () => {
       <div className="home__referral bg-[#E3EFFF] py-[40px] flex justify-center items-center mt-[60px] mb-[60px]">
         <Container>
           <div className="md:flex justify-evenly items-center">
-            <img src={referral} alt="" className="w-[60%] mx-auto lg:w-[27%]" />
+            <img src={referral} alt="Логотип OA.KG" loading="lazy" className="w-[60%] mx-auto lg:w-[27%]" />
             <div className="text-center lg:text-center mx-auto lg:max-w-[55%]">
-              <p className="text-[#000] text-[36px] leading-[41px] mt-[30px] lg:text-[32px]">
+              <h2 className="text-[#000] text-[36px] leading-[41px] mt-[30px] lg:text-[32px]">
                 <span className="text-[#0072DE] font-medium">
                   {t("home.referral.title")}
                 </span>
-              </p>
+              </h2>
               <p className="text-[#000] my-4 text-2xl max-w-[80%] mx-auto">
                 {t("home.referral.desc")}
               </p>
               <a
                 href="https://oa.kg/a/"
+                aria-label="Присоединиться к реферальной программе"
                 className="button text-[16px] py-[18px] mx-auto mt-[25px] px-[35px] bg-[#1AA37F] rounded-[12px] text-[#fff] flex text-center items-center justify-center w-full lg:w-[70%]"
               >
-                <img src={add} alt="" />
+                <img src={add} alt="" aria-hidden="true" loading="lazy" />
                 <span className="text-[20px] md:text-[20px]">
                   {t("home.referral.joinBtn")}
                 </span>
@@ -143,18 +223,19 @@ const Home = () => {
       <div className="home__referral bg-[#EAF4FF] py-[40px] flex justify-center items-center pt-[60px] pb-[60px]">
         <Container>
           <div className="md:flex justify-evenly items-center">
-            <img src={rules} alt="" className="w-[60%] mx-auto lg:w-[27%]" />
+            <img src={rules} alt="Правила и условия партнёрской программы" loading="lazy" className="w-[60%] mx-auto lg:w-[27%]" />
             <div className="text-center lg:text-center mx-auto lg:max-w-[55%]">
-              <p className="text-[#000] text-[36px] leading-[41px] mt-[30px] lg:text-[32px]">
+              <h2 className="text-[#000] text-[36px] leading-[41px] mt-[30px] lg:text-[32px]">
                 <span className="text-[#0072DE] font-medium">
                   {t("home.referralRules.title")}
                 </span>
-              </p>
+              </h2>
               <p className="text-[#000] my-4 text-2xl max-w-[80%] mx-auto">
                 {t("home.referralRules.desc")}
               </p>
               <a
                 href="/ПУБЛИЧНАЯ ОФЕРТА для субагентов.pdf"
+                aria-label="Ознакомиться с публичной офертой"
                 className="button text-[16px] py-[18px] mx-auto mt-[25px] px-[35px] bg-[#0072DE] rounded-[12px] text-[#fff] flex text-center items-center justify-center w-full lg:w-[70%]"
               >
                 <span className="text-[20px] md:text-[20px]">
